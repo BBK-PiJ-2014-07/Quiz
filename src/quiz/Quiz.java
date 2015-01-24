@@ -16,9 +16,18 @@ public class Quiz implements Serializable {
     public Quiz(){
         //instantiate array of questions - max number is 4
         questions = new Question[MAX_QUESTIONS];
+        //pre-increment id number to assign as id of this quiz
         id = ++questionIds;
     }
     protected class Question {
+        private int questionNumber;
+        private String question;
+        private String answer;
 
+        private Question(int questionNumber, String question, String answer){
+            this.questionNumber = questionNumber;
+            this.question = question;
+            this.answer = answer;
+        }
     }
 }
