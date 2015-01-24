@@ -1,6 +1,7 @@
 package quiz;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * The quiz itself. Contains inner class Question.
@@ -9,25 +10,27 @@ import java.io.Serializable;
 public class Quiz implements Serializable {
     private int id;
     //static int to ensure unique id for each quiz
-    private static int questionIds = 0;
-    private static final int MAX_QUESTIONS = 4;
-    private Question[] questions;
+    private static int quizIds = 0;
+    private ArrayList<Question> questions;
 
     public Quiz(){
-        //instantiate array of questions - max number is 4
-        questions = new Question[MAX_QUESTIONS];
+        questions = new ArrayList<Question>;
         //pre-increment id number to assign as id of this quiz
-        id = ++questionIds;
+        id = ++quizIds;
     }
     protected class Question {
         private int questionNumber;
         private String question;
-        private String answer;
+        private String[] answer;
 
         private Question(int questionNumber, String question, String answer){
             this.questionNumber = questionNumber;
             this.question = question;
             this.answer = answer;
+        }
+
+        protected String getQuestion(){
+            return question;
         }
     }
 }
