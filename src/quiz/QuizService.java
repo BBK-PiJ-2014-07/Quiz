@@ -10,8 +10,9 @@ public interface QuizService extends Remote {
     /**
      * Play a selected quiz
      * @param quizId - the id of the quiz to play
+     * @return score
      */
-    void playQuiz(int quizId);
+    int playQuiz(int quizId);
 
     /**
      * Create a new quiz
