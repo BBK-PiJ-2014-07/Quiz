@@ -32,13 +32,21 @@ public class Quiz implements Serializable {
 
         /**
          * Add a new answer to internal list of answers (max 4). The first answer added is always the correct one.
-         * @param answer
+         * @param ans  - the answer to be added
          */
-        protected void addAnswer(String answer){
+        protected void addAnswer(String ans){
             //check that list is not full
             if (answers.size() < 4) {
-                //add answer
+                answers.add(ans);
             }
+        }
+
+        /**
+         * Get the internal answer list
+         * @return the list of answers
+         */
+        public ArrayList<String> getAnswerList(){
+            return answers;
         }
     }
 }
