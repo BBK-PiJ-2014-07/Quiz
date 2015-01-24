@@ -18,8 +18,15 @@ public interface Quiz {
 
     /**
      * Add a new question to the quiz
+     * @return number of new question
      */
-    void addQuestion();
+    int addQuestion();
+
+    /**
+     * Remove a question from the quiz
+     * @param question number
+     */
+    Question removeQuestion(int questionNo);
 
     /**
      * Play the quiz
