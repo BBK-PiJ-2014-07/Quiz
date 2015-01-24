@@ -21,16 +21,11 @@ public class Quiz implements Serializable {
     protected class Question {
         private int questionNumber;
         private String question;
-        private String[] answer;
+        private String correctAnswer;
 
         private Question(int questionNumber, String question, String answer){
             this.questionNumber = questionNumber;
             this.question = question;
-            this.answer = answer;
-        }
-
-        protected String getQuestion(){
-            return question;
         }
     }
 }
