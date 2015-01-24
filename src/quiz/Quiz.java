@@ -23,11 +23,11 @@ public class Quiz implements Serializable {
         private String question;
         private String correctAnswer;
         private ArrayList<String> answers;
-        
-        private Question(int questionNumber, String question,){
+
+        private Question(int questionNumber, String question){
             this.questionNumber = questionNumber;
             this.question = question;
-
+            answers = new ArrayList<String>();
         }
     }
 }
