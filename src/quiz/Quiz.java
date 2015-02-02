@@ -33,6 +33,14 @@ public class Quiz implements Serializable {
         }
     }
 
+    /**
+     * Answer a question
+     * @return boolean - whether the answer is correct
+     */
+    public boolean answerQuestion(int questionNo, String answer){
+        return questions.get(questionNo).isCorrect(answer);
+    }
+
     public ArrayList<Question> getQuestions() { return questions; }
 
 
