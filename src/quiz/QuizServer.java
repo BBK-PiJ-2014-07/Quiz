@@ -1,16 +1,18 @@
 package quiz;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  * Created by Sophie on 02/02/15.
  */
 public class QuizServer implements QuizService {
-    private ArrayList<Quiz> quizList;
+    private Set<Quiz> quizList;
 
     public QuizServer(){
-        quizList = new ArrayList<>();
+        quizList = new HashSet<>();
     }
 
     public static void main(String[] args) {
@@ -35,9 +37,7 @@ public class QuizServer implements QuizService {
 
     @Override
     public void addQuestion(int quizId, String question, String...answers){
-        quizList.stream()
-                .filter(q -> q.getId() == quizId)
-                .forEach(q -> q.addQuestion(question, answers));
+
     }
 
     @Override
@@ -49,7 +49,7 @@ public class QuizServer implements QuizService {
      * Get the internal quiz list
      * @return the list of quizzes
      */
-    public ArrayList<Quiz> getQuizList(){
+    public Set<Quiz> getQuizList(){
         return quizList;
     }
 }
