@@ -20,8 +20,10 @@ public class TestStartup {
     }
 
     @Test
-    public void testAddQuiz(){
-        setup.addQuiz("test quiz");
+    public void testCreateQuiz(){
+        setup.createQuiz();
+        assertEquals("test quiz", setup.getQuizList.get(0).getQuizName);
+
     }
 
 }
