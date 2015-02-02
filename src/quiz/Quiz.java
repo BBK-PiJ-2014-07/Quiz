@@ -2,6 +2,7 @@ package quiz;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * The quiz itself. Contains inner class Question.
@@ -14,10 +15,15 @@ public class Quiz implements Serializable {
     private ArrayList<Question> questions;
 
     public Quiz(){
-        questions = new ArrayList<Question>;
+        questions = new ArrayList<Question>();
         //pre-increment id number to assign as id of this quiz
         id = ++quizIds;
     }
+
+
+    public ArrayList<Question> getQuestions() { return questions; }
+
+
     protected class Question {
         private int questionNumber;
         private String question;
@@ -27,7 +33,7 @@ public class Quiz implements Serializable {
         protected Question(int questionNumber, String question) {
             this.questionNumber = questionNumber;
             this.question = question;
-            answers = new ArrayList<String>();
+            answers = new ArrayList<>();
         }
 
         /**
@@ -39,14 +45,20 @@ public class Quiz implements Serializable {
             if (answers.size() < 4) {
                 answers.add(ans);
             }
+            correctAnswer = answers.get(0);
+            //randomise order of answers
+            Collections.shuffle(answers);
         }
 
         /**
          * Get the internal answer list
          * @return the list of answers
          */
-        public ArrayList<String> getAnswerList(){
+        protected ArrayList<String> getAnswerList(){
             return answers;
+        }
+
+        protected boolean isCorrect(String ans) { return ans.equals(correctAnswer);
         }
     }
 }
