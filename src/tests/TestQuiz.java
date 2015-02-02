@@ -20,7 +20,7 @@ public class TestQuiz {
     @Test
     public void testQuestion(){
         quiz.addQuestion("what is the capital of France", "paris","london","rome","brussels");
-        assertTrue(quiz.answerQuestion("paris"));
+        assertTrue(quiz.answerQuestion(0,"paris"));
     }
 
 }
