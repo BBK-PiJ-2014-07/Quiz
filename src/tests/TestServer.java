@@ -21,4 +21,11 @@ public class TestServer {
         server.createQuiz("test quiz");
         assertEquals("test quiz", server.getQuizList().get(0).getQuizName());
     }
+    @Test
+    public void testAddQuestion(){
+        server.addQuestion(1, "What comes after A?", "B", "C", "D", "E");
+        assertTrue(server.getQuizList().get(0).answerQuestion(1,"B"));
+    }
+
 }
+
