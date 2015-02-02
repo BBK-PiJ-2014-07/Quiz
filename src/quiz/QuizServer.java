@@ -34,6 +34,13 @@ public class QuizServer implements QuizService {
     }
 
     @Override
+    public void addQuestion(int quizId, String question, String...answers){
+        quizList.stream()
+                .filter(q -> q.getId() == quizId)
+                .forEach(q -> q.addQuestion(question, answers));
+    }
+
+    @Override
     public void closeQuiz(int quizId) {
 
     }
