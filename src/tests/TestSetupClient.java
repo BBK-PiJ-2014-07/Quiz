@@ -27,7 +27,9 @@ public class TestSetupClient {
         System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
         setup.createQuiz();
         System.setIn(null);
-        assertEquals("test quiz", server.getQuizList().get(0).getQuizName());
+
+        Quiz testQuiz = (Quiz) server.getQuizList().iterator().next();
+        assertEquals("test quiz", testQuiz.getQuizName());
     }
 
 }
