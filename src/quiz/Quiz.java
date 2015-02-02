@@ -47,6 +47,8 @@ public class Quiz implements Serializable {
 
     public String getQuizName() {return quizName;}
 
+    public int getId() {return id; }
+
     protected class Question {
         private int questionNumber;
         private String question;
