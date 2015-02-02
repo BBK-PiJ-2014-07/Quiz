@@ -14,7 +14,7 @@ public class TestQuiz {
     private Quiz quiz;
     @Before
     public void buildUp(){
-        quiz = new Quiz();
+        quiz = new Quiz("test quiz");
     }
 
     @Test
