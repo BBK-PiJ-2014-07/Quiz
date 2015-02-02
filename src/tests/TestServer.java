@@ -3,9 +3,6 @@ package tests;
 import quiz.QuizServer;
 import org.junit.*;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-
 import static org.junit.Assert.*;
 
 public class TestServer {
