@@ -18,11 +18,7 @@ public class SetupClient {
             Remote service = Naming.lookup("//localhost/");
             server = (QuizServer) service;
 
-        } catch (NotBoundException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (RemoteException e) {
+        } catch (NotBoundException | MalformedURLException | RemoteException e) {
             e.printStackTrace();
         }
     }
@@ -48,7 +44,7 @@ public class SetupClient {
             String wrong2 = inputScanner.nextLine();
             System.out.print("\n3: ");
             String wrong3 = inputScanner.nextLine();
-            server.addQuestion(newQuizId, newQuestion, correctAnswer,wrong1, wrong2, wrong 3);
+            server.addQuestion(newQuizId, newQuestion, correctAnswer,wrong1, wrong2, wrong3);
             System.out.println("Do you want to add another question? Y/N");
             String response = inputScanner.nextLine();
 
@@ -61,7 +57,5 @@ public class SetupClient {
             }
         }
         inputScanner.close();
-
-        System.out.print("Quiz " + server.createQuiz() + " created!");
     }
 }
