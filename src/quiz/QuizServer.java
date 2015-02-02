@@ -60,6 +60,7 @@ public class QuizServer implements QuizService {
         }
         inputScanner.close();
         System.out.print("Quiz " + newQuiz.getId() + " created!");
+        quizList.add(newQuiz);
         return newQuiz.getId();
     }
 
