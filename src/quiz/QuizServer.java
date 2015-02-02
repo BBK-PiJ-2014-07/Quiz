@@ -19,7 +19,6 @@ public class QuizServer implements QuizService {
     }
 
     public void launch(){
-        createQuiz();
     }
 
     @Override
