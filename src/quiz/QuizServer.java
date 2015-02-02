@@ -27,39 +27,8 @@ public class QuizServer implements QuizService {
     }
 
     @Override
-    public int createQuiz() {
-        Scanner inputScanner = new Scanner(System.in);
-        System.out.println("Please enter a name for the quiz.");
-        String quizName = inputScanner.nextLine();
-        //TODO - check to see if quiz name exists already
+    public int createQuiz(String quizName) {
         Quiz newQuiz = new Quiz(quizName);
-        Boolean finished = false;
-        while (!finished) {
-            //TODO to be simplified
-            System.out.println("Please enter a question.");
-            String newQuestion = inputScanner.nextLine();
-            System.out.println("Please enter the CORRECT ANSWER for the question \"" + newQuestion+"\"");
-            String correctAnswer = inputScanner.nextLine();
-            System.out.println("Please enter 3 incorrect answers.");
-            System.out.print("1: ");
-            String wrong1 = inputScanner.nextLine();
-            System.out.print("\n2: ");
-            String wrong2 = inputScanner.nextLine();
-            System.out.print("\n3: ");
-            String wrong3 = inputScanner.nextLine();
-            newQuiz.addQuestion(newQuestion, correctAnswer, wrong1, wrong2, wrong3);
-            System.out.println("Do you want to add another question? Y/N");
-            String response = inputScanner.nextLine();
-            while (!response.equals("y") && !response.equals("Y") && !response.equals("n") & !response.equals("N")){
-                System.out.println("Please enter Y or N.");
-                response = inputScanner.nextLine();
-            }
-            if (response.equals("n") || response.equals("N")) {
-                finished = true;
-            }
-        }
-        inputScanner.close();
-        System.out.print("Quiz " + newQuiz.getId() + " created!");
         quizList.add(newQuiz);
         return newQuiz.getId();
     }
