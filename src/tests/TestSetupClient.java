@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * Created by Sophie on 02/02/15.
- * Test the start-up client
+ * Test the setup client
  */
 public class TestSetupClient {
     SetupClient setup;
@@ -19,7 +19,6 @@ public class TestSetupClient {
     public void buildUp() throws FileNotFoundException {
         setup = new SetupClient();
         server = new QuizServer();
-        System.setIn(new FileInputStream("tests/testStartup.txt"));
     }
 
     @Test
