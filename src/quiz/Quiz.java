@@ -10,14 +10,17 @@ import java.util.Collections;
  */
 public class Quiz implements Serializable {
     private int id;
+    private String quizName;
     //static int to ensure unique id for each quiz
     private static int quizIds = 0;
     private ArrayList<Question> questions;
 
-    public Quiz(){
+    public Quiz(String quizName){
         questions = new ArrayList<Question>();
         //pre-increment id number to assign as id of this quiz
+        this.quizName = quizName;
         id = ++quizIds;
+
     }
 
     /**
@@ -42,6 +45,7 @@ public class Quiz implements Serializable {
 
     public ArrayList<Question> getQuestions() { return questions; }
 
+    public String getQuizName() {return quizName;}
 
     protected class Question {
         private int questionNumber;
