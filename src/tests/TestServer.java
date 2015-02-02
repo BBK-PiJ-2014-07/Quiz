@@ -22,6 +22,6 @@ public class TestServer {
         System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
         server.createQuiz();
         System.setIn(null);
-        assertEquals("test quiz", server.getQuizList().get(0).getQuizName);
+        assertEquals("test quiz", server.getQuizList().get(0).getQuizName());
     }
 }
