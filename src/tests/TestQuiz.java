@@ -18,9 +18,13 @@ public class TestQuiz {
     }
 
     @Test
-    public void testQuestion(){
+    public void testQuestionCorrectAns(){
         quiz.addQuestion("what is the capital of France", "paris","london","rome","brussels");
         assertTrue(quiz.answerQuestion(0,"paris"));
     }
-
+    @Test
+    public void testQuestionWrongAns(){
+        quiz.addQuestion("what is the capital of France", "paris","london","rome","brussels");
+        assertFalse(quiz.answerQuestion(0,"brussels"));
+    }
 }
