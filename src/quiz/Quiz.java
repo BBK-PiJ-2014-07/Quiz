@@ -28,9 +28,7 @@ public class Quiz implements Serializable {
      */
     public void addQuestion(String question, String...answers){
         Question newQ = new Question(questions.size()+1, question);
-        for (String ans : answers){
-            newQ.addAnswer(ans);
-        }
+        newQ.addAnswers(answers);
         questions.add(newQ);
     }
 
@@ -61,10 +59,9 @@ public class Quiz implements Serializable {
          * Add a new answer to internal list of answers (max 4). The first answer added is always the correct one.
          * @param ans  - the answer to be added
          */
-        protected void addAnswer(String ans){
-            //check that list is not full
-            if (answers.size() < 4) {
-                answers.add(ans);
+        protected void addAnswers(String... ans){
+            for (String answer: ans){
+                answers.add(answer);
             }
             correctAnswer = answers.get(0);
             //randomise order of answers
