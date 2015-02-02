@@ -51,14 +51,16 @@ public class QuizServer implements QuizService {
             newQuiz.addQuestion(newQuestion, correctAnswer, wrong1, wrong2, wrong3);
             System.out.println("Do you want to add another question? Y/N");
             String response = inputScanner.nextLine();
-            if (response == "n" || response == "N") {
-                finished = true;
-            } else if (response != "y" || response != "Y"){
+            while (!response.equals("y") && !response.equals("Y") && !response.equals("n") & !response.equals("N")){
                 System.out.println("Please enter Y or N.");
                 response = inputScanner.nextLine();
             }
+            if (response.equals("n") || response.equals("N")) {
+                finished = true;
+            }
         }
         inputScanner.close();
+        System.out.print("Quiz " + newQuiz.getId() + " created!");
         return newQuiz.getId();
     }
 
