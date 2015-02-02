@@ -1,7 +1,6 @@
 package tests;
 
 import org.junit.*;
-import static org.junit.Assert.*;
 import quiz.*;
 
 import java.io.*;
@@ -10,12 +9,12 @@ import java.io.*;
  * Created by Sophie on 02/02/15.
  * Test the start-up client
  */
-public class TestStartup {
-    Setup setup;
+public class TestSetupClient {
+    SetupClient setup;
 
     @Before
     public void buildUp() throws FileNotFoundException {
-        setup = new Setup();
+        setup = new SetupClient();
         System.setIn(new FileInputStream("tests/testStartup.txt"));
     }
 
