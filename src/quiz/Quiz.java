@@ -11,6 +11,7 @@ import java.util.Collections;
 public class Quiz implements Serializable {
     private int id;
     private String quizName;
+    private boolean closed;
     //static int to ensure unique id for each quiz
     private static int quizIds = 0;
     private ArrayList<Question> questions;
@@ -20,6 +21,7 @@ public class Quiz implements Serializable {
         //pre-increment id number to assign as id of this quiz
         this.quizName = quizName;
         id = ++quizIds;
+        closed = false;
 
     }
 
@@ -48,6 +50,17 @@ public class Quiz implements Serializable {
     public String getQuizName() {return quizName;}
 
     public int getId() {return id; }
+
+    /**
+     * Close the quiz.
+     */
+    public void closeQuiz() {closed = true;}
+
+    /**
+     * Check whether the quiz is closed.
+     * @return boolean isClosed - true if quiz is closed
+     */
+    public boolean isClosed() {return closed;}
 
     protected class Question {
         private int questionNumber;
