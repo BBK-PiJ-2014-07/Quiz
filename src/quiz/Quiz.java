@@ -20,6 +20,18 @@ public class Quiz implements Serializable {
         id = ++quizIds;
     }
 
+    /**
+     * Add a new question.
+     * @param question - the question
+     * @param answers - 4 answers. The constructor takes varargs, but the
+     *                 number should be 4 (this is checked in another class)
+     */
+    public void addQuestion(String question, String...answers){
+        Question newQ = new Question(questions.size()+1, question);
+        for (String ans : answers){
+            newQ.addAnswer(ans);
+        }
+    }
 
     public ArrayList<Question> getQuestions() { return questions; }
 
