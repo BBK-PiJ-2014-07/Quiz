@@ -31,6 +31,7 @@ public class Quiz implements Serializable {
         for (String ans : answers){
             newQ.addAnswer(ans);
         }
+        questions.add(newQ);
     }
 
     /**
