@@ -75,7 +75,5 @@ public class QuizServer implements QuizService {
      * Get the internal quiz list
      * @return the list of quizzes
      */
-    public ArrayList<Quiz> getQuizList(){
-        return quizList;
-    }
+    public ArrayList<Quiz> getQuizList(){ return quizList;}
 }
