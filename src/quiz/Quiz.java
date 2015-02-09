@@ -17,7 +17,7 @@ public class Quiz implements Serializable {
     private ArrayList<Question> questions;
 
     public Quiz(String quizName){
-        questions = new ArrayList<Question>();
+        questions = new ArrayList<>();
         //pre-increment id number to assign as id of this quiz
         this.quizName = quizName;
         id = ++quizIds;
@@ -42,7 +42,7 @@ public class Quiz implements Serializable {
      * @return boolean - whether the answer is correct
      */
     public boolean answerQuestion(int questionNo, String answer){
-        return questions.get(questionNo).isCorrect(answer);
+        return questions.get(questionNo-1).isCorrect(answer);
     }
 
     public ArrayList<Question> getQuestions() { return questions; }
