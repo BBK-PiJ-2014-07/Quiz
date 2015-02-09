@@ -1,6 +1,7 @@
 package quiz;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 /**
@@ -30,7 +31,23 @@ public class QuizServer implements QuizService {
      */
     @Override
     public int playQuiz(int quizId) {
-        return 0;
+        //TODO - check quiz id
+        //TODO - player high scores
+        Scanner inputScanner = new Scanner(System.in);
+        Quiz thisQuiz = quizList.stream().filter(q -> q.getId() == quizId).findFirst().get();
+        int score = 0;
+        for (int i=0; i<thisQuiz.getQuestions().size(); i++){
+            System.out.println("Question " + (i+1) + ": " + thisQuiz.getQuestions().get(i).getQuestion());   //print the question
+            thisQuiz.getQuestions().get(i).getAnswerList().forEach(System.out::println);
+            String input = inputScanner.nextLine();
+            if (thisQuiz.answerQuestion(i+1,input) == true) {
+                System.out.println("Correct!");
+                score++;
+            } else {
+                System.out.println("Wrong! The answer is "+thisQuiz.getQuestions().get(i).getCorrectAnswer());
+            }
+        }
+        return score;
     }
 
     /**
