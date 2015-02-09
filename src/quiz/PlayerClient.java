@@ -1,7 +1,8 @@
 package quiz;
 
 /**
- * Created by Sophie on 02/02/15.
+ * Client for playing quiz games.
+ * @author Sophie Koonin
  */
 public class PlayerClient {
 }
