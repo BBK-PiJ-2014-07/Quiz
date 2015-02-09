@@ -1,7 +1,7 @@
 package quiz;
 
 import java.util.ArrayList;
-import java.util.Scanner;
+
 
 /**
  * Created by Sophie on 02/02/15.
@@ -35,7 +35,11 @@ public class QuizServer implements QuizService {
 
     @Override
     public void addQuestion(int quizId, String question, String...answers){
-
+     for (Quiz q: quizList){
+         if (q.getId() == quizId){
+             q.addQuestion(question, answers);
+         }
+     }
     }
 
     @Override
