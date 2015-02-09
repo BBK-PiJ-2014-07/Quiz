@@ -95,7 +95,17 @@ public class Quiz implements Serializable {
             return answers;
         }
 
-        protected boolean isCorrect(String ans) { return ans.equals(correctAnswer);
-        }
+        /**
+         * Check whether an answer is correct
+         * @param ans
+         * @return true or false
+         */
+        protected boolean isCorrect(String ans) { return ans.equals(correctAnswer);}
+
+        /**
+         * Get the question
+         * @return the text of the question
+         */
+        protected String getQuestion() { return question;}
     }
 }
