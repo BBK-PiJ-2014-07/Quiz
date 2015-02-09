@@ -38,12 +38,13 @@ public class QuizServer implements QuizService {
     @Override
     public void addQuestion(int quizId, String question, String...answers){
         //TODO - check question/answers not null
-     quizList.stream().filter(q -> q.getId() == quizId).forEach(q -> q.addQuestion(question, answers));
+        quizList.stream().filter(q -> q.getId() == quizId).forEach(q -> q.addQuestion(question, answers));
 
     }
 
     @Override
     public void closeQuiz(int quizId) {
+        quizList.stream().filter(q -> q.getId() == quizId).forEach(q -> q.closeQuiz());
 
     }
 
