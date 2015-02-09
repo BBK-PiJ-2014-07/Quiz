@@ -31,6 +31,10 @@ public class QuizServer implements QuizService {
      */
     @Override
     public int playQuiz(int quizId) {
+        if (quizList.stream().noneMatch(q -> q.getId() == quizId)){
+            System.out.println("Quiz not found. Please try again");
+            return -1;
+        }
         //TODO - check quiz id
         //TODO - player high scores
         Scanner inputScanner = new Scanner(System.in);
@@ -47,6 +51,7 @@ public class QuizServer implements QuizService {
                 System.out.println("Wrong! The answer is "+thisQuiz.getQuestions().get(i).getCorrectAnswer());
             }
         }
+        System.out.println("At the end of the quiz, your score is " + score);
         return score;
     }
 
