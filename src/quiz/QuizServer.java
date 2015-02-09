@@ -31,6 +31,7 @@ public class QuizServer implements QuizService {
      */
     @Override
     public int playQuiz(int quizId) {
+        //TODO - move this over to client?
         if (quizList.stream().noneMatch(q -> q.getId() == quizId)){
             System.out.println("Quiz not found. Please try again");
             return -1;
