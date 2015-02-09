@@ -107,5 +107,7 @@ public class Quiz implements Serializable {
          * @return the text of the question
          */
         protected String getQuestion() { return question;}
+
+        protected String getCorrectAnswer() {return correctAnswer;}
     }
 }
