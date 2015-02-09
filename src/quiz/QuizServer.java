@@ -35,11 +35,8 @@ public class QuizServer implements QuizService {
 
     @Override
     public void addQuestion(int quizId, String question, String...answers){
-     for (Quiz q: quizList){
-         if (q.getId() == quizId){
-             q.addQuestion(question, answers);
-         }
-     }
+     quizList.stream().filter(q -> q.getId() == quizId).forEach(q -> q.addQuestion(question, answers));
+
     }
 
     @Override
