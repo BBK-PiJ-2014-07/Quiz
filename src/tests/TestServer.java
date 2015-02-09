@@ -25,5 +25,11 @@ public class TestServer {
         assertTrue(server.getQuizList().get(0).answerQuestion(1,"B"));
     }
 
+    @Test
+    public void testCloseQuiz(){
+        server.createQuiz("test quiz");
+        server.closeQuiz(3);
+        assertTrue(server.getQuizList().get(0).isClosed());
+    }
 }
 
