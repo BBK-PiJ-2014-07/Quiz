@@ -45,5 +45,11 @@ public class TestServer {
         int score = server.playQuiz(4);
         assertEquals(2, score);
     }
+
+    @Test
+    public void testPlayQuizWrongId(){
+        server.createQuiz("test");
+        assertEquals(-1,server.playQuiz(999));
+    }
 }
 
