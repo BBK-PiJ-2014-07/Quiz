@@ -21,7 +21,7 @@ public class TestServer {
     @Test
     public void testAddQuestion(){
         server.createQuiz("test quiz");
-        server.addQuestion(1, "What comes after A?", "B", "C", "D", "E");
+        server.addQuestion(2, "What comes after A?", "B", "C", "D", "E");
         assertTrue(server.getQuizList().get(0).answerQuestion(1,"B"));
     }
 
