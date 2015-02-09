@@ -44,7 +44,7 @@ public class QuizServer implements QuizService {
             System.out.println("Question " + (i+1) + ": " + thisQuiz.getQuestions().get(i).getQuestion());   //print the question
             thisQuiz.getQuestions().get(i).getAnswerList().forEach(System.out::println);
             String input = inputScanner.nextLine();
-            if (thisQuiz.answerQuestion(i+1,input) == true) {
+            if (thisQuiz.answerQuestion(i+1,input)) {
                 System.out.println("Correct!");
                 score++;
             } else {
