@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 /**
  * Implementation of QuizService
- * @author skooni01
+ * @author Sophie Koonin
  * @see quiz.QuizService
  */
 public class QuizServer implements QuizService {
@@ -27,7 +27,7 @@ public class QuizServer implements QuizService {
     /**
      * Play a quiz
      * @param quizId - the id of the quiz to play
-     * @return the score
+     * @return the score or -1 if there is an error
      */
     @Override
     public int playQuiz(int quizId) {
