@@ -51,5 +51,16 @@ public class TestServer {
         server.createQuiz("test");
         assertEquals(-1,server.playQuiz(999));
     }
+
+    @Test
+    public void testPlayQuizWrongAns(){
+        server.createQuiz("test quiz");
+        server.addQuestion(6, "What comes after A?", "B", "C", "D", "E");
+        server.addQuestion(6, "What is 1+1?", "2", "3", "4","5");
+        String input = "B\n5";
+        System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
+        int score = server.playQuiz(6);
+        assertEquals(1, score);
+    }
 }
 
