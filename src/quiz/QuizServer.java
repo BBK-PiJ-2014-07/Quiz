@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 
 /**
- * Created by Sophie on 02/02/15.
+ * Implementation of QuizService
+ * @author skooni01
  */
 public class QuizServer implements QuizService {
     private ArrayList<Quiz> quizList;
@@ -28,6 +29,7 @@ public class QuizServer implements QuizService {
 
     @Override
     public int createQuiz(String quizName) {
+        //TODO - check quizName not null
         Quiz newQuiz = new Quiz(quizName);
         quizList.add(newQuiz);
         return newQuiz.getId();
@@ -35,6 +37,7 @@ public class QuizServer implements QuizService {
 
     @Override
     public void addQuestion(int quizId, String question, String...answers){
+        //TODO - check question/answers not null
      quizList.stream().filter(q -> q.getId() == quizId).forEach(q -> q.addQuestion(question, answers));
 
     }
