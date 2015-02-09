@@ -57,7 +57,7 @@ public class QuizServer implements QuizService {
 
     /**
      * create a new quiz
-     * @param quizName
+     * @param quizName - the name of the quiz
      * @return the ID of the new quiz
      */
     @Override

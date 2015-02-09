@@ -16,7 +16,7 @@ public interface QuizService extends Remote {
 
     /**
      * Create a new quiz
-     * @oaram name of the quiz to be created
+     * @oaram quizName - name of the quiz to be created
      * @return id of new quiz
      */
     int createQuiz(String quizName);
