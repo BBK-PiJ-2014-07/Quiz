@@ -15,20 +15,25 @@ public class PlayerClient {
     private Remote service;
     private QuizServer server;
 
-
-    public boolean connectServer(String host){
+    /**
+     * Connect to the server
+     * @param host - the host of the server
+     * @return true if connected
+     */
+    public String connectServer(String host){
         try {
             service = Naming.lookup(host+ "QuizService");
             server = (QuizServer) service;
-            return true;
+            return server.sendResponse();
         } catch (RemoteException | MalformedURLException | NotBoundException ex) {
             ex.printStackTrace();
-            return false;
 
         }
+        return "no response";
     }
 
     public static void main(String[] args) {
 
     }
+
 }
