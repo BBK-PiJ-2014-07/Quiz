@@ -12,15 +12,23 @@ import java.rmi.RemoteException;
  * @author Sophie Koonin
  */
 public class PlayerClient {
-    public static void main(String[] args) {
-        try {
-            Remote service = Naming.lookup("//127.0.0.1/QuizService");
-            QuizService quizServer = (QuizServer) service;
-            //TODO
+    private Remote service;
+    private QuizServer server;
 
+
+    public boolean connectServer(String host){
+        try {
+            service = Naming.lookup(host+ "QuizService");
+            server = (QuizServer) service;
+            return true;
         } catch (RemoteException | MalformedURLException | NotBoundException ex) {
             ex.printStackTrace();
+            return false;
 
         }
+    }
+
+    public static void main(String[] args) {
+
     }
 }
