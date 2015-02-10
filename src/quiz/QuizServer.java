@@ -95,6 +95,11 @@ public class QuizServer implements QuizService {
     }
 
     /**
+     * Send a response to a connected client
+     * @return response
+     */
+    public String sendResponse(){ return "Server response"; }
+    /**
      * Get the internal quiz list
      * @return the list of quizzes
      */
