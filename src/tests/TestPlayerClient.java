@@ -1,5 +1,6 @@
 package tests;
 import org.junit.*;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.runner.RunWith;
@@ -32,10 +33,16 @@ public class TestPlayerClient {
     }
 
     @Test
+    public void testConnect(){
+        assertTrue(player.connectServer("//localhost/"));
+
+
+    }
+    /*
+    @Test
     public void testPlayQuiz(){
         String input = "B\n2";
         System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
-        player.playQuiz(1);
 
-    }
+    }*/
 }
