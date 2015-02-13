@@ -5,11 +5,14 @@ import static org.junit.Assert.*;
 
 import quiz.Quiz;
 
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
 
 
 /**
- * Created by Sophie on 24/01/15.
- */
+* Unit tests for Quiz
+ * @see quiz.Quiz
+ * */
 public class TestQuiz {
     private Quiz quiz;
     @Before
@@ -19,12 +22,17 @@ public class TestQuiz {
 
     @Test
     public void testQuestionCorrectAns(){
-        quiz.addQuestion("what is the capital of France", "paris","london","rome","brussels");
+        String input = "what is the capital of France\nparis\nlondon\nrome\nbrussels\nN";
+        System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
+        quiz.addQuestion();
+
         assertTrue(quiz.answerQuestion(0,"paris"));
     }
     @Test
     public void testQuestionWrongAns(){
-        quiz.addQuestion("what is the capital of France", "paris","london","rome","brussels");
+        String input = "what is the capital of France\nparis\nlondon\nrome\nbrussels\nN";
+        System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
+        quiz.addQuestion();
         assertFalse(quiz.answerQuestion(0,"brussels"));
     }
 }
