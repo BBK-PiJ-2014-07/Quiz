@@ -1,21 +1,16 @@
 package tests;
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import quiz.PlayerClient;
-import quiz.QuizServer;
-
-import java.io.ByteArrayInputStream;
-import java.nio.charset.StandardCharsets;
+import clients.PlayerClient;
+import server.QuizServer;
 
 /**
  * Testing class for Player Client
- * @see quiz.PlayerClient
+ * @see clients.PlayerClient
  */
 @RunWith(MockitoJUnitRunner.class)
 public class TestPlayerClient {
@@ -27,8 +22,7 @@ public class TestPlayerClient {
         player = new PlayerClient();
         server = Mockito.mock(QuizServer.class);
         server.createQuiz("test quiz");
-        server.addQuestion(1, "What comes after A?","B","C","D","E");
-        server.addQuestion(1, "What is 1+1?","2","3","4","5");
+
     }
 
     @Test

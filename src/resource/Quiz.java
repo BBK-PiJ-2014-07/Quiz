@@ -1,4 +1,4 @@
-package quiz;
+package resource;
 
 import lombok.Data;
 
@@ -92,7 +92,7 @@ public class Quiz implements Serializable {
     public boolean isClosed() {return closed;}
 
     @Data
-    protected class Question {
+    public class Question {
         private int questionNumber;
         private String question;
         private String correctAnswer;

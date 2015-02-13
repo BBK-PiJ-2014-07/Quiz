@@ -1,6 +1,6 @@
 package tests;
 
-import quiz.QuizServer;
+import server.QuizServer;
 import org.junit.*;
 
 import java.io.ByteArrayInputStream;

@@ -1,5 +1,7 @@
-package quiz;
+package clients;
 
+
+import server.QuizServer;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;

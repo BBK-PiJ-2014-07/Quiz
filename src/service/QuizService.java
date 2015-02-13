@@ -1,4 +1,4 @@
-package quiz;
+package service;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

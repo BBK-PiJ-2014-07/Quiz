@@ -1,6 +1,8 @@
-package quiz;
+package server;
 
 import lombok.Data;
+import resource.Quiz;
+import service.QuizService;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -11,7 +13,7 @@ import java.util.Scanner;
 /**
  * Implementation of QuizService
  * @author Sophie Koonin
- * @see quiz.QuizService
+ * @see service.QuizService
  */
 @Data
 public class QuizServer extends UnicastRemoteObject implements QuizService {

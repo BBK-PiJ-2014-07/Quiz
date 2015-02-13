@@ -1,11 +1,12 @@
-package quiz;
+package clients;
+
+import server.QuizServer;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.Scanner;
 
 /**
  * The client program for creating and closing quizzes.
@@ -22,7 +23,7 @@ public class SetupClient {
             e.printStackTrace();
         }
     }
-
+/*
     public void createQuiz(){
         Scanner inputScanner = new Scanner(System.in);
         System.out.println("Please enter a name for the quiz.");
@@ -58,4 +59,6 @@ public class SetupClient {
         }
         inputScanner.close();
     }
+
+    */
 }
