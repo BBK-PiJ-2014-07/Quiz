@@ -53,7 +53,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
         int score = 0;
         for (int i=0; i<thisQuiz.getQuestions().size(); i++){
             System.out.println("Question " + (i+1) + ": " + thisQuiz.getQuestions().get(i).getQuestion());   //print the question
-            thisQuiz.getQuestions().get(i).getAnswerList().forEach(System.out::println);
+            thisQuiz.getQuestions().get(i).getAnswers().forEach(System.out::println);
             String input = inputScanner.nextLine();
             if (thisQuiz.answerQuestion(i+1,input)) {
                 System.out.println("Correct!");
@@ -87,21 +87,21 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
      * @param answers the four answers to be added
      */
     @Override
-    public void addQuestion(int quizId, String question, String...answers){
+    public void addQuestion(int quizId, String question, String...answers){}/*
         //TODO - move this stuff over to Quiz
         //TODO - check question/answers not null
         quizList.stream().filter(q -> q.getId() == quizId).forEach(q -> q.addQuestion(question, answers));
         //TODO - maybe return question number?
 
     }
-
+*/
     /**
      * Close the selected quiz so nobody else can play it
      * @param quizId - the id of the quiz to close
      */
     @Override
     public void closeQuiz(int quizId) {
-        quizList.stream().filter(q -> q.getId() == quizId).forEach(q -> q.closeQuiz());
+        quizList.stream().filter(q -> q.getId() == quizId).forEach(q -> q.setClosed());
         //TODO - return high score
 
     }
