@@ -18,15 +18,18 @@ public class TestServer {
     }
 
     @Test
-    public void testCreateQuiz(){
+    public void testCreateQuizCreatesQuiz(){
+        String input = "what is the capital of France\nparis\nlondon\nrome\nbrussels\nN";
+        System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
         server.createQuiz("test quiz");
         assertEquals("test quiz", server.getQuizList().get(0).getQuizName());
     }
     @Test
-    public void testAddQuestion(){
+    public void testCreateQuizAdds1Question(){
+        String input = "what is the capital of France\nparis\nlondon\nrome\nbrussels\nN";
+        System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
         server.createQuiz("test quiz");
-        server.addQuestion(2, "What comes after A?", "B", "C", "D", "E");
-        assertTrue(server.getQuizList().get(0).answerQuestion(1,"B"));
+        assertTrue(server.getQuizList().get(0).answerQuestion(1,"paris"));
     }
 
     @Test
