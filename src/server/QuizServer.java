@@ -11,6 +11,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//TODO - SERIALIZATION
 
 /**
  * Implementation of QuizService
@@ -18,7 +19,8 @@ import java.util.Scanner;
  * @see service.QuizService
  */
 @Data
-public class QuizServer extends UnicastRemoteObject implements QuizService {
+
+public class QuizServer implements QuizService {
     private ArrayList<Quiz> quizList;
 
     public QuizServer() throws RemoteException {
