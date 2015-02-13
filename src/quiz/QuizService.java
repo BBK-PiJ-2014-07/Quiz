@@ -21,13 +21,6 @@ public interface QuizService extends Remote {
      */
     int createQuiz(String quizName);
 
-    /**
-     * Add a new question to a pre-existing quiz
-     * @param quizId the id of the quiz to add the new question to
-     * @param question the new question
-     * @param answers the four answers to be added
-     */
-    void addQuestion(int quizId, String question, String...answers);
 
     /**
      * Close the selected quiz
