@@ -3,6 +3,7 @@ package quiz;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 
 /**
  * The quiz itself. Contains inner class Question.
@@ -26,15 +27,41 @@ public class Quiz implements Serializable {
     }
 
     /**
-     * Add a new question.
-     * @param question - the question
-     * @param answers - 4 answers. The constructor takes varargs, but the
-     *                 number should be 4 (this is checked in another class)
+     * Add questions to the quiz.
      */
-    public void addQuestion(String question, String...answers){
-        Question newQ = new Question(questions.size()+1, question);
-        newQ.addAnswers(answers);
-        questions.add(newQ);
+    public void addQuestions(){
+        boolean finished = false;
+        String question;
+        String[] answers = new String[4];
+        Scanner input = new Scanner(System.in);
+        while (!finished){
+            System.out.print("\nPlease enter a question: ");
+            question = input.nextLine();
+            System.out.print("\nPlease enter the CORRECT answer: ");
+            answers[0] = input.nextLine();
+            for (int i=1; i<4; i++){
+                System.out.print("\nPlease enter an incorrect answer: ");
+                answers[i] = input.nextLine();
+            }
+            Question newQ = new Question(questions.size()+1, question);
+            newQ.addAnswers(answers);
+            questions.add(newQ);
+            boolean confirm = false;
+            while (!confirm) {
+                System.out.print("\nDo you want to add another question? Y/N: ");
+                String ans = input.nextLine();
+                if (ans.toUpperCase().equals("N")) {
+                    finished = true;
+                    confirm = true;
+                } else if (ans.toUpperCase().equals("Y")) {
+                    confirm = true;
+                }
+                else {
+                    System.out.println("Please enter Y or N!");
+                }
+            }
+
+        }
     }
 
     /**
