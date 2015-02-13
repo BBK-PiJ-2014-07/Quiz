@@ -24,7 +24,7 @@ public class TestQuiz {
     public void testQuestionCorrectAns(){
         String input = "what is the capital of France\nparis\nlondon\nrome\nbrussels\nN";
         System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
-        quiz.addQuestion();
+        quiz.addQuestions();
 
         assertTrue(quiz.answerQuestion(0,"paris"));
     }
@@ -32,7 +32,7 @@ public class TestQuiz {
     public void testQuestionWrongAns(){
         String input = "what is the capital of France\nparis\nlondon\nrome\nbrussels\nN";
         System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
-        quiz.addQuestion();
+        quiz.addQuestions();
         assertFalse(quiz.answerQuestion(0,"brussels"));
     }
 }
