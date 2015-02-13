@@ -75,7 +75,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
     public int createQuiz(String quizName) {
         //TODO - check quizName not null
         Quiz newQuiz = new Quiz(quizName);
-        //TODO - call add question methods here instead
+        newQuiz.addQuestions();
         quizList.add(newQuiz);
         return newQuiz.getId();
     }
