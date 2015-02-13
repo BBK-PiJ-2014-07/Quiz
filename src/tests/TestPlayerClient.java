@@ -8,6 +8,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import clients.PlayerClient;
 import server.QuizServer;
 
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+
 /**
  * Testing class for Player Client
  * @see clients.PlayerClient
@@ -17,8 +20,15 @@ public class TestPlayerClient {
     private PlayerClient player;
     private QuizServer server;
 
+    @BeforeClass
+    public static void doFirst() throws RemoteException {
+        LocateRegistry.createRegistry(1099); //TODO
+        System.setProperty("java.security.policy","/Users/Sophie/Documents/PiJCoursework/Quiz/src/clients/client.policy");
+    }
+
     @Before
     public void buildUp(){
+
         player = new PlayerClient();
         server = Mockito.mock(QuizServer.class);
 
@@ -27,7 +37,7 @@ public class TestPlayerClient {
     @Test
     public void testConnect() {
         server.startServer();
-        assertEquals("Server response",player.connectServer("//127.0.0.1/"));
+        assertEquals("Server response",player.connectServer());
 
 
     }
