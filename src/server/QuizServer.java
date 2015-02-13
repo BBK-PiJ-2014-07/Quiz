@@ -5,6 +5,8 @@ import resource.Quiz;
 import service.QuizService;
 
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -27,11 +29,31 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
         QuizServer server = null;
         try {
             server = new QuizServer();
+            server.startServer();
+            server.launch();
+
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        server.launch();
     }
+
+    public void startServer(){
+        if (System.getSecurityManager() == null) {
+            System.setSecurityManager(new SecurityManager());
+        }
+        try {
+            String name = "QuizService";
+            QuizService server = new QuizServer();
+            QuizService serverStub =
+                    (QuizService) UnicastRemoteObject.exportObject(server, 0);  //port chosen at runtime
+            Registry registry = LocateRegistry.getRegistry();   //port 1099
+            registry.rebind(name, serverStub);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     public void launch(){
     }
