@@ -24,12 +24,12 @@ public class PlayerClient {
      * @param host - the host of the server
      * @return response string (TODO - this is for testing only)
      */
-    public String connectServer(String host){
+    public String connectServer(){
         if (System.getSecurityManager() ==null){
             System.setSecurityManager(new SecurityManager());
         }
         try {
-            Registry registry = LocateRegistry.getRegistry(0); //TODO
+            Registry registry = LocateRegistry.getRegistry("127.0.0.1",1099); //TODO
             service = (QuizServer) registry.lookup("QuizService");
             server = (QuizServer) service;
             return server.sendResponse();
