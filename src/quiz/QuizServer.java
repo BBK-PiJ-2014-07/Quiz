@@ -81,21 +81,6 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
     }
 
     /**
-     * Add a new question to the selected quiz
-     * @param quizId the id of the quiz to add the new question to
-     * @param question the new question
-     * @param answers the four answers to be added
-     */
-    @Override
-    public void addQuestion(int quizId, String question, String...answers){}/*
-        //TODO - move this stuff over to Quiz
-        //TODO - check question/answers not null
-        quizList.stream().filter(q -> q.getId() == quizId).forEach(q -> q.addQuestion(question, answers));
-        //TODO - maybe return question number?
-
-    }
-*/
-    /**
      * Close the selected quiz so nobody else can play it
      * @param quizId - the id of the quiz to close
      */
