@@ -26,13 +26,13 @@ public class TestQuiz {
         System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
         quiz.addQuestions();
 
-        assertTrue(quiz.answerQuestion(0,"paris"));
+        assertTrue(quiz.answerQuestion(1,"paris"));
     }
     @Test
     public void testQuestionWrongAns(){
         String input = "what is the capital of France\nparis\nlondon\nrome\nbrussels\nN";
         System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
         quiz.addQuestions();
-        assertFalse(quiz.answerQuestion(0,"brussels"));
+        assertFalse(quiz.answerQuestion(1,"brussels"));
     }
 }
