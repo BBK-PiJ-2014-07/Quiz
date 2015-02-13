@@ -8,6 +8,8 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 /**
  * Client for playing quiz games.
@@ -20,14 +22,18 @@ public class PlayerClient {
     /**
      * Connect to the server
      * @param host - the host of the server
-     * @return true if connected
+     * @return response string (TODO - this is for testing only)
      */
     public String connectServer(String host){
+        if (System.getSecurityManager() ==null){
+            System.setSecurityManager(new SecurityManager());
+        }
         try {
-            service = Naming.lookup(host+ "QuizService");
+            Registry registry = LocateRegistry.getRegistry(0); //TODO
+            service = (QuizServer) registry.lookup("QuizService");
             server = (QuizServer) service;
             return server.sendResponse();
-        } catch (RemoteException | MalformedURLException | NotBoundException ex) {
+        } catch (RemoteException | NotBoundException ex) {
             ex.printStackTrace();
 
         }
