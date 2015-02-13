@@ -6,6 +6,7 @@ import quiz.*;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.rmi.RemoteException;
 
 /**
  * Created by Sophie on 02/02/15.
@@ -16,7 +17,7 @@ public class TestSetupClient {
     QuizServer server;
 
     @Before
-    public void buildUp() throws FileNotFoundException {
+    public void buildUp() throws FileNotFoundException, RemoteException {
         setup = new SetupClient();
         server = new QuizServer();
     }

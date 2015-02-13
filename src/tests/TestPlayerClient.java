@@ -20,13 +20,12 @@ import java.nio.charset.StandardCharsets;
 @RunWith(MockitoJUnitRunner.class)
 public class TestPlayerClient {
     private PlayerClient player;
+    private QuizServer server;
 
-    @Mock
-    QuizServer server;
-
-    @BeforeClass
+    @Before
     public void buildUp(){
         player = new PlayerClient();
+        server = Mockito.mock(QuizServer.class);
         server.createQuiz("test quiz");
         server.addQuestion(1, "What comes after A?","B","C","D","E");
         server.addQuestion(1, "What is 1+1?","2","3","4","5");
@@ -34,7 +33,7 @@ public class TestPlayerClient {
 
     @Test
     public void testConnect(){
-        assertTrue(player.connectServer("//localhost/"));
+        assertEquals("Server response",player.connectServer("//120.0.0.1/"));
 
 
     }
