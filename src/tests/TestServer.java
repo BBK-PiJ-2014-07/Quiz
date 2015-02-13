@@ -15,52 +15,43 @@ public class TestServer {
     @Before
     public void buildUp() throws RemoteException {
         server = new QuizServer();
+        String input = "what is the capital of France\nparis\nlondon\nrome\nbrussels\nY\nWhat is 1+1\n2\n3\n4\n5\nN";
+        System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
+        server.createQuiz("test quiz");
     }
 
-    @Test
+    @Test   //quiz1
     public void testCreateQuizCreatesQuiz(){
-        String input = "what is the capital of France\nparis\nlondon\nrome\nbrussels\nN";
-        System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
-        server.createQuiz("test quiz");
         assertEquals("test quiz", server.getQuizList().get(0).getQuizName());
     }
-    @Test
+    @Test   //quiz2
     public void testCreateQuizAdds1Question(){
-        String input = "what is the capital of France\nparis\nlondon\nrome\nbrussels\nN";
-        System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
-        server.createQuiz("test quiz");
         assertTrue(server.getQuizList().get(0).answerQuestion(1,"paris"));
     }
 
-    @Test
+    @Test   //quiz 3
     public void testCloseQuiz(){
-        String input = "what is the capital of France\nparis\nlondon\nrome\nbrussels\nN";
-        System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
-        server.createQuiz("test quiz");
         server.closeQuiz(3);
         assertTrue(server.getQuizList().get(0).isClosed());
     }
 
-    @Test
+    @Test   //quiz 4
     public void testPlayQuizScore(){
-        String input = "what is the capital of France\nparis\nlondon\nrome\nbrussels\nY\nWhat is 1+1\n2\n3\n4\n5\nN\nparis\n2";
-        System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
-        server.createQuiz("test quiz");
+        String answers="paris\n2";
+        System.setIn(new ByteArrayInputStream(answers.getBytes(StandardCharsets.UTF_8)));
         int score = server.playQuiz(4);
         assertEquals(2, score);
     }
 
-    @Test
+    @Test   //quiz 5
     public void testPlayQuizWrongId(){
-        server.createQuiz("test");
         assertEquals(-1,server.playQuiz(999));
     }
 
-    @Test
+    @Test   //quiz 6
     public void testPlayQuizWrongAns(){
-        String input = "what is the capital of France\nparis\nlondon\nrome\nbrussels\nY\nWhat is 1+1\n2\n3\n4\n5\nN\nparis\n5";
-        server.createQuiz("test quiz");
-        System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
+        String answers="paris\n5";
+        System.setIn(new ByteArrayInputStream(answers.getBytes(StandardCharsets.UTF_8)));
         int score = server.playQuiz(6);
         assertEquals(1, score);
     }
