@@ -86,7 +86,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
      */
     @Override
     public void closeQuiz(int quizId) {
-        quizList.stream().filter(q -> q.getId() == quizId).forEach(q -> q.setClosed());
+        quizList.stream().filter(q -> q.getId() == quizId).forEach(Quiz::setClosed);
         //TODO - return high score
 
     }
