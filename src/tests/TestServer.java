@@ -5,6 +5,7 @@ import org.junit.*;
 
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
+import java.rmi.RemoteException;
 
 import static org.junit.Assert.*;
 
@@ -12,7 +13,7 @@ public class TestServer {
     private QuizServer server;
 
     @Before
-    public void buildUp(){
+    public void buildUp() throws RemoteException {
         server = new QuizServer();
     }
 

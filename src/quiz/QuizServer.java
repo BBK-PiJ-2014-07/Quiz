@@ -1,5 +1,9 @@
 package quiz;
 
+import lombok.Data;
+
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,15 +13,21 @@ import java.util.Scanner;
  * @author Sophie Koonin
  * @see quiz.QuizService
  */
-public class QuizServer implements QuizService {
+@Data
+public class QuizServer extends UnicastRemoteObject implements QuizService {
     private ArrayList<Quiz> quizList;
 
-    public QuizServer(){
+    public QuizServer() throws RemoteException {
         quizList = new ArrayList<>();
     }
 
     public static void main(String[] args) {
-        QuizServer server = new QuizServer();
+        QuizServer server = null;
+        try {
+            server = new QuizServer();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         server.launch();
     }
 
@@ -65,6 +75,7 @@ public class QuizServer implements QuizService {
     public int createQuiz(String quizName) {
         //TODO - check quizName not null
         Quiz newQuiz = new Quiz(quizName);
+        //TODO - call add question methods here instead
         quizList.add(newQuiz);
         return newQuiz.getId();
     }
@@ -77,6 +88,7 @@ public class QuizServer implements QuizService {
      */
     @Override
     public void addQuestion(int quizId, String question, String...answers){
+        //TODO - move this stuff over to Quiz
         //TODO - check question/answers not null
         quizList.stream().filter(q -> q.getId() == quizId).forEach(q -> q.addQuestion(question, answers));
         //TODO - maybe return question number?
@@ -99,9 +111,5 @@ public class QuizServer implements QuizService {
      * @return response
      */
     public String sendResponse(){ return "Server response"; }
-    /**
-     * Get the internal quiz list
-     * @return the list of quizzes
-     */
-    public ArrayList<Quiz> getQuizList(){ return quizList;}
+
 }
