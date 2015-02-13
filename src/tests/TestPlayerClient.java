@@ -21,13 +21,13 @@ public class TestPlayerClient {
     public void buildUp(){
         player = new PlayerClient();
         server = Mockito.mock(QuizServer.class);
-        server.createQuiz("test quiz");
 
     }
 
     @Test
-    public void testConnect(){
-        assertEquals("Server response",player.connectServer("//120.0.0.1/"));
+    public void testConnect() {
+        server.startServer();
+        assertEquals("Server response",player.connectServer("//127.0.0.1/"));
 
 
     }
