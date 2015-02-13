@@ -1,5 +1,7 @@
 package quiz;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,6 +11,7 @@ import java.util.Scanner;
  * The quiz itself. Contains inner class Question.
  * @author Sophie Koonin
  */
+@Data
 public class Quiz implements Serializable {
     private int id;
     private String quizName;
@@ -72,12 +75,6 @@ public class Quiz implements Serializable {
         return questions.get(questionNo-1).isCorrect(answer);
     }
 
-    public ArrayList<Question> getQuestions() { return questions; }
-
-    public String getQuizName() {return quizName;}
-
-    public int getId() {return id; }
-
     /**
      * Close the quiz.
      */
@@ -89,6 +86,7 @@ public class Quiz implements Serializable {
      */
     public boolean isClosed() {return closed;}
 
+    @Data
     protected class Question {
         private int questionNumber;
         private String question;
@@ -115,26 +113,11 @@ public class Quiz implements Serializable {
         }
 
         /**
-         * Get the internal answer list
-         * @return the list of answers
-         */
-        protected ArrayList<String> getAnswerList(){
-            return answers;
-        }
-
-        /**
          * Check whether an answer is correct
          * @param ans
          * @return true or false
          */
         protected boolean isCorrect(String ans) { return ans.equals(correctAnswer);}
 
-        /**
-         * Get the question
-         * @return the text of the question
-         */
-        protected String getQuestion() { return question;}
-
-        protected String getCorrectAnswer() {return correctAnswer;}
     }
 }
