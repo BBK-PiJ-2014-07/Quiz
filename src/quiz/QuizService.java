@@ -1,30 +1,31 @@
 package quiz;
 
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 
 /**
  * Interface for Quiz Server.
  * @author Sophie Koonin
  */
-public interface QuizService extends Remote {
+public interface QuizService extends Remote{
     /**
      * Play a selected quiz
      * @param quizId - the id of the quiz to play
      * @return score
      */
-    int playQuiz(int quizId);
+    int playQuiz(int quizId) throws RemoteException;
 
     /**
      * Create a new quiz
      * @oaram quizName - name of the quiz to be created
      * @return id of new quiz
      */
-    int createQuiz(String quizName);
+    int createQuiz(String quizName) throws RemoteException;
 
 
     /**
      * Close the selected quiz
      * @param quizId - the id of the quiz to close
      */
-    void closeQuiz(int quizId);
+    void closeQuiz(int quizId) throws RemoteException;
 }
