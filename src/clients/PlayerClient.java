@@ -41,7 +41,7 @@ public class PlayerClient {
     }
 
     public void launch(){
-        System.out.println(connectServer());
+        //TODO
     }
 
 }
