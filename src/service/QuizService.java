@@ -28,4 +28,10 @@ public interface QuizService extends Remote{
      * @param quizId - the id of the quiz to close
      */
     void closeQuiz(int quizId) throws RemoteException;
+
+    /**
+     * Testing method - send a response to a client
+     * @return response
+     */
+    String sendResponse();
 }
