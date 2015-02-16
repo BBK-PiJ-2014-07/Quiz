@@ -21,7 +21,7 @@ public class TestPlayerClient {
 
     @BeforeClass
     public static void doFirst() throws RemoteException {
-       server = Mockito.mock(QuizServer.class);
+       server = new QuizServer();
         server.startServer();
     }
 
