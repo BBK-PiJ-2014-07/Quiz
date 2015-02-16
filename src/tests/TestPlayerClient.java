@@ -9,7 +9,6 @@ import clients.PlayerClient;
 import server.QuizServer;
 
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 
 /**
  * Testing class for Player Client
@@ -18,16 +17,11 @@ import java.rmi.registry.LocateRegistry;
 @RunWith(MockitoJUnitRunner.class)
 public class TestPlayerClient {
     private PlayerClient player;
-    private QuizServer server;
+    private static QuizServer server;
 
     @BeforeClass
     public static void doFirst() throws RemoteException {
-       TestPlayerClient tpc = new TestPlayerClient();
-        tpc.beforeClass();
-    }
-
-    public void beforeClass(){
-        server = Mockito.mock(QuizServer.class);
+       server = Mockito.mock(QuizServer.class);
         server.startServer();
     }
 
