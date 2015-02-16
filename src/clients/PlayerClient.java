@@ -15,7 +15,6 @@ import java.rmi.registry.Registry;
  * @author Sophie Koonin
  */
 public class PlayerClient {
-    private Remote service;
     private QuizService server;
 
     public PlayerClient(){
@@ -28,8 +27,7 @@ public class PlayerClient {
 
         try {
             Registry registry = LocateRegistry.getRegistry(1099); //TODO
-            service = registry.lookup("QuizService");
-            server = (QuizService) service;
+            server = (QuizService) registry.lookup("QuizService");
             return server.sendResponse();
         } catch (RemoteException | NotBoundException ex) {
             ex.printStackTrace();
