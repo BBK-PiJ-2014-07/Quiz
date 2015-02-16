@@ -40,15 +40,13 @@ public class QuizServer implements QuizService {
     }
 
     public void startServer(){
-        if (System.getSecurityManager() == null) {
-            System.setSecurityManager(new SecurityManager());
-        }
+
         try {
             String name = "QuizService";
             QuizService server = new QuizServer();
             QuizService serverStub =
                     (QuizService) UnicastRemoteObject.exportObject(server, 0);  //port chosen at runtime
-            Registry registry = LocateRegistry.createRegistry(1099);   //port 1099
+            Registry registry = LocateRegistry.createRegistry(1099);
             registry.rebind(name, serverStub);
         } catch (RemoteException e) {
             e.printStackTrace();
