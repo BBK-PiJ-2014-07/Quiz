@@ -22,24 +22,23 @@ public class TestPlayerClient {
 
     @BeforeClass
     public static void doFirst() throws RemoteException {
-        LocateRegistry.createRegistry(1099); //TODO
-        System.setProperty("java.security.policy","/Users/Sophie/Documents/PiJCoursework/Quiz/src/clients/client.policy");
+       TestPlayerClient tpc = new TestPlayerClient();
+        tpc.beforeClass();
+    }
+
+    public void beforeClass(){
+        server = Mockito.mock(QuizServer.class);
+        server.startServer();
     }
 
     @Before
     public void buildUp(){
-
         player = new PlayerClient();
-        server = Mockito.mock(QuizServer.class);
-
     }
 
     @Test
     public void testConnect() {
-        server.startServer();
         assertEquals("Server response",player.connectServer());
-
-
     }
     /*
     @Test
