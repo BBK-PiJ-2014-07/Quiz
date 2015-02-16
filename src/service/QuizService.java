@@ -33,5 +33,5 @@ public interface QuizService extends Remote{
      * Testing method - send a response to a client
      * @return response
      */
-    String sendResponse();
+    String sendResponse() throws RemoteException;
 }
