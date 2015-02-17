@@ -2,6 +2,7 @@ package resource;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -10,7 +11,7 @@ import java.util.Collections;
  * @author Sophie Koonin
  */
 @Data
-public class Question {
+public class Question implements Serializable {
     private int questionNumber;
     private String question;
     private String correctAnswer;
