@@ -33,11 +33,10 @@ public class TestSetupClient {
 
     @Test
     public void testCreateQuiz(){
-        String input = "test quiz\nwhat is the capital of england?\nlondon\nparis\nbeijing\ntokyo\nn";
-        System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
-        setup.createQuiz();
         try {
+            setup.createQuiz("test quiz");
             assertEquals("test quiz", server.getQuizList().get(0).getQuizName());
+
         } catch (RemoteException e) {
             e.printStackTrace();
         }
