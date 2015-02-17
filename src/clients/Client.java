@@ -11,22 +11,20 @@ import java.rmi.registry.Registry;
  * Superclass for client classes
  */
 public abstract class Client {
-    private QuizService server;
 
     /**
      * Connect to the server
      * @return response string (TODO - this is for testing only)
      */
-    public String connectServer(){
+    public QuizService connectServer(){
 
         try {
             Registry registry = LocateRegistry.getRegistry(1099); //TODO
-            server = (QuizService) registry.lookup("QuizService");
-            return server.sendResponse();
+            return (QuizService) registry.lookup("QuizService");
         } catch (RemoteException | NotBoundException ex) {
             ex.printStackTrace();
         }
-        return "no response";
+        return null;
     }
 
 }
