@@ -38,4 +38,40 @@ public class Player {
     public int getHighScore(){
         return scores.values().stream().max((x,y) -> x > y ? 1:-1).get();
     }
+
+    /**
+     * Override equals to allow for easy comparison
+     * @param other - the other object to be compared
+     * @return true or false depending on whether they are equal
+     */
+    @Override
+    public boolean equals(Object other){
+        if (this.getClass() != other.getClass()){
+            return false;
+        }
+        if (this == other) {
+            return true;
+        }
+
+        Player player2 = (Player) other;
+
+        if (this.getId()!=player2.getId()){
+            return false;
+        }
+        if (!this.getName().equals(player2.getName())){
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Override hashcode because equals overridden
+     * @return hashcode
+     */
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash =  12 * hash + this.name.hashCode();
+        return hash;
+    }
 }
