@@ -7,6 +7,8 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -37,14 +39,14 @@ public class SetupClient {
         System.out.println("Please enter a name for the quiz");
         //TODO - check user input length
         String quizName = input.nextLine();
-        Quiz newQuiz = new Quiz(quizName);  //read user input for quiz name
-
 
         //QUESTIONS
+        List<Question> questions = new ArrayList<>();
         boolean finished = false;
         String question;
         String[] answers = new String[4];   //Each question should only have 4 answers
-        while (!finished){
+        int questionNumber = 1;
+        while (!finished){  //repeat until told otherwise
             System.out.print("\nPlease enter a question: ");
             question = input.nextLine();    //get question from user
             System.out.print("\nPlease enter the CORRECT answer: ");
@@ -56,9 +58,11 @@ public class SetupClient {
             }
 
             //instantiate new question with this data
-            Question newQ = new Question(newQuiz.getQuestions().size()+1, question);
+            Question newQ = new Question(questionNumber, question);
+            questions.add(newQ);
+            questionNumber++;   //increment question number for next question
             newQ.addAnswers(answers);   //add the answers
-            newQuiz.getQuestions().add(newQ);        //add this question to the internal array of questions
+
 
             boolean confirm = false;    // Ask whether user is finished
             while (!confirm) {
@@ -78,7 +82,7 @@ public class SetupClient {
 
         }
         try {
-            server.getQuizList().add(newQuiz);  //add the new quiz to the server
+            server.createQuiz(quizName,questions);  //add the new quiz to the server
         } catch (RemoteException e) {
             e.printStackTrace();
         }
