@@ -70,5 +70,13 @@ public class TestServer {
         server.playQuiz(7,player2);
         assertEquals(server.getQuizList().get(0).getHighScore().getKey().getName(),"Lindsay");
     }
+
+    @Test
+    public void testAddPlayer(){
+        server.addNewPlayer("Lucille");
+        Player lucille = new Player("Lucille");
+        lucille.setId(1);
+        assertTrue(server.getPlayerList().get(0).equals(lucille));
+    }
 }
 
