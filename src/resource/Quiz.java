@@ -5,6 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -34,10 +35,8 @@ public class Quiz implements Serializable {
     /**
      * Add questions to the quiz.
      */
-    public void addQuestions(Question...newQs) {
-        for (Question q: newQs){
-            questions.add(q);
-        }
+    public void addQuestions(List<Question> newQs) {
+        questions.addAll(newQs);
     }
     /**
      * Answer a question (check against question's internal correctAnswer)
