@@ -76,7 +76,7 @@ public class TestPlayer {
     @Test
     public void testEqualsSameNameId(){
         Player playerSame = new Player("Fred");
-        playerSame.setId(1);
+        playerSame.setId(6);
         assertTrue(player.equals(playerSame));  //equality with obj with same name and id
 
     }
