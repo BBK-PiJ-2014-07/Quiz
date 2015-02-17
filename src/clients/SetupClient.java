@@ -1,7 +1,6 @@
 package clients;
 
 import resource.Question;
-import resource.Quiz;
 import service.QuizService;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -38,42 +37,30 @@ public class SetupClient {
 
     /**
      * Create a new quiz.
-     * This method asks for input from the user,
-     * creates questions from it,
-     * and passes that data through to the server's
-     * createQuiz method, where the questions will
-     * be added to a new Quiz.
+     * This method asks for input from the user, creates questions from it,
+     * and passes that data through to the server's createQuiz method,
+     * where the questions will be added to a new Quiz.
      */
-    public void createQuiz(){
+    public void createQuiz(String quizName) throws RemoteException {
         //Create the quiz itself
-        Scanner input = new Scanner(System.in);
-        System.out.println("Please enter a name for the quiz");
-        //TODO - check user input length
-        String quizName = input.nextLine();
+        server.createQuiz(quizName);
+
 
         //QUESTIONS
-        List<Question> questions = new ArrayList<>();
+        Scanner input = new Scanner(System.in);
         boolean finished = false;
-        String question;
-        String[] answers = new String[4];   //Each question should only have 4 answers
-        int questionNumber = 1;
-        while (!finished){  //repeat until told otherwise
+        String[][] questions = new String[20][5]; //max 20 questions, with 4 answers each;
+        int questionNo = 0; //number of question (0-indexed)
+        while (!finished) {  //repeat until told otherwise
             System.out.print("\nPlease enter a question: ");
-            question = input.nextLine();    //get question from user
+            questions[questionNo][0] = input.nextLine();    //get question from user
             System.out.print("\nPlease enter the CORRECT answer: ");
-            answers[0] = input.nextLine();  //first member of answer array is correct answer
-
-            for (int i=1; i<4; i++){
+            questions[questionNo][1] = input.nextLine();  //first member of answer array is correct answer
+            for (int i = 1; i < 4; i++) {
                 System.out.print("\nPlease enter an incorrect answer: ");
-                answers[i] = input.nextLine();  //Populate rest of answer array with incorrect answers
+                questions[questionNo][i] = input.nextLine();  //Populate rest of answer array with incorrect answers
             }
-
-            //instantiate new question with this data
-            Question newQ = new Question(questionNumber, question);
-            questions.add(newQ);
-            questionNumber++;   //increment question number for next question
-            newQ.addAnswers(answers);   //add the answers
-
+        questionNo++;   //increment for next question
 
             boolean confirm = false;    // Ask whether user is finished
             while (!confirm) {
@@ -91,11 +78,6 @@ public class SetupClient {
                 }
             }
 
-        }
-        try {
-            server.createQuiz(quizName,questions);  //add the new quiz to the server
-        } catch (RemoteException e) {
-            e.printStackTrace();
         }
     }
 

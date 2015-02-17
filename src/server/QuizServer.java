@@ -22,12 +22,13 @@ import java.util.Scanner;
  * @see service.QuizService
  */
 
-public class QuizServer implements QuizService {
+public class QuizServer extends UnicastRemoteObject implements QuizService {
     private ArrayList<Quiz> quizList;
     private ArrayList<Player> playerList;
 
     public QuizServer() throws RemoteException {
         quizList = new ArrayList<>();
+        playerList = new ArrayList<>();
     }
 
     public static void main(String[] args) {
@@ -45,10 +46,8 @@ public class QuizServer implements QuizService {
         try {
             String name = "QuizService";
             QuizService server = new QuizServer();
-            QuizService serverStub =
-                    (QuizService) UnicastRemoteObject.exportObject(server, 0);  //port chosen at runtime
             Registry registry = LocateRegistry.createRegistry(1099);
-            registry.rebind(name, serverStub);
+            registry.rebind(name, server);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -98,14 +97,24 @@ public class QuizServer implements QuizService {
     /**
      * create a new quiz
      * @param quizName - the name of the quiz
+     * @param questionMatrix - a 2d array of questions and answers
      * @return the ID of the new quiz
      */
     @Override
-    public int createQuiz(String quizName, List<Question> questions) {
-        //TODO - check quizName not null
+    public int createQuiz(String quizName, String[][] questionMatrix) {
         Quiz newQuiz = new Quiz(quizName);
-        newQuiz.addQuestions(questions);
+
+        String question;
+        String[] answers = new String[4];
+        for (int i=0; i<20; i++){   //get the Qs + As from the matrix
+           question = questionMatrix[i][0];
+            System.arraycopy(questionMatrix[i], 1, answers, 0, 4);
+            Question newQ = new Question(i+1, question);    //instantiate each question
+            newQ.addAnswers(answers);   //add answers to question
+            newQuiz.addQuestion(newQ);  //add question to quiz
+        }
         quizList.add(newQuiz);
+        System.out.println("Added!");   //debug
         return newQuiz.getId();
     }
 
