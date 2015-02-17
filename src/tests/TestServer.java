@@ -1,6 +1,7 @@
 package tests;
 
 import resource.Player;
+import resource.Question;
 import server.QuizServer;
 import org.junit.*;
 
@@ -18,15 +19,16 @@ public class TestServer {
     public void buildUp() throws RemoteException {
         player1 = new Player("Michael");
         server = new QuizServer();
-        String input = "what is the capital of France\nparis\nlondon\nrome\nbrussels\nY\nWhat is 1+1\n2\n3\n4\n5\nN";
-        System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
-        server.createQuiz("test quiz");
+        Question q1 = new Question(1, "What is the capital of France?");
+        q1.addAnswers("paris","brussels","london","tokyo");
+        server.createQuiz("test quiz", q1);
     }
 
     @Test   //quiz1
     public void testCreateQuizCreatesQuiz(){
         assertEquals("test quiz", server.getQuizList().get(0).getQuizName());
     }
+
     @Test   //quiz2
     public void testCreateQuizAdds1Question(){
         assertTrue(server.getQuizList().get(0).answerQuestion(1,"paris"));
@@ -71,12 +73,12 @@ public class TestServer {
         assertEquals(server.getQuizList().get(0).getHighScore().getKey().getName(),"Lindsay");
     }
 
-    @Test
+    /*@Test
     public void testAddPlayer(){
         server.addNewPlayer("Lucille");
         Player lucille = new Player("Lucille");
         lucille.setId(1);
         assertTrue(server.getPlayerList().get(0).equals(lucille));
-    }
+    }*/
 }
 
