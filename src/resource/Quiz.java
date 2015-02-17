@@ -3,6 +3,7 @@ package resource;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -19,6 +20,7 @@ public class Quiz implements Serializable {
     //static int to ensure unique id for each quiz
     private static int quizIds = 0;
     private ArrayList<Question> questions;
+    private AbstractMap.SimpleEntry<Player,Integer> highScore;
 
     public Quiz(String quizName){
         questions = new ArrayList<>();
@@ -26,6 +28,7 @@ public class Quiz implements Serializable {
         this.quizName = quizName;
         id = ++quizIds;
         closed = false;
+        highScore = new AbstractMap.SimpleEntry<>(null,0);
 
     }
 
