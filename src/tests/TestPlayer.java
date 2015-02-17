@@ -69,4 +69,21 @@ public class TestPlayer {
         player.addScore(6,20);
         assertEquals(153,player.getHighScore());
     }
+
+    /**
+     * Test override of equals()
+     */
+    @Test
+    public void testEquals(){
+        Player player1 = new Player("Alan");
+        Player playerSame = new Player("Fred");
+        Player player2 = new Player("Fred");
+        playerSame.setId(1);
+
+        assertTrue(player.equals(player));  //equality with same obj
+        assertTrue(player.equals(playerSame));  //equality with obj with same name and id
+        assertFalse(player.equals(player1));    //different name and id
+        assertFalse(player.equals(player2));    //same name, different id
+
+    }
 }
