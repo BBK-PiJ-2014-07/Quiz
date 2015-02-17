@@ -48,7 +48,7 @@ public class TestPlayerClient {
         String answers = "paris\n2";
         System.setIn(new ByteArrayInputStream(answers.getBytes(StandardCharsets.UTF_8)));
         try {
-            player.playQuiz(1, player1, server);
+            player.playQuiz(1, player1);
         } catch (RemoteException e) {
             e.printStackTrace();
         }

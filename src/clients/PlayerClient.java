@@ -12,6 +12,8 @@ import java.rmi.RemoteException;
  * @see clients.Client
  */
 public class PlayerClient extends Client {
+    private QuizService server;
+
     public PlayerClient(){ super(); }
 
     public static void main(String[] args) {
@@ -20,13 +22,19 @@ public class PlayerClient extends Client {
     }
 
     public void launch(){
-        QuizService server = connectServer();
+        server = connectServer();
+        try {
+            server.addNewPlayer("Fred");
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
         //TODO get player details
         //TODO play quiz
         //TODO get high scores
     }
 
-    public void playQuiz(int quizId, Player player, QuizService server) throws RemoteException {
+    public void playQuiz(int quizId, Player player) throws RemoteException {
         server.playQuiz(quizId,player);
 
     }
