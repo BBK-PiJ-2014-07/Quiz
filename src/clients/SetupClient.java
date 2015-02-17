@@ -43,8 +43,6 @@ public class SetupClient {
      */
     public void createQuiz(String quizName) throws RemoteException {
         //Create the quiz itself
-        server.createQuiz(quizName);
-
 
         //QUESTIONS
         Scanner input = new Scanner(System.in);
@@ -79,6 +77,7 @@ public class SetupClient {
             }
 
         }
+        server.createQuiz(quizName,questions);
     }
 
 
