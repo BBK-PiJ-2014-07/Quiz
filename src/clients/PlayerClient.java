@@ -3,6 +3,7 @@ package clients;
 /**
  * Client for playing quiz games.
  * @author Sophie Koonin
+ * @see clients.Client
  */
 public class PlayerClient extends Client {
 
