@@ -7,12 +7,15 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import clients.PlayerClient;
 import resource.Player;
+import resource.Question;
 import server.QuizServer;
 import service.QuizService;
 
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Testing class for Player Client
@@ -40,10 +43,15 @@ public class TestPlayerClient {
     public void testPlayQuiz(){
         player.launch();
         Player player1 = new Player("Alfred");
-        String input = "what is the capital of France\nparis\nlondon\nrome\nbrussels\nY\nWhat is 1+1\n2\n3\n4\n5\nN";
-        System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
+        Question q1 = new Question(1, "What is the capital of France?");
+        q1.addAnswers("paris", "brussels", "london", "tokyo");
+        Question q2 = new Question(1, "What is 1+1");
+        q1.addAnswers("2","5","3","4");
+        List<Question> qList = new ArrayList<>();
+        qList.add(q1);
+        qList.add(q2);
         try {
-            server.createQuiz("test quiz");
+            server.createQuiz("test quiz", qList);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
