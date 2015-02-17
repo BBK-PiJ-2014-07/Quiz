@@ -1,15 +1,23 @@
 package service;
 
 import resource.Player;
+import resource.Quiz;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 /**
  * Interface for Quiz Server.
  * @author Sophie Koonin
  */
 public interface QuizService extends Remote{
+
+    /**
+     * Launch the server
+     */
+    void launch();
+
     /**
      * Play a selected quiz
      * @param quizId - the id of the quiz to play
@@ -32,7 +40,8 @@ public interface QuizService extends Remote{
     void closeQuiz(int quizId) throws RemoteException;
 
     /**
-     *
+     *  Add a new player - no duplicate names are allowed
+     *  @param name - the name of the player to be added
      */
     void addNewPlayer(String name) throws RemoteException;
 
@@ -41,4 +50,18 @@ public interface QuizService extends Remote{
      * @return response
      */
     String echo() throws RemoteException;
+
+    /**
+     * Get the internal list of quizzes
+     * @return list of players
+     * @throws RemoteException
+     */
+    List<Quiz> getQuizList() throws RemoteException;
+
+    /**
+     * Get the internal list of players
+     * @return the list of players
+     * @throws RemoteException
+     */
+    List<Player> getPlayerList() throws RemoteException;
 }

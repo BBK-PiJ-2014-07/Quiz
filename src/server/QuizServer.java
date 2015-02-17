@@ -1,6 +1,5 @@
 package server;
 
-import lombok.Data;
 import resource.Player;
 import resource.Quiz;
 import service.QuizService;
@@ -11,6 +10,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 //TODO - SERIALIZATION
@@ -20,7 +20,6 @@ import java.util.Scanner;
  * @author Sophie Koonin
  * @see service.QuizService
  */
-@Data
 
 public class QuizServer implements QuizService {
     private ArrayList<Quiz> quizList;
@@ -34,7 +33,7 @@ public class QuizServer implements QuizService {
         QuizServer server = null;
         try {
             server = new QuizServer();
-            server.startServer();
+            //server.startServer();
             server.launch();
 
         } catch (RemoteException e) {
@@ -42,8 +41,7 @@ public class QuizServer implements QuizService {
         }
     }
 
-    public void startServer(){
-
+    public void launch(){
         try {
             String name = "QuizService";
             QuizService server = new QuizServer();
@@ -56,10 +54,6 @@ public class QuizServer implements QuizService {
         }
     }
 
-
-
-    public void launch(){
-    }
 
     /**
      * Play a quiz
@@ -126,13 +120,32 @@ public class QuizServer implements QuizService {
 
     }
 
+    /**
+     * Add a new player to the internal player list
+     * @param name - the name of the player to be added
+     */
+    @Override
     public void addNewPlayer(String name){
-        System.out.print("My name is " + name);
+        //TODO
     }
+
     /**
      * Send a response to a connected client
      * @return response
      */
+
+    @Override
     public String echo(){ return "Server response"; }
 
+    /** Return the list of quizzes
+     * @return the list of quizzes
+     */
+    @Override
+    public List<Quiz> getQuizList(){ return quizList;}
+
+    /**
+     * Return the list of players
+     * @return the list of players
+     */
+    public List<Player> getPlayerList() { return playerList; }
 }
