@@ -34,8 +34,8 @@ public class Quiz implements Serializable {
     /**
      * Add questions to the quiz.
      */
-    public void addQuestions(List<Question> newQs) {
-        questions.addAll(newQs);
+    public void addQuestion(Question q) {
+        questions.add(q);
     }
     /**
      * Answer a question (check against question's internal correctAnswer)
