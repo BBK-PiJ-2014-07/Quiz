@@ -10,9 +10,8 @@ import java.rmi.registry.Registry;
 /**
  * Superclass for client classes
  */
-public class Client {
+public abstract class Client {
     private QuizService server;
-
 
     /**
      * Connect to the server
