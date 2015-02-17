@@ -1,5 +1,7 @@
 package resource;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -7,6 +9,7 @@ import java.util.Collections;
  * Question for the quiz
  * @author Sophie Koonin
  */
+@Data
 public class Question {
     private int questionNumber;
     private String question;
