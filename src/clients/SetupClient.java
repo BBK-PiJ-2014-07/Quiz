@@ -23,6 +23,9 @@ public class SetupClient {
         client.launch();
     }
 
+    /**
+     * Launch the setup client and connect to the server.
+     */
     public void launch() {
         try {
             Registry registry = LocateRegistry.getRegistry(1099); //TODO
@@ -33,6 +36,14 @@ public class SetupClient {
 
     }
 
+    /**
+     * Create a new quiz.
+     * This method asks for input from the user,
+     * creates questions from it,
+     * and passes that data through to the server's
+     * createQuiz method, where the questions will
+     * be added to a new Quiz.
+     */
     public void createQuiz(){
         //Create the quiz itself
         Scanner input = new Scanner(System.in);
