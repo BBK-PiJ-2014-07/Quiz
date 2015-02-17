@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The quiz itself. Contains inner class Question.
+ * The quiz itself. Contains a list of questions and
+ * a high score as a simple map entry with a player-score pair.
  * @author Sophie Koonin
  */
 @Data
@@ -18,8 +19,8 @@ public class Quiz implements Serializable {
     private boolean closed;
     //static int to ensure unique id for each quiz
     private static int quizIds = 0;
-    private ArrayList<Question> questions;
-    private AbstractMap.SimpleEntry<Player,Integer> highScore;
+    private List<Question> questions;
+    private AbstractMap.SimpleEntry<Player,Integer> highScore;  //Player-HighScore pair
 
     public Quiz(String quizName){
         questions = new ArrayList<>();
