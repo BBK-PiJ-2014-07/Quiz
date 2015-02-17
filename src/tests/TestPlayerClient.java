@@ -43,15 +43,20 @@ public class TestPlayerClient {
     public void testPlayQuiz(){
         player.launch();
         Player player1 = new Player("Alfred");
-        Question q1 = new Question(1, "What is the capital of France?");
-        q1.addAnswers("paris", "brussels", "london", "tokyo");
-        Question q2 = new Question(1, "What is 1+1");
-        q1.addAnswers("2","5","3","4");
-        List<Question> qList = new ArrayList<>();
-        qList.add(q1);
-        qList.add(q2);
+        String[][] questions = new String[2][5];
+        questions[0][0] = "What is the capital of France?";
+        questions[0][1] = "paris";
+        questions[0][2] = "brussels";
+        questions[0][3] = "london";
+        questions[0][4] = "tokyo";
+        questions[1][0] = "What's 1+1?";
+        questions[1][1] = "2";
+        questions[1][2] = "3";
+        questions[1][3] = "4";
+        questions[1][4] = "5";
+
         try {
-            server.createQuiz("test quiz", qList);
+            server.createQuiz("test quiz", questions);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
