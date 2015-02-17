@@ -112,9 +112,7 @@ public class Quiz implements Serializable {
          * @param ans  - the answer to be added
          */
         protected void addAnswers(String... ans){
-            for (String answer: ans){
-                answers.add(answer);
-            }
+            Collections.addAll(answers, ans);
             correctAnswer = answers.get(0); //assign correct answer
             //randomise order of answers
             Collections.shuffle(answers);
@@ -122,7 +120,7 @@ public class Quiz implements Serializable {
 
         /**
          * Check whether an answer is correct
-         * @param ans
+         * @param ans - the answer entered
          * @return true or false
          */
         protected boolean isCorrect(String ans) { return ans.equals(correctAnswer);}
