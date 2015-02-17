@@ -107,11 +107,13 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
         String question;
         String[] answers = new String[4];
         for (int i=0; i<20; i++){   //get the Qs + As from the matrix
-           question = questionMatrix[i][0];
-            System.arraycopy(questionMatrix[i], 1, answers, 0, 4);
-            Question newQ = new Question(i+1, question);    //instantiate each question
-            newQ.addAnswers(answers);   //add answers to question
-            newQuiz.addQuestion(newQ);  //add question to quiz
+            if (questionMatrix[i][0] != null){  //check not null
+                question = questionMatrix[i][0];
+                System.arraycopy(questionMatrix[i], 1, answers, 0, 4);
+                Question newQ = new Question(i+1, question);    //instantiate each question
+                newQ.addAnswers(answers);   //add answers to question
+                newQuiz.addQuestion(newQ);  //add question to quiz
+            }
         }
         quizList.add(newQuiz);
         System.out.println("Added!");   //debug
