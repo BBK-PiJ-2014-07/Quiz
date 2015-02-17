@@ -74,15 +74,23 @@ public class TestPlayer {
      * Test override of equals()
      */
     @Test
-    public void testEquals(){
-        Player player1 = new Player("Alan");
+    public void testEqualsSameNameId(){
         Player playerSame = new Player("Fred");
-        Player player2 = new Player("Fred");
         playerSame.setId(1);
-
-        assertTrue(player.equals(player));  //equality with same obj
         assertTrue(player.equals(playerSame));  //equality with obj with same name and id
+
+    }
+
+    @Test
+    public void testEqualsDifferentNameId(){
+        Player player1 = new Player("Alan");
         assertFalse(player.equals(player1));    //different name and id
+
+    }
+
+    @Test
+    public void testEqualsSameNameDiffId(){
+        Player player2 = new Player("Fred");
         assertFalse(player.equals(player2));    //same name, different id
 
     }
