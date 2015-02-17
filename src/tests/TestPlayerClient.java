@@ -35,18 +35,24 @@ public class TestPlayerClient {
 
     @Test
     public void testConnect() {
-        assertEquals("Server response",player.connectServer());
+        assertNotNull(player.connectServer());
     }
 
     @Test
     public void testPlayQuiz(){
+        player.connectServer();
         Player player1 = new Player("Alfred");
         String input = "what is the capital of France\nparis\nlondon\nrome\nbrussels\nY\nWhat is 1+1\n2\n3\n4\n5\nN";
         System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
         server.createQuiz("test quiz");
-        String answers = "B\n2";
+        String answers = "paris\n2";
         System.setIn(new ByteArrayInputStream(answers.getBytes(StandardCharsets.UTF_8)));
-        player.playQuiz(1, player1);
+        try {
+            player.playQuiz(1, player1, server);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+            assertEquals(2,(int)server.getQuizList().get(0).getHighScore().getValue());
 
     }
 }
