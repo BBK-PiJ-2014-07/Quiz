@@ -5,7 +5,6 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
 
 /**
@@ -93,7 +92,5 @@ public class Quiz implements Serializable {
      * @return boolean isClosed - true if quiz is closed
      */
     public boolean isClosed() {return closed;}
-
-    @Data
 
 }
