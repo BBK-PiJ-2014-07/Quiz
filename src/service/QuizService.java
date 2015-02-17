@@ -1,5 +1,7 @@
 package service;
 
+import resource.Player;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -13,7 +15,7 @@ public interface QuizService extends Remote{
      * @param quizId - the id of the quiz to play
      * @return score
      */
-    int playQuiz(int quizId) throws RemoteException;
+    int playQuiz(int quizId, Player player) throws RemoteException;
 
     /**
      * Create a new quiz

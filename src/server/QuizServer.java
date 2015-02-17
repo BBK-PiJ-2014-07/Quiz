@@ -1,6 +1,7 @@
 package server;
 
 import lombok.Data;
+import resource.Player;
 import resource.Quiz;
 import service.QuizService;
 
@@ -8,6 +9,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -61,20 +63,21 @@ public class QuizServer implements QuizService {
     /**
      * Play a quiz
      * @param quizId - the id of the quiz to play
+     * @param player - the player currently playing
      * @return the score or -1 if there is an error
      */
     @Override
-    public int playQuiz(int quizId) {
+    public int playQuiz(int quizId, Player player) {
         //TODO - move this over to client?
         if (quizList.stream().noneMatch(q -> q.getId() == quizId)){
             System.out.println("Quiz not found. Please try again");
             return -1;
         }
-        //TODO - check quiz id
-        //TODO - player high scores
+
         Scanner inputScanner = new Scanner(System.in);
         Quiz thisQuiz = quizList.stream().filter(q -> q.getId() == quizId).findFirst().get();
         int score = 0;
+
         for (int i=0; i<thisQuiz.getQuestions().size(); i++){
             System.out.println("Question " + (i+1) + ": " + thisQuiz.getQuestions().get(i).getQuestion());   //print the question
             thisQuiz.getQuestions().get(i).getAnswers().forEach(System.out::println);
@@ -86,7 +89,14 @@ public class QuizServer implements QuizService {
                 System.out.println("Wrong! The answer is "+thisQuiz.getQuestions().get(i).getCorrectAnswer());
             }
         }
+
+        if (score > thisQuiz.getHighScore().getValue()){
+            thisQuiz.setHighScore(new AbstractMap.SimpleEntry<>(player, score));
+            System.out.println("NEW HIGH SCORE!");
+        }
+
         System.out.println("At the end of the quiz, your score is " + score);
+        System.out.println("Current high scorer: " + thisQuiz.getHighScore().getKey().getName() + " - " + thisQuiz.getHighScore().getValue());
         return score;
     }
 
