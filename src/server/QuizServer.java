@@ -101,10 +101,10 @@ public class QuizServer implements QuizService {
      * @return the ID of the new quiz
      */
     @Override
-    public int createQuiz(String quizName, Question...questions) {
+    public int createQuiz(String quizName, List<Question> questions) {
         //TODO - check quizName not null
         Quiz newQuiz = new Quiz(quizName);
-        newQuiz.addQuestions();
+        newQuiz.addQuestions(questions);
         quizList.add(newQuiz);
         return newQuiz.getId();
     }
