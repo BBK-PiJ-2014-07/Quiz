@@ -5,8 +5,7 @@ import static org.junit.Assert.*;
 
 import resource.Question;
 import resource.Quiz;
-import java.util.ArrayList;
-import java.util.List;
+
 
 
 /**
@@ -21,9 +20,7 @@ public class TestQuiz {
         quiz = new Quiz("test quiz");
         Question q1 = new Question(1, "What is the capital of France?");
         q1.addAnswers("paris", "brussels", "london", "tokyo");
-        List<Question> qList = new ArrayList<>();
-        qList.add(q1);
-        quiz.addQuestions(qList);
+        quiz.addQuestion(q1);
     }
 
     @Test
