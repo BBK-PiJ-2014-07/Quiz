@@ -11,6 +11,7 @@ import java.rmi.registry.Registry;
 /**
  * Client for playing quiz games.
  * @author Sophie Koonin
+ * @see clients.Client
  */
 public class PlayerClient {
     private QuizService server;
