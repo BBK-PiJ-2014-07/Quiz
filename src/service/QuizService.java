@@ -1,6 +1,7 @@
 package service;
 
 import resource.Player;
+import resource.Question;
 import resource.Quiz;
 
 import java.rmi.Remote;
@@ -27,10 +28,11 @@ public interface QuizService extends Remote{
 
     /**
      * Create a new quiz
-     * @oaram quizName - name of the quiz to be created
+     * @param quizName - name of the quiz to be created
+     * @param questions - the questions to be added to the quiz
      * @return id of new quiz
      */
-    int createQuiz(String quizName) throws RemoteException;
+    int createQuiz(String quizName, Question...questions) throws RemoteException;
 
 
     /**

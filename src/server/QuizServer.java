@@ -1,6 +1,7 @@
 package server;
 
 import resource.Player;
+import resource.Question;
 import resource.Quiz;
 import service.QuizService;
 
@@ -100,7 +101,7 @@ public class QuizServer implements QuizService {
      * @return the ID of the new quiz
      */
     @Override
-    public int createQuiz(String quizName) {
+    public int createQuiz(String quizName, Question...questions) {
         //TODO - check quizName not null
         Quiz newQuiz = new Quiz(quizName);
         newQuiz.addQuestions();
