@@ -6,8 +6,11 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import clients.PlayerClient;
+import resource.Player;
 import server.QuizServer;
 
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
 import java.rmi.RemoteException;
 
 /**
@@ -34,11 +37,16 @@ public class TestPlayerClient {
     public void testConnect() {
         assertEquals("Server response",player.connectServer());
     }
-    /*
+
     @Test
     public void testPlayQuiz(){
-        String input = "B\n2";
+        Player player1 = new Player("Alfred");
+        String input = "what is the capital of France\nparis\nlondon\nrome\nbrussels\nY\nWhat is 1+1\n2\n3\n4\n5\nN";
         System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
+        server.createQuiz("test quiz");
+        String answers = "B\n2";
+        System.setIn(new ByteArrayInputStream(answers.getBytes(StandardCharsets.UTF_8)));
+        player.playQuiz(1, player1);
 
-    }*/
+    }
 }
