@@ -5,9 +5,10 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
- * Question for the quiz
+ * Question for the quiz class. Contains inner list of answers, randomly shuffled.
  * @author Sophie Koonin
  */
 @Data
@@ -15,7 +16,7 @@ public class Question implements Serializable {
     private int questionNumber;
     private String question;
     private String correctAnswer;
-    private ArrayList<String> answers;
+    private List<String> answers;
 
     public Question(int questionNumber, String question) {
         this.questionNumber = questionNumber;
@@ -30,8 +31,7 @@ public class Question implements Serializable {
     public void addAnswers(String... ans){
         Collections.addAll(answers, ans);
         correctAnswer = answers.get(0); //assign correct answer
-        //randomise order of answers
-        Collections.shuffle(answers);
+        Collections.shuffle(answers);   //randomise order of answers
     }
 
     /**

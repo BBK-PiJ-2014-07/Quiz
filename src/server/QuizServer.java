@@ -62,7 +62,9 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
      */
     @Override
     public int playQuiz(int quizId, Player player) {
-        //TODO - move interactive bits over to client
+
+        //TODO  - keep logic here, move fluff to client
+
         if (quizList.stream().noneMatch(q -> q.getId() == quizId)){
             System.out.println("Quiz not found. Please try again");
             return -1;
