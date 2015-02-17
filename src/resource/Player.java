@@ -16,7 +16,7 @@ public class Player {
 
     public Player(String name){
         this.name = name;
-        scores = new TreeMap<Integer,Integer>();
+        scores = new TreeMap<>();
         id = playerIds++;
     }
 
@@ -27,14 +27,9 @@ public class Player {
      */
     public int addScore(int quizId, int newScore){
         //check to see if the quiz already has a score associated with it
-        // if the existing score is LOWER then delete it and replace with new one
-        //otherwise just leave the existing high score for that quiz
-        if (scores.containsKey(quizId)) {
-            if (scores.get(quizId) > newScore) {
+        // if the existing score is HIGHER just leave the existing high score for that quiz
+        if (scores.containsKey(quizId) && (scores.get(quizId) > newScore)) {
                 return scores.get(quizId);
-            } else {
-                scores.remove(quizId);
-            }
         }
         scores.put(quizId,newScore);
         return newScore;
