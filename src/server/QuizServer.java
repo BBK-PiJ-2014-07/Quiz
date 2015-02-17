@@ -24,6 +24,7 @@ import java.util.Scanner;
 
 public class QuizServer implements QuizService {
     private ArrayList<Quiz> quizList;
+    private ArrayList<Player> playerList;
 
     public QuizServer() throws RemoteException {
         quizList = new ArrayList<>();
@@ -68,7 +69,7 @@ public class QuizServer implements QuizService {
      */
     @Override
     public int playQuiz(int quizId, Player player) {
-        //TODO - move this over to client?
+        //TODO - move interactive bits over to client
         if (quizList.stream().noneMatch(q -> q.getId() == quizId)){
             System.out.println("Quiz not found. Please try again");
             return -1;
@@ -125,10 +126,13 @@ public class QuizServer implements QuizService {
 
     }
 
+    public void addNewPlayer(String name){
+        System.out.print("My name is " + name);
+    }
     /**
      * Send a response to a connected client
      * @return response
      */
-    public String sendResponse(){ return "Server response"; }
+    public String echo(){ return "Server response"; }
 
 }

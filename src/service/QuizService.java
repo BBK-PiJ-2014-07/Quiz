@@ -32,8 +32,13 @@ public interface QuizService extends Remote{
     void closeQuiz(int quizId) throws RemoteException;
 
     /**
+     *
+     */
+    void addNewPlayer(String name) throws RemoteException;
+
+    /**
      * Testing method - send a response to a client
      * @return response
      */
-    String sendResponse() throws RemoteException;
+    String echo() throws RemoteException;
 }
