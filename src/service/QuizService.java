@@ -16,7 +16,7 @@ public interface QuizService extends Remote{
     /**
      * Launch the server
      */
-    void launch();
+    void launch() throws RemoteException;
 
     /**
      * Play a selected quiz

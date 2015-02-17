@@ -33,7 +33,6 @@ public class QuizServer implements QuizService {
         QuizServer server = null;
         try {
             server = new QuizServer();
-            //server.startServer();
             server.launch();
 
         } catch (RemoteException e) {
