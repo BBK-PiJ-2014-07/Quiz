@@ -29,10 +29,9 @@ public interface QuizService extends Remote{
     /**
      * Create a new quiz
      * @param quizName - name of the quiz to be created
-     * @param questions - the questions to be added to the quiz
      * @return id of new quiz
      */
-    int createQuiz(String quizName, List<Question>questions) throws RemoteException;
+    int createQuiz(String quizName) throws RemoteException;
 
 
     /**
