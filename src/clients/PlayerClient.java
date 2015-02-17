@@ -35,6 +35,7 @@ public class PlayerClient {
 
     public void playQuiz(int quizId, Player player) throws RemoteException {
         server.playQuiz(quizId,player);
+        //TODO
 
     }
 }
