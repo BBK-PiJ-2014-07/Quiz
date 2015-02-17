@@ -8,8 +8,6 @@ import org.junit.*;
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -21,11 +19,14 @@ public class TestServer {
     public void buildUp() throws RemoteException {
         player1 = new Player("Michael");
         server = new QuizServer();
-        Question q1 = new Question(1, "What is the capital of France?");
-        q1.addAnswers("paris","brussels","london","tokyo");
-        List<Question> qList =new ArrayList<>();
-        qList.add(q1);
-        server.createQuiz("test quiz", qList);
+        String[][] questions = new String[1][5];
+        questions[0][0] = "What is the capital of France?";
+        questions[0][1] = "paris";
+        questions[0][2] = "brussels";
+        questions[0][3] = "london";
+        questions[0][4] = "tokyo";
+
+        server.createQuiz("test quiz", questions);
     }
 
     @Test   //quiz1
