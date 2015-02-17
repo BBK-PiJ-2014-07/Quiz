@@ -1,20 +1,20 @@
 package clients;
 
 import resource.Player;
-import server.QuizServer;
 import service.QuizService;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 /**
  * Client for playing quiz games.
  * @author Sophie Koonin
  * @see clients.Client
  */
-public class PlayerClient extends Client {
+public class PlayerClient {
     private QuizService server;
-
-    public PlayerClient(){ super(); }
 
     public static void main(String[] args) {
         PlayerClient pc = new PlayerClient();
@@ -22,11 +22,11 @@ public class PlayerClient extends Client {
     }
 
     public void launch(){
-        server = connectServer();
         try {
-            server.addNewPlayer("Fred");
-        } catch (RemoteException e) {
-            e.printStackTrace();
+            Registry registry = LocateRegistry.getRegistry(1099); //TODO
+            server = (QuizService) registry.lookup("QuizService");
+        } catch (RemoteException | NotBoundException ex) {
+            ex.printStackTrace();
         }
 
         //TODO get player details
