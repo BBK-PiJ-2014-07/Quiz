@@ -16,17 +16,22 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class TestServer {
-    private QuizServer server;
-    private Player player1;
+    private static QuizServer server;
+    private static Player player1;
     private static File testFile;
     private List<String> answers;
 
-    @Before
-    public void buildUp() throws IOException {
+    @BeforeClass
+    public static void doFirst() throws IOException {
         player1 = new Player("Michael");
         testFile = new File("testFile.txt");
         testFile.createNewFile();
         server = new QuizServer(testFile);
+        server.getPlayerList().add(player1);
+    }
+    @Before
+    public void buildUp() {
+
         String[][] questions = new String[20][5];
         questions[0][0] = "What is the capital of France?";
         questions[0][1] = "paris";
@@ -57,7 +62,7 @@ public class TestServer {
     @Test   //quiz 3
     public void testCloseQuiz(){
         server.closeQuiz(3);
-        assertTrue(server.getQuizList().get(0).isClosed());
+        assertTrue(server.getQuizList().get(2).isClosed());
     }
 
     @Test   //quiz 4
@@ -76,7 +81,7 @@ public class TestServer {
 
     @Test   //quiz 6
     public void testPlayQuizScore(){
-        int score = server.playQuiz(6, 1, answers);
+        int score = server.playQuiz(1, 1, answers);
         assertEquals(2, score);
     }
 
@@ -88,16 +93,17 @@ public class TestServer {
     @Test   //quiz 8
     public void testPlayQuizWrongAns(){
         answers.set(1,"5");
-        int score = server.playQuiz(6,1,answers);
+        int score = server.playQuiz(1,1,answers);
         assertEquals(1, score);
     }
 
     @Test   //quiz 9
     public void testHighScore(){
         Player player2 = new Player("Lindsay");
-        server.playQuiz(9,1,answers);   //both correct
+        server.getPlayerList().add(player2);
+        server.playQuiz(1,1,answers);   //both correct
         answers.set(1,"5");
-        server.playQuiz(9,2,answers);
+        server.playQuiz(1,2,answers);
         assertEquals(server.getQuizList().get(0).getHighScore().getKey().getName(),"Michael");
     }
 
