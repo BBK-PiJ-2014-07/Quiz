@@ -2,23 +2,29 @@ package tests;
 
 import resource.Player;
 import resource.Question;
+import resource.Quiz;
 import server.QuizServer;
 import org.junit.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.List;
 
-import java.io.ByteArrayInputStream;
-import java.nio.charset.StandardCharsets;
-import java.rmi.RemoteException;
 
 import static org.junit.Assert.*;
 
 public class TestServer {
     private QuizServer server;
     private Player player1;
+    private File testFile;
 
     @Before
-    public void buildUp() throws RemoteException {
+    public void buildUp() throws IOException {
         player1 = new Player("Michael");
-        server = new QuizServer();
+        testFile = new File("testFile.txt");
+        testFile.createNewFile();
+        server = new QuizServer(testFile);
         String[][] questions = new String[2][5];
         questions[0][0] = "What is the capital of France?";
         questions[0][1] = "paris";
@@ -48,6 +54,20 @@ public class TestServer {
     public void testCloseQuiz(){
         server.closeQuiz(3);
         assertTrue(server.getQuizList().get(0).isClosed());
+    }
+
+    @Test
+    public void testWriteToFileWritesSomething(){
+        assertTrue(testFile.length() > 0);
+    }
+
+    @Test
+    public void testWriteToFileWritesCorrectly() throws IOException, ClassNotFoundException{
+        ObjectInputStream inStream = new ObjectInputStream(new FileInputStream(testFile));
+        List<List<?>> data = (List) inStream.readObject();
+        List<Quiz> quizList = (List) data.get(0);
+        inStream.close();
+        assertTrue(quizList.get(0).getQuizName() == "test quiz");
     }
 /*
     @Test   //quiz 4
