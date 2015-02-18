@@ -5,6 +5,7 @@ import resource.Question;
 import resource.Quiz;
 import service.QuizService;
 
+import java.io.*;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -23,12 +24,35 @@ import java.util.Scanner;
  */
 
 public class QuizServer extends UnicastRemoteObject implements QuizService {
-    private ArrayList<Quiz> quizList;
-    private ArrayList<Player> playerList;
+    private List<List<?>> data;   //list for storing playerList + quizList
+    private List<Quiz> quizList;    //list of all quizzes
+    private List<Player> playerList;    //list of all players
+    private File file;  //the file to be written to/read from - supplied by factory
 
     public QuizServer() throws RemoteException {
-        quizList = new ArrayList<>();
-        playerList = new ArrayList<>();
+    }
+
+    public QuizServer(File file) throws IOException {
+        ObjectInputStream inStream = new ObjectInputStream(new FileInputStream(file));
+        this.file = file;
+        //TODO - check warnings
+        if (file.length() > 0){
+            try {
+                data = (List<List<?>>) inStream.readObject();
+                quizList = (List<Quiz>) data.get(0);
+                playerList = (List<Player>)data.get(1);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {    //if the file is empty the lists must be created
+            data = new ArrayList<>();
+            quizList = new ArrayList<>();
+            playerList = new ArrayList<>();
+            data.add(quizList); //add the quizList to the output list
+            data.add(playerList);   //add the playerList to the output list
+
+
+        }
     }
 
     public void start(){
@@ -108,6 +132,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
         }
         quizList.add(newQuiz);
         System.out.println("Added!");   //debug
+        writeToFile();
         return newQuiz.getId();
     }
 
@@ -118,6 +143,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
     @Override
     public void closeQuiz(int quizId) {
         quizList.stream().filter(q -> q.getId() == quizId).forEach(Quiz::setClosed);
+        writeToFile();
     }
 
     /**
@@ -148,4 +174,20 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
      * @return the list of players
      */
     public List<Player> getPlayerList() { return playerList; }
+
+    /**
+     * Write the data list to file.
+     */
+    public void writeToFile(){
+        try {
+            ObjectOutputStream outStream = new ObjectOutputStream(new FileOutputStream(file));
+            outStream.reset();  //clear the file, to avoid appending rather than overwriting
+            outStream.writeObject(data);    //write the data list to file
+            outStream.close();  //close the OutputStream
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
 }
