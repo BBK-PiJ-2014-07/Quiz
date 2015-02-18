@@ -19,12 +19,17 @@ public class TestServer {
     public void buildUp() throws RemoteException {
         player1 = new Player("Michael");
         server = new QuizServer();
-        String[][] questions = new String[1][5];
+        String[][] questions = new String[2][5];
         questions[0][0] = "What is the capital of France?";
         questions[0][1] = "paris";
         questions[0][2] = "brussels";
         questions[0][3] = "london";
         questions[0][4] = "tokyo";
+        questions[1][0] = "What is 1+1";
+        questions[2][1] = "2";
+        questions[3][2] = "3";
+        questions[4][3] = "4";
+        questions[5][4] = "5";
 
         server.createQuiz("test quiz", questions);
     }
@@ -78,6 +83,19 @@ public class TestServer {
         assertEquals(server.getQuizList().get(0).getHighScore().getKey().getName(),"Lindsay");
     }
 
+    @Test   //quiz8
+    public void testCloseQuizReturnsHighScore(){
+        Player player2 = new Player("Lindsay");
+        String answers = "paris\n5";
+        System.setIn(new ByteArrayInputStream(answers.getBytes(StandardCharsets.UTF_8)));
+        server.playQuiz(8,player1);
+        String newAnswers = "paris\n2";
+        System.setIn(new ByteArrayInputStream(newAnswers.getBytes(StandardCharsets.UTF_8)));
+        server.playQuiz(8, player2);
+        assertEquals(2, server.closeQuiz(8));
+
+
+    }
     /*@Test
     public void testAddPlayer(){
         server.addNewPlayer("Lucille");
