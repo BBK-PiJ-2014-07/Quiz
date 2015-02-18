@@ -14,8 +14,10 @@ public class QuizServerFactory {
 
     public static void main(String[] args) {
         QuizService quizService;
+        File file = new File("saveData.txt");
         try {
-            quizService = new QuizServer(new File("saveData.txt"));
+            file.createNewFile();   //create new file if and only if file does not exist
+            quizService = new QuizServer(file);
             quizService.start();
         } catch (IOException e) {
             e.printStackTrace();

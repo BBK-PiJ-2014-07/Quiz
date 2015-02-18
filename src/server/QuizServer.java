@@ -18,7 +18,8 @@ import java.util.Scanner;
 //TODO - SERIALIZATION
 
 /**
- * Implementation of QuizService
+ * Implementation of QuizService. The file for I/O is passed into the constructor.
+ * This enables a different file to be used for testing.
  * @author Sophie Koonin
  * @see service.QuizService
  */
@@ -33,14 +34,17 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
     }
 
     public QuizServer(File file) throws IOException {
-        ObjectInputStream inStream = new ObjectInputStream(new FileInputStream(file));
         this.file = file;
+
         //TODO - check warnings
         if (file.length() > 0){
+            ObjectInputStream inStream = new ObjectInputStream(new FileInputStream(file));
+
             try {
-                data = (List<List<?>>) inStream.readObject();
-                quizList = (List<Quiz>) data.get(0);
-                playerList = (List<Player>)data.get(1);
+                data = (List<List<?>>) inStream.readObject();   //the object written to file is the data list
+                quizList = (List<Quiz>) data.get(0);    //first object in data list is quizList
+                playerList = (List<Player>)data.get(1); //second object is playerList
+                inStream.close();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -53,8 +57,12 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 
 
         }
+
     }
 
+    /**
+     * Start the server.
+     */
     public void start(){
         try {
             String name = "QuizService";
