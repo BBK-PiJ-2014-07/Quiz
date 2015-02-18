@@ -1,6 +1,8 @@
 package resource;
 
 import lombok.Data;
+
+import java.io.Serializable;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -8,7 +10,7 @@ import java.util.TreeMap;
  * Player class - contains Player details and scores
  */
 @Data
-public class Player {
+public class Player implements Serializable {
     private String name;
     private int id;
     private static int playerIds = 1;
