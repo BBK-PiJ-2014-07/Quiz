@@ -25,7 +25,7 @@ public class TestServer {
         testFile = new File("testFile.txt");
         testFile.createNewFile();
         server = new QuizServer(testFile);
-        String[][] questions = new String[2][5];
+        String[][] questions = new String[20][5];
         questions[0][0] = "What is the capital of France?";
         questions[0][1] = "paris";
         questions[0][2] = "brussels";
