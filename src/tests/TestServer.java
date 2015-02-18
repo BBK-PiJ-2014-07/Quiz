@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -17,7 +18,8 @@ import static org.junit.Assert.*;
 public class TestServer {
     private QuizServer server;
     private Player player1;
-    private File testFile;
+    private static File testFile;
+    private List<String> answers;
 
     @Before
     public void buildUp() throws IOException {
@@ -36,7 +38,9 @@ public class TestServer {
         questions[1][2] = "3";
         questions[1][3] = "4";
         questions[1][4] = "5";
-
+        answers = new ArrayList<>();
+        answers.add("paris");
+        answers.add("2");
         server.createQuiz("test quiz", questions);
     }
 
@@ -56,53 +60,47 @@ public class TestServer {
         assertTrue(server.getQuizList().get(0).isClosed());
     }
 
-    @Test
+    @Test   //quiz 4
     public void testWriteToFileWritesSomething(){
         assertTrue(testFile.length() > 0);
     }
 
-    @Test
+    @Test   //quiz 5
     public void testWriteToFileWritesCorrectly() throws IOException, ClassNotFoundException{
         ObjectInputStream inStream = new ObjectInputStream(new FileInputStream(testFile));
         List<List<?>> data = (List) inStream.readObject();
         List<Quiz> quizList = (List) data.get(0);
         inStream.close();
-        assertEquals(quizList.get(0).getQuizName(),"test quiz");
-    }
-/*
-    @Test   //quiz 4
-    public void testPlayQuizScore(){
-        String answers="paris\n2";
-        System.setIn(new ByteArrayInputStream(answers.getBytes(StandardCharsets.UTF_8)));
-        int score = server.playQuiz(4,player1);
-        assertEquals(2, score);
-    }
-
-    @Test   //quiz 5
-    public void testPlayQuizWrongId(){
-        assertEquals(-1,server.playQuiz(999,player1));
+        assertEquals(quizList.get(0).getQuizName(), "test quiz");
     }
 
     @Test   //quiz 6
-    public void testPlayQuizWrongAns(){
-        String answers="paris\n5";
-        System.setIn(new ByteArrayInputStream(answers.getBytes(StandardCharsets.UTF_8)));
-        int score = server.playQuiz(6,player1);
-        assertEquals(1, score);
+    public void testPlayQuizScore(){
+        int score = server.playQuiz(6, 1, answers);
+        assertEquals(2, score);
     }
 
     @Test   //quiz 7
+    public void testPlayQuizWrongId(){
+        assertEquals(-1,server.playQuiz(999,1,answers));
+    }
+
+    @Test   //quiz 8
+    public void testPlayQuizWrongAns(){
+        answers.set(1,"5");
+        int score = server.playQuiz(6,1,answers);
+        assertEquals(1, score);
+    }
+
+    @Test   //quiz 9
     public void testHighScore(){
         Player player2 = new Player("Lindsay");
-        String answers="paris\n5";
-        System.setIn(new ByteArrayInputStream(answers.getBytes(StandardCharsets.UTF_8)));
-        server.playQuiz(7,player1);
-        String newAnswers = "paris\n2";
-        System.setIn(new ByteArrayInputStream(newAnswers.getBytes(StandardCharsets.UTF_8)));
-        server.playQuiz(7,player2);
-        assertEquals(server.getQuizList().get(0).getHighScore().getKey().getName(),"Lindsay");
+        server.playQuiz(9,1,answers);   //both correct
+        answers.set(1,"5");
+        server.playQuiz(9,2,answers);
+        assertEquals(server.getQuizList().get(0).getHighScore().getKey().getName(),"Michael");
     }
-*/
+
     /*@Test
     public void testAddPlayer(){
         server.addNewPlayer("Lucille");
@@ -111,8 +109,8 @@ public class TestServer {
         assertTrue(server.getPlayerList().get(0).equals(lucille));
     }*/
 
-    @After
-    public void closeDown(){
+    @AfterClass
+    public static void closeDown(){
         testFile.delete();
     }
 }
