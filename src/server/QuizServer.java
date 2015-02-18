@@ -15,11 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-//TODO - SERIALIZATION
-
 /**
  * Implementation of QuizService. The file for I/O is passed into the constructor.
  * This enables a different file to be used for testing.
+ * After every call to createQuiz, playQuiz or closeQuiz the data file is written
  * @author Sophie Koonin
  * @see service.QuizService
  */
@@ -78,42 +77,30 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
     /**
      * Play a quiz
      * @param quizId - the id of the quiz to play
-     * @param player - the player currently playing
+     * @param playerId - the id of player currently playing
      * @return the score or -1 if there is an error
      */
-    @Override
-    public int playQuiz(int quizId, Player player) {
+    public int playQuiz(int quizId, int playerId, List<String> answers) {
 
-        //TODO  - keep logic here, move fluff to client
-
-        if (quizList.stream().noneMatch(q -> q.getId() == quizId)){
-            System.out.println("Quiz not found. Please try again");
+        //check that quiz and player IDs both valid. if not, return -1
+        if (quizList.stream().noneMatch(q -> q.getId() == quizId) || playerList.stream().noneMatch(p -> p.getId() == playerId)) {
             return -1;
         }
 
-        Scanner inputScanner = new Scanner(System.in);
-        Quiz thisQuiz = quizList.stream().filter(q -> q.getId() == quizId).findFirst().get();
         int score = 0;
+        Quiz thisQuiz = quizList.stream().filter(q->q.getId()==quizId).findFirst().get();
 
-        for (int i=0; i<thisQuiz.getQuestions().size(); i++){
-            System.out.println("Question " + (i+1) + ": " + thisQuiz.getQuestions().get(i).getQuestion());   //print the question
-            thisQuiz.getQuestions().get(i).getAnswers().forEach(System.out::println);
-            String input = inputScanner.nextLine();
-            if (thisQuiz.answerQuestion(i+1,input)) {
-                System.out.println("Correct!");
-                score++;
-            } else {
-                System.out.println("Wrong! The answer is "+thisQuiz.getQuestions().get(i).getCorrectAnswer());
-            }
+       for (int i=0; i<thisQuiz.getQuestions().size(); i++){
+           //Check the answer for each question, and increment score accordingly
+           if (thisQuiz.answerQuestion(i+1,answers.get(i))) { score++; }
+       }
+        //Check to see if score is a high score
+        if (score > thisQuiz.getHighScore().getValue()) {   //compare to existing high score
+            Player thisPlayer = playerList.stream()
+                    .filter(p -> p.getId() == playerId)
+                    .findFirst().get(); //get the player details
+            thisQuiz.setHighScore(new AbstractMap.SimpleEntry<>(thisPlayer, score));    //set the high score
         }
-
-        if (score > thisQuiz.getHighScore().getValue()){
-            thisQuiz.setHighScore(new AbstractMap.SimpleEntry<>(player, score));
-            System.out.println("NEW HIGH SCORE!");
-        }
-
-        System.out.println("At the end of the quiz, your score is " + score);
-        System.out.println("Current high scorer: " + thisQuiz.getHighScore().getKey().getName() + " - " + thisQuiz.getHighScore().getValue());
         return score;
     }
 
@@ -139,7 +126,6 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
             }
         }
         quizList.add(newQuiz);
-        System.out.println("Added!");   //debug
         writeToFile();
         return newQuiz.getId();
     }

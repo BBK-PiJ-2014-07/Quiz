@@ -22,9 +22,12 @@ public interface QuizService extends Remote{
     /**
      * Play a selected quiz
      * @param quizId - the id of the quiz to play
+     * @param playerId - the id of the player
+     * @param answers - the list of answers the user has entered
      * @return score
      */
-    int playQuiz(int quizId, Player player) throws RemoteException;
+    int playQuiz(int quizId, int playerId, List<String> answers) throws RemoteException;
+
 
     /**
      * Create a new quiz
