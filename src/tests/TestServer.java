@@ -83,19 +83,6 @@ public class TestServer {
         assertEquals(server.getQuizList().get(0).getHighScore().getKey().getName(),"Lindsay");
     }
 
-    @Test   //quiz8
-    public void testCloseQuizReturnsHighScore(){
-        Player player2 = new Player("Lindsay");
-        String answers = "paris\n5";
-        System.setIn(new ByteArrayInputStream(answers.getBytes(StandardCharsets.UTF_8)));
-        server.playQuiz(8,player1);
-        String newAnswers = "paris\n2";
-        System.setIn(new ByteArrayInputStream(newAnswers.getBytes(StandardCharsets.UTF_8)));
-        server.playQuiz(8, player2);
-        assertEquals(2, server.closeQuiz(8));
-
-
-    }
     /*@Test
     public void testAddPlayer(){
         server.addNewPlayer("Lucille");
