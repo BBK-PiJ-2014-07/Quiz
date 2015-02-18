@@ -32,10 +32,10 @@ public class TestServer {
         questions[0][3] = "london";
         questions[0][4] = "tokyo";
         questions[1][0] = "What is 1+1";
-        questions[2][1] = "2";
-        questions[3][2] = "3";
-        questions[4][3] = "4";
-        questions[5][4] = "5";
+        questions[1][1] = "2";
+        questions[1][2] = "3";
+        questions[1][3] = "4";
+        questions[1][4] = "5";
 
         server.createQuiz("test quiz", questions);
     }
