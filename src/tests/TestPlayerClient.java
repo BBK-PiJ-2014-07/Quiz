@@ -3,19 +3,15 @@ import org.junit.*;
 import static org.junit.Assert.*;
 
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import clients.PlayerClient;
 import resource.Player;
-import resource.Question;
 import server.QuizServer;
 import service.QuizService;
 
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Testing class for Player Client
@@ -29,7 +25,7 @@ public class TestPlayerClient {
     @BeforeClass
     public static void doFirst() throws RemoteException {
         server = new QuizServer();
-        server.launch();
+        server.start();
     }
 
     @Before

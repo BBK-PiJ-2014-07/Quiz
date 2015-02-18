@@ -49,7 +49,7 @@ public class TestServer {
         server.closeQuiz(3);
         assertTrue(server.getQuizList().get(0).isClosed());
     }
-
+/*
     @Test   //quiz 4
     public void testPlayQuizScore(){
         String answers="paris\n2";
@@ -82,7 +82,7 @@ public class TestServer {
         server.playQuiz(7,player2);
         assertEquals(server.getQuizList().get(0).getHighScore().getKey().getName(),"Lindsay");
     }
-
+*/
     /*@Test
     public void testAddPlayer(){
         server.addNewPlayer("Lucille");

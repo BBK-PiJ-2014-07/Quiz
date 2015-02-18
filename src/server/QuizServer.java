@@ -31,18 +31,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
         playerList = new ArrayList<>();
     }
 
-    public static void main(String[] args) {
-        QuizServer server = null;
-        try {
-            server = new QuizServer();
-            server.launch();
-
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void launch(){
+    public void start(){
         try {
             String name = "QuizService";
             QuizService server = new QuizServer();
@@ -109,7 +98,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
         String question;
         String[] answers = new String[4];
         for (int i=0; i<20; i++){   //get the Qs + As from the matrix
-            if (questionMatrix[i][0] != null){  //check not null
+            if (questionMatrix[i][0] != null){  //check question not null
                 question = questionMatrix[i][0];
                 System.arraycopy(questionMatrix[i], 1, answers, 0, 4);
                 Question newQ = new Question(i+1, question);    //instantiate each question
@@ -129,8 +118,6 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
     @Override
     public void closeQuiz(int quizId) {
         quizList.stream().filter(q -> q.getId() == quizId).forEach(Quiz::setClosed);
-        //TODO - return high score
-
     }
 
     /**

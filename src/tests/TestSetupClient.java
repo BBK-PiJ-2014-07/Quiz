@@ -22,7 +22,7 @@ public class TestSetupClient {
     @BeforeClass
     public static void setUpFirst() throws RemoteException {
         server = new QuizServer();
-        server.launch();
+        server.start();
 
     }
     @Before
