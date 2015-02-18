@@ -67,7 +67,7 @@ public class TestServer {
         List<List<?>> data = (List) inStream.readObject();
         List<Quiz> quizList = (List) data.get(0);
         inStream.close();
-        assertTrue(quizList.get(0).getQuizName() == "test quiz");
+        assertEquals(quizList.get(0).getQuizName(),"test quiz");
     }
 /*
     @Test   //quiz 4
@@ -110,5 +110,10 @@ public class TestServer {
         lucille.setId(1);
         assertTrue(server.getPlayerList().get(0).equals(lucille));
     }*/
+
+    @After
+    public void closeDown(){
+        testFile.delete();
+    }
 }
 
