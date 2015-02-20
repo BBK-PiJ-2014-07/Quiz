@@ -93,7 +93,7 @@ public class TestServer {
     @Test   //quiz 8
     public void testPlayQuizWrongAns(){
         answers.set(1,"5");
-        int score = server.playQuiz(1,1,answers);
+        int score = server.playQuiz(1,1 ,answers);
         assertEquals(1, score);
     }
 
@@ -107,13 +107,13 @@ public class TestServer {
         assertEquals(server.getQuizList().get(0).getHighScore().getKey().getName(),"Michael");
     }
 
-    /*@Test
+    @Test
     public void testAddPlayer(){
         server.addNewPlayer("Lucille");
         Player lucille = new Player("Lucille");
         lucille.setId(1);
         assertTrue(server.getPlayerList().get(0).equals(lucille));
-    }*/
+    }
 
     @AfterClass
     public static void closeDown(){
