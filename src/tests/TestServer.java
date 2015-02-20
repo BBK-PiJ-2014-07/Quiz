@@ -115,6 +115,10 @@ public class TestServer {
         assertTrue(server.getPlayerList().contains(lucille));
     }
 
+    @Test   //quiz 11
+    public void testSavePlayerScore(){
+        assertEquals(2, (int) server.getPlayerList().get(0).getScores().get(1));
+    }
     @AfterClass
     public static void closeDown(){
         testFile.delete();
