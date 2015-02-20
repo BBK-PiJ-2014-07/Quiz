@@ -146,7 +146,8 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
      */
     @Override
     public void addNewPlayer(String name){
-        //TODO
+        Player newPlayer = new Player(name);
+        playerList.add(newPlayer);
     }
 
     /**

@@ -111,8 +111,8 @@ public class TestServer {
     public void testAddPlayer(){
         server.addNewPlayer("Lucille");
         Player lucille = new Player("Lucille");
-        lucille.setId(1);
-        assertTrue(server.getPlayerList().get(0).equals(lucille));
+        lucille.setId(3);
+        assertTrue(server.getPlayerList().contains(lucille));
     }
 
     @AfterClass
