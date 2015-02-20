@@ -94,13 +94,16 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
            //Check the answer for each question, and increment score accordingly
            if (thisQuiz.answerQuestion(i+1,answers.get(i))) { score++; }
        }
+        Player thisPlayer = playerList.stream()
+                .filter(p -> p.getId() == playerId)
+                .findFirst().get(); //get the player details
+
         //Check to see if score is a high score
         if (score > thisQuiz.getHighScore().getValue()) {   //compare to existing high score
-            Player thisPlayer = playerList.stream()
-                    .filter(p -> p.getId() == playerId)
-                    .findFirst().get(); //get the player details
+
             thisQuiz.setHighScore(new AbstractMap.SimpleEntry<>(thisPlayer, score));    //set the high score
         }
+        thisPlayer.getScores().put(quizId,score);   //store the score for this quiz in player's score map
         return score;
     }
 
