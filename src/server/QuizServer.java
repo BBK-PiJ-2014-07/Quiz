@@ -13,7 +13,6 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Implementation of QuizService. The file for I/O is passed into the constructor.
@@ -83,9 +82,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
     public int playQuiz(int quizId, int playerId, List<String> answers) {
 
         //check that quiz and player IDs both valid. if not, return -1
-        if (quizList.stream().noneMatch(q -> q.getId() == quizId) || playerList.stream().noneMatch(p -> p.getId() == playerId)) {
-            return -1;
-        }
+
 
         int score = 0;
         Quiz thisQuiz = quizList.stream().filter(q->q.getId()==quizId).findFirst().get();
@@ -114,20 +111,9 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
      * @return the ID of the new quiz
      */
     @Override
-    public int createQuiz(String quizName, String[][] questionMatrix) {
+    public int createQuiz(String quizName, List<Question> questions) {
         Quiz newQuiz = new Quiz(quizName);
-
-        String question;
-        String[] answers = new String[4];
-        for (int i=0; i<20; i++){   //get the Qs + As from the matrix
-            if (questionMatrix[i][0] != null){  //check question not null
-                question = questionMatrix[i][0];
-                System.arraycopy(questionMatrix[i], 1, answers, 0, 4);
-                Question newQ = new Question(i+1, question);    //instantiate each question
-                newQ.addAnswers(answers);   //add answers to question
-                newQuiz.addQuestion(newQ);  //add question to quiz
-            }
-        }
+        questions.forEach(newQuiz::addQuestion);
         quizList.add(newQuiz);
         writeToFile();
         return newQuiz.getId();
