@@ -3,9 +3,7 @@ package resource;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Question for the quiz class. Contains inner list of answers, randomly shuffled.
@@ -16,12 +14,13 @@ public class Question implements Serializable {
     private int questionNumber;
     private String question;
     private String correctAnswer;
-    private List<String> answers;
+    private String correctKey;
+    private Map<String,String> answers;
 
     public Question(int questionNumber, String question) {
         this.questionNumber = questionNumber;
         this.question = question;
-        answers = new ArrayList<>();
+        answers = new TreeMap<>();
     }
 
     /**
@@ -29,9 +28,14 @@ public class Question implements Serializable {
      * @param ans  - the answer to be added
      */
     public void addAnswers(String... ans){
-        Collections.addAll(answers, ans);
-        correctAnswer = answers.get(0); //assign correct answer
-        Collections.shuffle(answers);   //randomise order of answers
+        correctAnswer = ans[0]; //assign correct answer
+        Collections.shuffle(Arrays.asList(ans));//randomise order of answers
+        String[] letters = {"a","b","c","d"}; //question letters
+        for (int i=0; i<4; i++){
+            answers.put(letters[i], ans[i]);
+            if (ans[i].equals(correctAnswer)){ correctKey = letters[i]; }
+        }
+
     }
 
     /**
@@ -44,7 +48,7 @@ public class Question implements Serializable {
     @Override
     public String toString(){
         return "Question " + questionNumber + ": " + question + "\n"
-                + "a. " + answers.get(0) + "\nb. " + answers.get(1) + "\nc. " + answers.get(2) + "\nd. " + answers.get(3);
+                + "a. " + answers.get("a") + "\nb. " + answers.get("b") + "\nc. " + answers.get("c") + "\nd. " + answers.get("d");
     }
 
 }
