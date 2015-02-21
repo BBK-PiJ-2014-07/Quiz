@@ -41,4 +41,10 @@ public class Question implements Serializable {
      */
     public boolean isCorrect(String ans) { return ans.equals(correctAnswer);}
 
+    @Override
+    public String toString(){
+        return "Question " + questionNumber + ": " + question + "\n"
+                + "a. " + answers.get(0) + "\nb. " + answers.get(1) + "\nc. " + answers.get(2) + "\nd. " + answers.get(3);
+    }
+
 }
