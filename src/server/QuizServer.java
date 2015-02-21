@@ -107,7 +107,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
     /**
      * create a new quiz
      * @param quizName - the name of the quiz
-     * @param questionMatrix - a 2d array of questions and answers
+     * @param questions - the questions to add
      * @return the ID of the new quiz
      */
     @Override
