@@ -22,7 +22,7 @@ public class TestSetupClient {
 
     @BeforeClass
     public static void setUpFirst() throws IOException {
-        file = new File("/tests/setuptest.txt");
+        file = new File("setuptest.txt");
         file.createNewFile();
         server = new QuizServer(file);
         server.start();
