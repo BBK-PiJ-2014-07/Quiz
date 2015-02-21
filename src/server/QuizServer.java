@@ -28,7 +28,11 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
     private List<Player> playerList;    //list of all players
     private File file;  //the file to be written to/read from - supplied by factory
 
-    public QuizServer() throws RemoteException {
+    /**
+     * default constructor - shouldn't be called
+     * @throws RemoteException
+     */
+    private QuizServer() throws RemoteException {
     }
 
     public QuizServer(File file) throws IOException {
@@ -64,9 +68,8 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
     public void start(){
         try {
             String name = "QuizService";
-            QuizService server = new QuizServer();
             Registry registry = LocateRegistry.createRegistry(1099);
-            registry.rebind(name, server);
+            registry.rebind(name, this);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
