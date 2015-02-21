@@ -17,11 +17,14 @@ import java.rmi.RemoteException;
  */
 public class TestSetupClient {
     private SetupClient setup;
+    private static File file;
     private static QuizService server;
 
     @BeforeClass
-    public static void setUpFirst() throws RemoteException {
-        server = new QuizServer();
+    public static void setUpFirst() throws IOException {
+        file = new File("/tests/setuptest.txt");
+        file.createNewFile();
+        server = new QuizServer(file);
         server.start();
 
     }
@@ -42,6 +45,11 @@ public class TestSetupClient {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+    }
+
+    @AfterClass
+    public void tearDown(){
+        file.delete();
     }
 
 }
