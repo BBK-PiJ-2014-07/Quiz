@@ -42,10 +42,7 @@ public class PlayerClient {
         // user answers -> call to server answerQuestion()
         // server returns score at end
 
-        //check the server list of quizzes and players to ensure that id exists
-        if (server.getQuizList().stream().noneMatch(q -> q.getId() == quizId) || server.getPlayerList().stream().noneMatch(p -> p.getId() == playerId)) {
-            return -1;
-        }
+
         List<String> answers = new ArrayList<>();
         Quiz thisQuiz = server.getQuizList().stream().filter(q -> q.getId() == quizId).findFirst().get();   //get the quiz
 

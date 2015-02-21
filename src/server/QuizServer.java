@@ -80,10 +80,10 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
      * @return the score or -1 if there is an error
      */
     public int playQuiz(int quizId, int playerId, List<String> answers) {
-
-        //check that quiz and player IDs both valid. if not, return -1
-
-
+        //check the server list of quizzes and players to ensure that id exists
+        if (quizList.stream().noneMatch(q -> q.getId() == quizId) || playerList.stream().noneMatch(p -> p.getId() == playerId)) {
+            return -1;
+        }
         int score = 0;
         Quiz thisQuiz = quizList.stream().filter(q->q.getId()==quizId).findFirst().get();
 
@@ -160,7 +160,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
     public List<Player> getPlayerList() { return playerList; }
 
     /**
-     * Write the data list to file.
+     * Write the data list to the file specified in the constructor.
      */
     public void writeToFile(){
         try {
