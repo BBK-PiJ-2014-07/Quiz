@@ -32,7 +32,7 @@ public class TestPlayerClient {
     public static void doFirst() throws IOException {
         file = new File("playerClientTest.txt");
         file.createNewFile();
-        server = new QuizServer();
+        server = new QuizServer(file);
         server.start();
     }
 

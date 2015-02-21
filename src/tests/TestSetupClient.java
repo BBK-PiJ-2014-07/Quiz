@@ -16,7 +16,7 @@ import java.rmi.RemoteException;
  * Test the setup client
  */
 public class TestSetupClient {
-    private SetupClient setup;
+    private static SetupClient setup;
     private static File file;
     private static QuizService server;
 
@@ -26,13 +26,11 @@ public class TestSetupClient {
         file.createNewFile();
         server = new QuizServer(file);
         server.start();
-
-    }
-    @Before
-    public void buildUp() {
         setup = new SetupClient();
         setup.launch();
+
     }
+   
 
     @Test
     public void testCreateQuiz(){
