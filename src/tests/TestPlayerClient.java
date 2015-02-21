@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import clients.PlayerClient;
 import resource.Player;
+import resource.Question;
 import server.QuizServer;
 import service.QuizService;
 
@@ -14,6 +15,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Testing class for Player Client
@@ -44,17 +47,11 @@ public class TestPlayerClient {
     public void testPlayQuiz(){
         player.launch();
         Player player1 = new Player("Alfred");
-        String[][] questions = new String[20][5];
-        questions[0][0] = "What is the capital of France?";
-        questions[0][1] = "paris";
-        questions[0][2] = "brussels";
-        questions[0][3] = "london";
-        questions[0][4] = "tokyo";
-        questions[1][0] = "What's 1+1?";
-        questions[1][1] = "2";
-        questions[1][2] = "3";
-        questions[1][3] = "4";
-        questions[1][4] = "5";
+        List<Question> questions = new ArrayList<>();
+        Question q1 = new Question(1, "What is the capital of France?");
+        q1.addAnswers("paris","london","tokyo","madrid");
+        Question q2 = new Question(2, "What is 1+1");
+        q2.addAnswers("2","3","4","5");
 
         try {
             server.createQuiz("test quiz", questions);

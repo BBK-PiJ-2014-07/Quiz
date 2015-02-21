@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 import static org.junit.Assert.*;
@@ -32,17 +33,13 @@ public class TestServer {
     @Before
     public void buildUp() {
 
-        String[][] questions = new String[20][5];
-        questions[0][0] = "What is the capital of France?";
-        questions[0][1] = "paris";
-        questions[0][2] = "brussels";
-        questions[0][3] = "london";
-        questions[0][4] = "tokyo";
-        questions[1][0] = "What is 1+1";
-        questions[1][1] = "2";
-        questions[1][2] = "3";
-        questions[1][3] = "4";
-        questions[1][4] = "5";
+        List<Question> questions = new ArrayList<>();
+        Question q1 = new Question(1, "What is the capital of France?");
+        q1.addAnswers("paris","london","tokyo","madrid");
+        Question q2 = new Question(2, "What is 1+1");
+        q2.addAnswers("2","3","4","5");
+        questions.add(q1);
+        questions.add(q2);
         answers = new ArrayList<>();
         answers.add("paris");
         answers.add("2");
@@ -85,9 +82,13 @@ public class TestServer {
         assertEquals(2, score);
     }
 
-    @Test   //quiz 7
+    /**
+     * Test that looking up a wrong ID throws an exception.
+     * Checking for this is done in PlayerClient
+     */
+    @Test(expected = NoSuchElementException.class)
     public void testPlayQuizWrongId(){
-        assertEquals(-1,server.playQuiz(999,1,answers));
+        server.playQuiz(999,1,answers);
     }
 
     @Test   //quiz 8
