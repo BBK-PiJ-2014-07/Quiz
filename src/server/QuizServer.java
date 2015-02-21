@@ -28,6 +28,12 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
     private List<Player> playerList;    //list of all players
     private File file;  //the file to be written to/read from - supplied by factory
 
+    public QuizServer startNewServer(file) throws IOException {
+        QuizServer s = new QuizServer(file);
+        s.start();
+        return s;
+    }
+    
     public QuizServer() throws RemoteException {
     }
 
