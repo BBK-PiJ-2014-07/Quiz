@@ -48,7 +48,7 @@ public class TestSetupClient {
     }
 
     @AfterClass
-    public void tearDown(){
+    public static void tearDown(){
         file.delete();
     }
 
