@@ -40,10 +40,10 @@ public class Question implements Serializable {
 
     /**
      * Check whether an answer is correct
-     * @param ans - the answer entered
+     * @param ans - the answer entered - can be the answer itself, or its corresponding letter (a,b,c,d)
      * @return true or false
      */
-    public boolean isCorrect(String ans) { return ans.equals(correctAnswer);}
+    public boolean isCorrect(String ans) { return ans.equals(correctKey) || ans.equals(correctAnswer);}
 
     @Override
     public String toString(){
