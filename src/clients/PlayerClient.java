@@ -35,6 +35,11 @@ public class PlayerClient {
         } catch (RemoteException | NotBoundException ex) {
             ex.printStackTrace();
         }
+        System.out.println("\n");       //spacer
+        for (int i = 0; i < 60; i++) {
+            System.out.print("=");      //horizontal rule
+        }
+
         System.out.println("\nPlease enter your name.");
         String playerName = input.nextLine();
 
