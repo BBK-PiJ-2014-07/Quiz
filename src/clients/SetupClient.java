@@ -16,16 +16,10 @@ import java.util.Scanner;
 public class SetupClient {
     QuizService server;
 
-
-    public static void main(String[] args) {
-        SetupClient client = new SetupClient();
-        client.launch();
-    }
-
     /**
      * Launch the setup client and connect to the server.
      */
-    public void launch() {
+    public void execute() {
         try {
             Registry registry = LocateRegistry.getRegistry(1099); //TODO
             server = (QuizService) registry.lookup("QuizService");

@@ -27,10 +27,10 @@ public class TestSetupClient {
         server = new QuizServer(file);
         server.start();
         setup = new SetupClient();
-        setup.launch();
+        setup.execute();
 
     }
-   
+
 
     @Test
     public void testCreateQuiz(){
