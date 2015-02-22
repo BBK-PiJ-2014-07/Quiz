@@ -47,8 +47,9 @@ public interface QuizService extends Remote{
     /**
      *  Add a new player - no duplicate names are allowed
      *  @param name - the name of the player to be added
+     *  @return playerId = the id of the new player
      */
-    void addNewPlayer(String name) throws RemoteException;
+    int addNewPlayer(String name) throws RemoteException;
 
     /**
      * Testing method - send a response to a client

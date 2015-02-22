@@ -137,9 +137,10 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
      * @param name - the name of the player to be added
      */
     @Override
-    public synchronized void addNewPlayer(String name){
+    public synchronized int addNewPlayer(String name){
         Player newPlayer = new Player(name);
         playerList.add(newPlayer);
+        return newPlayer.getId();
     }
 
     /**
