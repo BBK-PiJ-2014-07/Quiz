@@ -26,17 +26,16 @@ public class TestSetupClient {
         file.createNewFile();
         server = new QuizServer(file);
         server.start();
-        setup = new SetupClient();
-        setup.execute();
-
     }
 
 
     @Test
     public void testCreateQuiz(){
         try {
-            String answers = "1\ntest quiz\nwhat is 1+1\n2\n3\n4\n5\nN";
+            String answers = "test quiz\nwhat is 1+1\n2\n3\n4\n5\nN";
             System.setIn(new ByteArrayInputStream(answers.getBytes(StandardCharsets.UTF_8)));
+            setup = new SetupClient();
+            setup.connectToServer();    //connect the client
             setup.createQuiz();
             assertEquals("test quiz", server.getQuizList().get(0).getQuizName());
 
@@ -47,15 +46,13 @@ public class TestSetupClient {
 
     @Test
     public void testCloseQuiz(){
-        try {
-            String input = "2\n1";
-            System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
-            setup.closeQuiz();
-            assertTrue(server.getQuizList().get(0).isClosed());
-        } catch (RemoteException ex) {
-            ex.printStackTrace();
+        String input = "1\nY";
+        System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
+        setup = new SetupClient();
+        setup.connectToServer();    //connect the client
+        assertEquals(1, setup.closeQuiz());
         }
-    }
+
     @AfterClass
     public static void tearDown(){
         file.delete();
