@@ -7,6 +7,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import clients.PlayerClient;
 import resource.Player;
 import resource.Question;
+import resource.Quiz;
 import server.QuizServer;
 import service.QuizService;
 
@@ -63,7 +64,8 @@ public class TestPlayerClient {
         try {
             server.addNewPlayer("Alfred");
             server.createQuiz("test quiz", questions);
-            assertEquals(2,player.playQuiz(1, 1));
+            Quiz thisQuiz = server.getQuizList().get(0);
+            assertEquals(2,(int)server.getQuizList().get(0).getHighScore().getValue());
         } catch (RemoteException e) {
             e.printStackTrace();
         }

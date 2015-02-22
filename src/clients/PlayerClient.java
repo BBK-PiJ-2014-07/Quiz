@@ -88,7 +88,7 @@ public class PlayerClient {
         for (int i=0; i<60; i++) {
             System.out.print("*");  //top border
         }
-        for (int i=0; i<3; i++) {
+        for (int i=0; i<2; i++) {
             System.out.print("\n*");    // top
             for (int j=0; j<58; j++){
                 System.out.print(" ");
@@ -105,7 +105,7 @@ public class PlayerClient {
             System.out.print(" ");
         }
         System.out.print("*");
-        for (int i=0; i<3; i++) {
+        for (int i=0; i<2; i++) {
             System.out.print("\n*");
             for (int j=0; j<58; j++){
                 System.out.print(" ");  //bottom
@@ -132,7 +132,9 @@ public class PlayerClient {
     public void playQuiz(int quizId) throws RemoteException {
         List<String> answers = new ArrayList<>();
         Quiz thisQuiz = server.getQuizList().stream().filter(q -> q.getId() == quizId).findFirst().get();   //get the quiz
-        System.out.println(thisQuiz.getQuizName().toUpperCase() + "\n");   //print the quiz name
+
+        System.out.println("\n" + thisQuiz.getQuizName().toUpperCase() + "\n");   //print the quiz name
+
         for (Question q: thisQuiz.getQuestions()){
             System.out.println(q); //print the question
             System.out.print("\nEnter your answer: ");
@@ -146,7 +148,7 @@ public class PlayerClient {
         if (score > thisQuiz.getHighScore().getValue()){
             System.out.println("NEW HIGH SCORE! CONGRATULATIONS!" + "\n");
         } else {
-            System.out.println("HIGH SCORE: " + thisQuiz.getHighScore().getKey() + " - " + thisQuiz.getHighScore().getValue() + "\n");
+            System.out.println("HIGH SCORE: " + thisQuiz.getHighScore().getKey().getName() + " - " + thisQuiz.getHighScore().getValue() + "\n");
         }
 
         System.out.println("Type R to replay; N for new quiz; X to exit");
