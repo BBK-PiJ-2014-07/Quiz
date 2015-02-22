@@ -127,15 +127,24 @@ public class PlayerClient {
 
         System.out.println("\nPlease enter the number of the quiz you want to play.");
         int quizIdToPlay = Integer.parseInt(input.nextLine());
-        int score = playQuiz(quizIdToPlay, playerId);
-        System.out.println("At the end of the quiz your score is " + score);
+        Quiz thisQuiz = server.getQuizList().stream().filter(q -> q.getId() == quizIdToPlay).findFirst().get();   //get the quiz
+        int score = playQuiz(thisQuiz);
+        System.out.println("At the end of the quiz your score is " + score+"!");
+
+        // Print the high scores
+        if (score > thisQuiz.getHighScore().getValue()){
+            System.out.println("NEW HIGH SCORE! CONGRATULATIONS!" + "\n");
+        } else {
+            System.out.println("HIGH SCORE: " + thisQuiz.getHighScore().getKey() + " - " + thisQuiz.getHighScore().getValue() + "\n");
+        }
+
         System.out.println("Type R to replay; N for new quiz; X to exit");
         String choice = input.nextLine().toLowerCase();
 
         switch (choice){
             case "n": chooseQuiz();
                 break;
-            case "r": playQuiz(quizIdToPlay, playerId);
+            case "r": playQuiz(thisQuiz);
                 break;
             case "x": System.out.println("Thanks for playing! See you next time.");
                 break;
@@ -145,10 +154,11 @@ public class PlayerClient {
 
     }
 
-    public int playQuiz(int quizId, int playerId) throws RemoteException {
+    public int playQuiz(Quiz quiz) throws RemoteException {
         List<String> answers = new ArrayList<>();
-        Quiz thisQuiz = server.getQuizList().stream().filter(q -> q.getId() == quizId).findFirst().get();   //get the quiz
-        for (Question q: thisQuiz.getQuestions()){
+        int quizId = quiz.getId();
+        System.out.println(quiz.getQuizName().toUpperCase() + "\n");   //print the quiz name
+        for (Question q: quiz.getQuestions()){
             System.out.println(q); //print the question
             System.out.print("\nEnter your answer: ");
             String ans = input.nextLine();   //get the answer from the user
