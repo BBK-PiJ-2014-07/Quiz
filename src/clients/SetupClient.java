@@ -23,19 +23,25 @@ public class SetupClient {
         connected = false;
     }
 
+    /**
+     * Connect to server
+     */
+    public void connectToServer(){
+        try {
+            Registry registry = LocateRegistry.getRegistry(1099); //TODO
+            server = (QuizService) registry.lookup("QuizService");
+            connected = true;
+        } catch (RemoteException | NotBoundException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     /**
      * Launch the setup client and connect to the server.
      */
     public void execute() {
         if (!connected) {
-            try {
-                Registry registry = LocateRegistry.getRegistry(1099); //TODO
-                server = (QuizService) registry.lookup("QuizService");
-                connected = true;
-            } catch (RemoteException | NotBoundException ex) {
-                ex.printStackTrace();
-            }
+            connectToServer();
         }
         System.out.println("\n");       //spacer
         for (int i = 0; i < 60; i++) {
@@ -46,6 +52,7 @@ public class SetupClient {
         System.out.println("You have 2 options: ");
         System.out.println("1. Create a new quiz");
         System.out.println("2. Close an existing quiz");
+        System.out.println("3. Quit");
 
         int choice = Integer.parseInt(input.nextLine());
 
@@ -54,6 +61,7 @@ public class SetupClient {
                 break;
             case 2: closeQuiz();
                 break;
+            case 3: return;
             default:
                 System.out.println("Please choose a valid option.");
                 break;
@@ -71,7 +79,6 @@ public class SetupClient {
         //Variables for each question
         System.out.println("Please enter a name for your quiz: ");
         String quizName = input.nextLine();
-
         String question;
         String[] answers = new String[4];
         int questionNo = 1;
@@ -117,29 +124,41 @@ public class SetupClient {
 
     /**
      * Close a quiz.
+     * @return the id of the closed quiz, 0 if no quiz closed, -1 if error (quiz not found)
      */
-    public void closeQuiz(){
+    public int closeQuiz(){
         try {
-            for (int i = 1; i == server.getQuizList().size(); i++) {
-                System.out.println(server.getQuizList().get(i - 1).getId() + ". " + server.getQuizList().get(i - 1).getQuizName());
+            System.out.println("\nOpen quizzes: ");
+            for (int i = 0; i<server.getQuizList().size(); i++) {   //print quiz list
+                if (!server.getQuizList().get(i).isClosed()) {
+                    System.out.println(server.getQuizList().get(i).getId() + ". " + server.getQuizList().get(i).getQuizName());
+                }
             }
-            System.out.println("Please enter the number of the quiz you wish to close.");
-            int idNo = Integer.parseInt(input.nextLine());
+
+            System.out.println("\nPlease enter the number of the quiz you wish to close.");
+            int idNo = Integer.parseInt(input.nextLine());  //get the id from the user
+            if (server.getQuizList().stream().noneMatch(q -> q.getId() == idNo)){   //check quiz exists
+                System.out.println("Quiz not found!");
+                return -1;  //if not, return -1
+            }
             System.out.println("Are you sure you want to close quiz " + idNo + "? You will no longer be able to play it. Y/N");
             String choice = input.nextLine().toLowerCase();
+
             switch (choice) {
                 case "y": server.closeQuiz(idNo);
                     System.out.println("Quiz " + idNo + " closed.");
-                    break;
+                    return idNo;
                 case "n":
                     System.out.println("Quiz not closed.");
                     break;
                 default:
                     System.out.println("Please enter Y or N.");
+                    break;
             }
         } catch (RemoteException ex){
             ex.printStackTrace();
         }
+        return 0;
     }
 
 }
