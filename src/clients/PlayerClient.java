@@ -37,13 +37,79 @@ public class PlayerClient {
         //TODO get high scores
     }
 
+    /**
+     * Print header/welcome message
+     * Ask player what they want to do
+     */
+    public void init(){
+        Scanner input = new Scanner(System.in);
+        for (int i=0; i<60; i++) {
+            System.out.print("*");  //top border
+        }
+        for (int i=0; i<3; i++) {
+            System.out.print("\n*");    // top
+            for (int j=0; j<58; j++){
+                System.out.print(" ");
+            }
+            System.out.print("*");
+        }
+        System.out.print("\n*");
+        for (int j=0; j<24; j++){
+            System.out.print(" ");
+        }
+        System.out.print("QUIZ  GAME"); //middle
+
+        for (int j=0; j<24; j++){
+            System.out.print(" ");
+        }
+        System.out.print("*");
+        for (int i=0; i<3; i++) {
+            System.out.print("\n*");
+            for (int j=0; j<58; j++){
+                System.out.print(" ");  //bottom
+            }
+            System.out.print("*");
+        }
+        System.out.print("\n");
+        for (int i=0; i<60; i++) {
+            System.out.print("*");      //bottom border
+        }
+
+
+        for (int i=0; i<60; i++){
+            System.out.print("=");
+        }
+        System.out.println("\nPlease enter your name.");
+        String playerName = input.nextLine();
+        int playerId;
+
+        try {
+        if (server.getPlayerList().stream()         // check to see if player exists already
+                .noneMatch(p -> p.getName().equals(playerName))) {
+            playerId = server.addNewPlayer(playerName);     //if not, create player
+        } else {
+            playerId = server.getPlayerList().stream()      //otherwise get id of existing player
+                    .filter(p -> p.getName().equals(playerName))
+                    .findFirst().get().getId();
+        }
+
+        System.out.println("\nWelcome" + playerName + "!");
+        System.out.println("Here are the available quizzes for you to play:\n");
+
+            //print all the quiz titles
+            for (int i=1; i==server.getQuizList().size(); i++){
+                System.out.println(server.getQuizList().get(i-1).getId() + ". " + server.getQuizList().get(i-1).getQuizName());
+            }
+
+            System.out.println("\nPlease enter the number of the quiz you want to play.");
+            int quizIdToPlay = Integer.parseInt(input.nextLine());
+            playQuiz(quizIdToPlay, playerId);
+        } catch (RemoteException ex){
+            ex.printStackTrace();
+        }
+    }
+
     public int playQuiz(int quizId, int playerId) throws RemoteException {
-        // print the question
-        // print the answers
-        // user answers -> call to server answerQuestion()
-        // server returns score at end
-
-
         List<String> answers = new ArrayList<>();
         Quiz thisQuiz = server.getQuizList().stream().filter(q -> q.getId() == quizId).findFirst().get();   //get the quiz
         Scanner input = new Scanner(System.in);
