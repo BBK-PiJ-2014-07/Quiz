@@ -15,6 +15,12 @@ import java.util.Scanner;
  */
 public class SetupClient {
     QuizService server;
+    Scanner input;
+
+    public SetupClient(){
+        input = new Scanner(System.in);
+    }
+
 
     /**
      * Launch the setup client and connect to the server.
@@ -27,6 +33,28 @@ public class SetupClient {
             ex.printStackTrace();
         }
 
+        System.out.println("\n");       //spacer
+        for (int i = 0; i < 60; i++) {
+            System.out.print("=");      //horizontal rule
+        }
+
+        System.out.println("\nQUIZ SETUP\n");
+        System.out.println("You have 2 options: ");
+        System.out.println("1. Create a new quiz");
+        System.out.println("2. Close an existing quiz");
+
+        int choice = Integer.parseInt(input.nextLine());
+
+        switch(choice) {
+            case 1: createQuiz();
+                break;
+            case 2: closeQuiz();
+                break;
+            default:
+                System.out.println("Please choose a valid option.");
+                break;
+        }
+
     }
 
     /**
@@ -34,17 +62,18 @@ public class SetupClient {
      * This method asks for input from the user, creates questions from it,
      * and passes that data through to the server's createQuiz method,
      * where the questions will be added to a new Quiz.
-     * @param quizName - the name of the quiz to create
      */
-    public void createQuiz(String quizName) throws RemoteException {
+    public void createQuiz() {
         //Variables for each question
+        System.out.println("Please enter a name for your quiz: ");
+        String quizName = input.nextLine();
+
         String question;
         String[] answers = new String[4];
         int questionNo = 1;
         List<Question> questionsToAdd = new ArrayList<>();
 
         //QUESTIONS
-        Scanner input = new Scanner(System.in);
         boolean finished = false;
 
         while (!finished) {  //repeat until told otherwise
@@ -73,12 +102,18 @@ public class SetupClient {
                     break;
             }
 
-
-
         }
-        server.createQuiz(quizName,questionsToAdd);     //create the quiz on the server
+        try {
+            server.createQuiz(quizName,questionsToAdd);     //create the quiz on the server
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * Close a quiz.
+     */
+    public void closeQuiz
 
 }
 

@@ -35,9 +35,9 @@ public class TestSetupClient {
     @Test
     public void testCreateQuiz(){
         try {
-            String answers = "what is 1+1\n2\n3\n4\n5\nN";
+            String answers = "test quiz\nwhat is 1+1\n2\n3\n4\n5\nN";
             System.setIn(new ByteArrayInputStream(answers.getBytes(StandardCharsets.UTF_8)));
-            setup.createQuiz("test quiz");
+            setup.createQuiz();
             assertEquals("test quiz", server.getQuizList().get(0).getQuizName());
 
         } catch (RemoteException e) {
