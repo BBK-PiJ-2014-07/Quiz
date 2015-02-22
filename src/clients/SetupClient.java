@@ -77,6 +77,7 @@ public class SetupClient {
      */
     public void createQuiz() {
         //Variables for each question
+        System.out.println("\nCREATE A QUIZ\n");
         System.out.println("Please enter a name for your quiz: ");
         String quizName = input.nextLine();
         String question;
@@ -127,8 +128,9 @@ public class SetupClient {
      * @return the id of the closed quiz, 0 if no quiz closed, -1 if error (quiz not found)
      */
     public int closeQuiz(){
+        System.out.println("\nCLOSE A QUIZ\n");
         try {
-            System.out.println("\nOpen quizzes: ");
+            System.out.println("Open quizzes: ");
             for (int i = 0; i<server.getQuizList().size(); i++) {   //print quiz list
                 if (!server.getQuizList().get(i).isClosed()) {
                     System.out.println(server.getQuizList().get(i).getId() + ". " + server.getQuizList().get(i).getQuizName());
