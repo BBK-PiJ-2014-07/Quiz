@@ -35,26 +35,28 @@ public class PlayerClient {
         } catch (RemoteException | NotBoundException ex) {
             ex.printStackTrace();
         }
-        System.out.println("\n");       //spacer
         for (int i = 0; i < 60; i++) {
             System.out.print("=");      //horizontal rule
         }
-
-        System.out.println("\nPlease enter your name.");
+        System.out.println("\nPLAY A QUIZ\n");
+        System.out.println("Please enter your name.");
         String playerName = input.nextLine();
 
         try {
             if (server.getPlayerList().stream()         // check to see if player exists already
                     .noneMatch(p -> p.getName().equals(playerName))) {
-                playerId = server.addNewPlayer(playerName);     //if not, create player
+                playerId = server.addNewPlayer(playerName);
+                System.out.println("\nWelcome " + playerName + "!");//if not, create player
             } else {
                 playerId = server.getPlayerList().stream()      //otherwise get id of existing player
                         .filter(p -> p.getName().equals(playerName))
                         .findFirst().get().getId();
+                System.out.println("\nWelcome back " + playerName + "!");
             }
 
-            System.out.println("\nWelcome " + playerName + "!");
-            chooseQuiz();
+            chooseQuiz();   //go to quiz selection
+
+
         } catch (RemoteException ex){
             ex.printStackTrace();
         }
@@ -130,7 +132,7 @@ public class PlayerClient {
             case "r": playQuiz(quizId);
                 break;
             case "x": System.out.println("Thanks for playing! See you next time.");
-                break;
+                return;
             default: System.out.println("Invalid choice, please enter R, N or X.");
                 break;
         }
