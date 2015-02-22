@@ -42,34 +42,31 @@ public class TestPlayerClient {
     }
 
 
+    @Test
+    public void testServerConnection() throws RemoteException {
+        assertEquals("Server response", server.echo());
+    }
 
     @Test
     public void testPlayQuiz(){
         player.launch();
-        Player player1 = new Player("Alfred");
+        String answers = "paris\n2";
+        System.setIn(new ByteArrayInputStream(answers.getBytes(StandardCharsets.UTF_8)));
         List<Question> questions = new ArrayList<>();
         Question q1 = new Question(1, "What is the capital of France?");
         q1.addAnswers("paris","london","tokyo","madrid");
         Question q2 = new Question(2, "What is 1+1");
         q2.addAnswers("2","3","4","5");
+        questions.add(q1);
+        questions.add(q2);
 
         try {
+            server.addNewPlayer("Alfred");
             server.createQuiz("test quiz", questions);
+            assertEquals(2,player.playQuiz(1, 1));
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        String answers = "paris\n2";
-        System.setIn(new ByteArrayInputStream(answers.getBytes(StandardCharsets.UTF_8)));
-        /*try {
-            //player.playQuiz(1, player1);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        try {
-            assertEquals(2,(int)server.getQuizList().get(0).getHighScore().getValue());
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }*/
 
     }
 
