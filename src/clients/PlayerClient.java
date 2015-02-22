@@ -10,6 +10,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Client for playing quiz games.
@@ -45,11 +46,11 @@ public class PlayerClient {
 
         List<String> answers = new ArrayList<>();
         Quiz thisQuiz = server.getQuizList().stream().filter(q -> q.getId() == quizId).findFirst().get();   //get the quiz
-
+        Scanner input = new Scanner(System.in);
         for (Question q: thisQuiz.getQuestions()){
             System.out.println(q); //print the question
             System.out.print("\nEnter your answer: ");
-            String ans = System.console().readLine();   //get the answer from the user
+            String ans = input.nextLine();   //get the answer from the user
             answers.add(ans);   //add the answer to the list
         }
         return server.playQuiz(quizId, playerId, answers);  //play the quiz to get the score
