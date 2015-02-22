@@ -19,7 +19,7 @@ public class ClientLauncher {
             System.out.print("=");      //horizontal rule
         }
 
-        System.out.println("What do you want to do?");
+        System.out.println("\nWhat do you want to do?");
         System.out.println("1. Create or edit a quiz");
         System.out.println("2. Play a quiz");
         Scanner input = new Scanner(System.in);
