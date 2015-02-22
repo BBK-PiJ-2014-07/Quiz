@@ -40,12 +40,12 @@ public class ClientLauncher {
 
     public void startSetupClient(){
         SetupClient setup = new SetupClient();
-        setup.launch();
+        setup.execute();
     }
 
     public void startPlayerClient(){
         PlayerClient player = new PlayerClient();
-        player.launch();
+        player.execute();
     }
 
     public void printHeader(){
