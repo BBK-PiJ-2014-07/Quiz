@@ -82,13 +82,13 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
      * @param playerId - the id of player currently playing
      * @return the score or -1 if there is an error
      */
-    public int playQuiz(int quizId, int playerId, List<String> answers) {
+    public synchronized int playQuiz(int quizId, int playerId, List<String> answers) {
         //check the server list of quizzes and players to ensure that id exists
         if (quizList.stream().noneMatch(q -> q.getId() == quizId) || playerList.stream().noneMatch(p -> p.getId() == playerId)) {
             return -1;
         }
-        int score = 0;
-        Quiz thisQuiz = quizList.stream().filter(q->q.getId()==quizId).findFirst().get();
+        int score = 0;  //init score
+        Quiz thisQuiz = quizList.stream().filter(q->q.getId()==quizId).findFirst().get(); //get quiz to play
 
        for (int i=0; i<thisQuiz.getQuestions().size(); i++){
            //Check the answer for each question, and increment score accordingly
@@ -114,7 +114,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
      * @return the ID of the new quiz
      */
     @Override
-    public int createQuiz(String quizName, List<Question> questions) {
+    public synchronized int createQuiz(String quizName, List<Question> questions) {
         Quiz newQuiz = new Quiz(quizName);
         questions.forEach(newQuiz::addQuestion);
         quizList.add(newQuiz);
@@ -127,7 +127,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
      * @param quizId - the id of the quiz to close
      */
     @Override
-    public void closeQuiz(int quizId) {
+    public synchronized void closeQuiz(int quizId) {
         quizList.stream().filter(q -> q.getId() == quizId).forEach(Quiz::setClosed);
         writeToFile();
     }
@@ -137,7 +137,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
      * @param name - the name of the player to be added
      */
     @Override
-    public void addNewPlayer(String name){
+    public synchronized void addNewPlayer(String name){
         Player newPlayer = new Player(name);
         playerList.add(newPlayer);
     }
@@ -165,7 +165,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
     /**
      * Write the data list to the file specified in the constructor.
      */
-    public void writeToFile(){
+    public synchronized void writeToFile(){
         try {
             ObjectOutputStream outStream = new ObjectOutputStream(new FileOutputStream(file));
             outStream.reset();  //clear the file, to avoid appending rather than overwriting
