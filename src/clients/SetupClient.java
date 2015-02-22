@@ -61,21 +61,19 @@ public class SetupClient {
             questionsToAdd.add(newQ);   //add question to list of questions for quiz
             questionNo++;   //increment number for next question
 
-            boolean confirm =  false;    // Ask whether user is finished
-            while (!confirm) {
-                System.out.print("\nDo you want to add another question? Y/N: ");
-                String ans = input.nextLine();
-
-                if (ans.toUpperCase().equals("N")) {
-                    finished = true;    //User finished; stop the loop
-                    confirm = true;     // User has confirmed
-                } else if (ans.toUpperCase().equals("Y")) {
-                    confirm = true; //User has confirmed but is not finished
-                }
-                else {  //If user enters neither Y or N it will loop again
+            System.out.print("\nDo you want to add another question? Y/N: ");
+            String ans = input.nextLine().toLowerCase();
+            switch (ans) {
+                case "y":   //do nothing, user wants to add another question
+                    break;
+                case "n": finished = true;  //set finished to true as user has finished
+                    break;
+                default:
                     System.out.println("Please enter Y or N!");
-                }
+                    break;
             }
+
+
 
         }
         server.createQuiz(quizName,questionsToAdd);     //create the quiz on the server
