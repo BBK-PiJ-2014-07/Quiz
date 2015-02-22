@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import clients.PlayerClient;
-import resource.Player;
 import resource.Question;
 import resource.Quiz;
 import server.QuizServer;
@@ -50,7 +49,7 @@ public class TestPlayerClient {
 
     @Test
     public void testPlayQuiz(){
-        player.launch();
+        player.execute();
         String answers = "paris\n2";
         System.setIn(new ByteArrayInputStream(answers.getBytes(StandardCharsets.UTF_8)));
         List<Question> questions = new ArrayList<>();

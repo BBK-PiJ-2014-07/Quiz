@@ -25,20 +25,16 @@ public class PlayerClient {
         input = new Scanner(System.in);
     }
 
-    public static void main(String[] args) {
-        PlayerClient pc = new PlayerClient();
-        pc.launch();
-    }
-
-    public void launch(){
+    /**
+     * Connects the server, gets player name and begins the process of playing a quiz.
+     */
+    public void execute(){
         try {
             Registry registry = LocateRegistry.getRegistry(1099); //TODO
             server = (QuizService) registry.lookup("QuizService");
         } catch (RemoteException | NotBoundException ex) {
             ex.printStackTrace();
         }
-
-        printHeader(); //Print header
         System.out.println("\nPlease enter your name.");
         String playerName = input.nextLine();
 
@@ -81,47 +77,11 @@ public class PlayerClient {
             System.out.print("=");      //horizontal rule
         }
     }
+
     /**
-     * Print header/welcome message
+     * Choose the quiz to play.
+     * @throws RemoteException
      */
-    public void printHeader(){
-        for (int i=0; i<60; i++) {
-            System.out.print("*");  //top border
-        }
-        for (int i=0; i<2; i++) {
-            System.out.print("\n*");    // top
-            for (int j=0; j<58; j++){
-                System.out.print(" ");
-            }
-            System.out.print("*");
-        }
-        System.out.print("\n*");
-        for (int j=0; j<24; j++){
-            System.out.print(" ");
-        }
-        System.out.print("QUIZ  GAME"); //middle
-
-        for (int j=0; j<24; j++){
-            System.out.print(" ");
-        }
-        System.out.print("*");
-        for (int i=0; i<2; i++) {
-            System.out.print("\n*");
-            for (int j=0; j<58; j++){
-                System.out.print(" ");  //bottom
-            }
-            System.out.print("*");
-        }
-        System.out.print("\n");
-        for (int i=0; i<60; i++) {
-            System.out.print("*");      //bottom border
-        }
-        System.out.println("\n");       //spacer
-        for (int i=0; i<60; i++){
-            System.out.print("=");      //horizontal rule
-        }
-    }
-
     public void chooseQuiz() throws RemoteException {
         printQuizNames();            //print all the quiz titles
         System.out.println("\nPlease enter the number of the quiz you want to play.");
@@ -129,6 +89,11 @@ public class PlayerClient {
         playQuiz(quizIdToPlay);
     }
 
+    /**
+     * Play a quiz. At the end of the quiz the user will be asked what they want to do next.
+     * @param quizId - the ID of the quiz to play.
+     * @throws RemoteException
+     */
     public void playQuiz(int quizId) throws RemoteException {
         List<String> answers = new ArrayList<>();
         Quiz thisQuiz = server.getQuizList().stream().filter(q -> q.getId() == quizId).findFirst().get();   //get the quiz
