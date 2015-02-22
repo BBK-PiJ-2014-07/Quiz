@@ -16,9 +16,11 @@ import java.util.Scanner;
 public class SetupClient {
     QuizService server;
     Scanner input;
+    boolean connected;
 
     public SetupClient(){
         input = new Scanner(System.in);
+        connected = false;
     }
 
 
@@ -26,13 +28,15 @@ public class SetupClient {
      * Launch the setup client and connect to the server.
      */
     public void execute() {
-        try {
-            Registry registry = LocateRegistry.getRegistry(1099); //TODO
-            server = (QuizService) registry.lookup("QuizService");
-        } catch (RemoteException | NotBoundException ex) {
-            ex.printStackTrace();
+        if (!connected) {
+            try {
+                Registry registry = LocateRegistry.getRegistry(1099); //TODO
+                server = (QuizService) registry.lookup("QuizService");
+                connected = true;
+            } catch (RemoteException | NotBoundException ex) {
+                ex.printStackTrace();
+            }
         }
-
         System.out.println("\n");       //spacer
         for (int i = 0; i < 60; i++) {
             System.out.print("=");      //horizontal rule
@@ -104,7 +108,8 @@ public class SetupClient {
 
         }
         try {
-            server.createQuiz(quizName,questionsToAdd);     //create the quiz on the server
+            int quizId = server.createQuiz(quizName,questionsToAdd);     //create the quiz on the server
+            System.out.println("Quiz "+quizId+" created!");
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -113,7 +118,29 @@ public class SetupClient {
     /**
      * Close a quiz.
      */
-    public void closeQuiz
+    public void closeQuiz(){
+        try {
+            for (int i = 1; i == server.getQuizList().size(); i++) {
+                System.out.println(server.getQuizList().get(i - 1).getId() + ". " + server.getQuizList().get(i - 1).getQuizName());
+            }
+            System.out.println("Please enter the number of the quiz you wish to close.");
+            int idNo = Integer.parseInt(input.nextLine());
+            System.out.println("Are you sure you want to close quiz " + idNo + "? You will no longer be able to play it. Y/N");
+            String choice = input.nextLine().toLowerCase();
+            switch (choice) {
+                case "y": server.closeQuiz(idNo);
+                    System.out.println("Quiz " + idNo + " closed.");
+                    break;
+                case "n":
+                    System.out.println("Quiz not closed.");
+                    break;
+                default:
+                    System.out.println("Please enter Y or N.");
+            }
+        } catch (RemoteException ex){
+            ex.printStackTrace();
+        }
+    }
 
 }
 
