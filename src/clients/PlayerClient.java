@@ -124,11 +124,22 @@ public class PlayerClient {
 
     public void chooseQuiz() throws RemoteException {
         printQuizNames();            //print all the quiz titles
-
         System.out.println("\nPlease enter the number of the quiz you want to play.");
         int quizIdToPlay = Integer.parseInt(input.nextLine());
-        Quiz thisQuiz = server.getQuizList().stream().filter(q -> q.getId() == quizIdToPlay).findFirst().get();   //get the quiz
-        int score = playQuiz(thisQuiz);
+        playQuiz(quizIdToPlay);
+    }
+
+    public void playQuiz(int quizId) throws RemoteException {
+        List<String> answers = new ArrayList<>();
+        Quiz thisQuiz = server.getQuizList().stream().filter(q -> q.getId() == quizId).findFirst().get();   //get the quiz
+        System.out.println(thisQuiz.getQuizName().toUpperCase() + "\n");   //print the quiz name
+        for (Question q: thisQuiz.getQuestions()){
+            System.out.println(q); //print the question
+            System.out.print("\nEnter your answer: ");
+            String ans = input.nextLine();   //get the answer from the user
+            answers.add(ans);   //add the answer to the list
+        }
+        int score = server.playQuiz(quizId, playerId, answers);  //play the quiz to get the score
         System.out.println("At the end of the quiz your score is " + score+"!");
 
         // Print the high scores
@@ -144,27 +155,13 @@ public class PlayerClient {
         switch (choice){
             case "n": chooseQuiz();
                 break;
-            case "r": playQuiz(thisQuiz);
+            case "r": playQuiz(quizId);
                 break;
             case "x": System.out.println("Thanks for playing! See you next time.");
                 break;
             default: System.out.println("Invalid choice, please enter R, N or X.");
                 break;
         }
-
-    }
-
-    public int playQuiz(Quiz quiz) throws RemoteException {
-        List<String> answers = new ArrayList<>();
-        int quizId = quiz.getId();
-        System.out.println(quiz.getQuizName().toUpperCase() + "\n");   //print the quiz name
-        for (Question q: quiz.getQuestions()){
-            System.out.println(q); //print the question
-            System.out.print("\nEnter your answer: ");
-            String ans = input.nextLine();   //get the answer from the user
-            answers.add(ans);   //add the answer to the list
-        }
-        return server.playQuiz(quizId, playerId, answers);  //play the quiz to get the score
 
     }
 }
