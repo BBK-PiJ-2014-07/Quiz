@@ -18,6 +18,12 @@ import java.util.Scanner;
  */
 public class PlayerClient {
     private QuizService server;
+    private int playerId;
+    private Scanner input;
+    
+    public PlayerClient() {
+        input = new Scanner(System.in);
+    }
 
     public static void main(String[] args) {
         PlayerClient pc = new PlayerClient();
@@ -32,12 +38,9 @@ public class PlayerClient {
             ex.printStackTrace();
         }
 
-        init(); //Print header
-
-        Scanner input = new Scanner(System.in);
+        printHeader(); //Print header
         System.out.println("\nPlease enter your name.");
         String playerName = input.nextLine();
-        int playerId;
 
         try {
             if (server.getPlayerList().stream()         // check to see if player exists already
@@ -49,26 +52,39 @@ public class PlayerClient {
                         .findFirst().get().getId();
             }
 
-            System.out.println("\nWelcome" + playerName + "!");
-            System.out.println("Here are the available quizzes for you to play:\n");
-
-            //print all the quiz titles
-            for (int i=1; i==server.getQuizList().size(); i++){
-                System.out.println(server.getQuizList().get(i-1).getId() + ". " + server.getQuizList().get(i-1).getQuizName());
-            }
-
-            System.out.println("\nPlease enter the number of the quiz you want to play.");
-            int quizIdToPlay = Integer.parseInt(input.nextLine());
-            playQuiz(quizIdToPlay, playerId);
+            System.out.println("\nWelcome " + playerName + "!");
+            chooseQuiz();
         } catch (RemoteException ex){
             ex.printStackTrace();
         }
     }
 
+
+    /**
+     * Print quiz names
+     */
+    public void printQuizNames() throws RemoteException {
+
+        System.out.println("Here are the available quizzes for you to play:\n");
+
+        for (int i=0; i<60; i++){
+            System.out.print("=");      //horizontal rule
+        }
+        System.out.println("\n");       //spacer
+
+
+        for (int i=1; i==server.getQuizList().size(); i++){
+            System.out.println(server.getQuizList().get(i-1).getId() + ". " + server.getQuizList().get(i-1).getQuizName());
+        }
+        System.out.println("\n");       //spacer
+        for (int i=0; i<60; i++){
+            System.out.print("=");      //horizontal rule
+        }
+    }
     /**
      * Print header/welcome message
      */
-    public void init(){
+    public void printHeader(){
         for (int i=0; i<60; i++) {
             System.out.print("*");  //top border
         }
@@ -100,17 +116,38 @@ public class PlayerClient {
         for (int i=0; i<60; i++) {
             System.out.print("*");      //bottom border
         }
-
-
+        System.out.println("\n");       //spacer
         for (int i=0; i<60; i++){
-            System.out.print("=");
+            System.out.print("=");      //horizontal rule
         }
+    }
+
+    public void chooseQuiz() throws RemoteException {
+        printQuizNames();            //print all the quiz titles
+
+        System.out.println("\nPlease enter the number of the quiz you want to play.");
+        int quizIdToPlay = Integer.parseInt(input.nextLine());
+        int score = playQuiz(quizIdToPlay, playerId);
+        System.out.println("At the end of the quiz your score is " + score);
+        System.out.println("Type R to replay; N for new quiz; X to exit");
+        String choice = input.nextLine().toLowerCase();
+
+        switch (choice){
+            case "n": chooseQuiz();
+                break;
+            case "r": playQuiz(quizIdToPlay, playerId);
+                break;
+            case "x": System.out.println("Thanks for playing! See you next time.");
+                break;
+            default: System.out.println("Invalid choice, please enter R, N or X.");
+                break;
+        }
+
     }
 
     public int playQuiz(int quizId, int playerId) throws RemoteException {
         List<String> answers = new ArrayList<>();
         Quiz thisQuiz = server.getQuizList().stream().filter(q -> q.getId() == quizId).findFirst().get();   //get the quiz
-        Scanner input = new Scanner(System.in);
         for (Question q: thisQuiz.getQuestions()){
             System.out.println(q); //print the question
             System.out.print("\nEnter your answer: ");
