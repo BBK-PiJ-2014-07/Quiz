@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -63,8 +64,7 @@ public class TestPlayerClient {
         try {
             server.addNewPlayer("Alfred");
             server.createQuiz("test quiz", questions);
-            Quiz thisQuiz = server.getQuizList().get(0);
-            assertEquals(2,(int)server.getQuizList().get(0).getHighScore().getValue());
+            assertTrue(server.getQuizList().get(0).getScores().containsKey(2));
         } catch (RemoteException e) {
             e.printStackTrace();
         }
