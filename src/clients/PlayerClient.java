@@ -1,5 +1,6 @@
 package clients;
 
+import resource.Player;
 import resource.Question;
 import resource.Quiz;
 import service.QuizService;
@@ -8,9 +9,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Client for playing quiz games.
@@ -107,35 +106,50 @@ public class PlayerClient {
 
         System.out.println("\n" + thisQuiz.getQuizName().toUpperCase() + "\n");   //print the quiz name
 
-        for (Question q: thisQuiz.getQuestions()){
+        for (Question q : thisQuiz.getQuestions()) {
             System.out.println(q); //print the question
             System.out.print("\nEnter your answer: ");
             String ans = input.nextLine();   //get the answer from the user
             answers.add(ans);   //add the answer to the list
         }
         int score = server.playQuiz(quizId, playerId, answers);  //play the quiz to get the score
-        System.out.println("At the end of the quiz your score is " + score+"!");
+        System.out.println("At the end of the quiz your score is " + score + "!");
 
-        // Print the high scores
-        if (score > thisQuiz.getHighScore().getValue()){
+        // Check if high score
+        if (score > thisQuiz.getScores().firstKey()) {
             System.out.println("NEW HIGH SCORE! CONGRATULATIONS!" + "\n");
-        } else {
-            System.out.println("HIGH SCORE: " + thisQuiz.getHighScore().getKey().getName() + " - " + thisQuiz.getHighScore().getValue() + "\n");
+        }
+        thisQuiz = server.getQuizList().stream().filter(q -> q.getId() == quizId).findFirst().get();   //refresh quiz to update scores
+
+        System.out.println("Top 5 scores:");
+
+        int fifthKey = thisQuiz.getScores().firstKey();
+        for (int i=0; i<5; i++) {       //Convoluted way of getting the 5th key value to allow for top 5 scores
+            fifthKey = thisQuiz.getScores().lowerKey(fifthKey);
         }
 
-        System.out.println("Type R to replay; N for new quiz; X to exit");
+        SortedMap<Integer, Player> top5Scores = thisQuiz.getScores().subMap(thisQuiz.getScores().firstKey(),fifthKey);
+        int position = 1;   //allow for 1-5 numbering
+        for (Map.Entry<Integer, Player> entry: top5Scores.entrySet()){
+            System.out.println(position + ". " + entry.getValue().getName() + " - " + entry.getKey());  //print score and player name
+        }
+
+        System.out.println("\nType R to replay; N for new quiz; X to exit");
         String choice = input.nextLine().toLowerCase();
 
-        switch (choice){
-            case "n": chooseQuiz();
+        switch (choice) {
+            case "n":
+                chooseQuiz();
                 break;
-            case "r": playQuiz(quizId);
+            case "r":
+                playQuiz(quizId);
                 break;
-            case "x": System.out.println("Thanks for playing! See you next time.");
+            case "x":
+                System.out.println("Thanks for playing! See you next time.");
                 return;
-            default: System.out.println("Invalid choice, please enter R, N or X.");
+            default:
+                System.out.println("Invalid choice, please enter R, N or X.");
                 break;
         }
-
     }
 }
