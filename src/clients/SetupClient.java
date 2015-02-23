@@ -54,7 +54,13 @@ public class SetupClient {
         System.out.println("2. Close an existing quiz");
         System.out.println("3. Quit");
 
-        int choice = Integer.parseInt(input.nextLine());
+        int choice;
+        try {
+            choice = Integer.parseInt(input.nextLine());
+        } catch (NumberFormatException ex) {
+            System.out.println("Please enter a number.");
+             choice = Integer.parseInt(input.nextLine());
+        }
 
         switch(choice) {
             case 1: createQuiz();
