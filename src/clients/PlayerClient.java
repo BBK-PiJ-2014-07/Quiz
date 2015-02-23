@@ -116,23 +116,32 @@ public class PlayerClient {
         System.out.println("At the end of the quiz your score is " + score + "!");
 
         // Check if high score
-        if (score > thisQuiz.getScores().firstKey()) {
+        if (score > thisQuiz.getScores().firstKey() || thisQuiz.getScores().isEmpty()) {
             System.out.println("NEW HIGH SCORE! CONGRATULATIONS!" + "\n");
         }
         thisQuiz = server.getQuizList().stream().filter(q -> q.getId() == quizId).findFirst().get();   //refresh quiz to update scores
 
-        System.out.println("Top 5 scores:");
-
-        int fifthKey = thisQuiz.getScores().firstKey();
-        for (int i=0; i<5; i++) {       //Convoluted way of getting the 5th key value to allow for top 5 scores
-            fifthKey = thisQuiz.getScores().lowerKey(fifthKey);
+        System.out.println("Top scores:");  //print top 5 scores
+        SortedMap<Integer, Player> topScores;
+        if (thisQuiz.getScores().size() > 5) {
+            int fifthKey = thisQuiz.getScores().firstKey();
+            for (int i = 0; i < 5; i++) {       //Convoluted way of getting the 5th key value to allow for top 5 scores
+                fifthKey = thisQuiz.getScores().lowerKey(fifthKey);
+            }
+            topScores = thisQuiz.getScores().subMap(thisQuiz.getScores().firstKey(), fifthKey); //trim to top 5 entries
+        } else {
+            topScores = thisQuiz.getScores();   //if fewer than 5 entries, print them all
         }
+            int position = 1;   //allow for 1-5 numbering
 
-        SortedMap<Integer, Player> top5Scores = thisQuiz.getScores().subMap(thisQuiz.getScores().firstKey(),fifthKey);
-        int position = 1;   //allow for 1-5 numbering
-        for (Map.Entry<Integer, Player> entry: top5Scores.entrySet()){
-            System.out.println(position + ". " + entry.getValue().getName() + " - " + entry.getKey());  //print score and player name
-        }
+            for (Map.Entry<Integer, Player> entry: topScores.entrySet()){
+                System.out.println(position + ". " + entry.getValue().getName() + " - " + entry.getKey());  //print score and player name
+                position++;
+            }
+
+
+
+
 
         System.out.println("\nType R to replay; N for new quiz; X to exit");
         String choice = input.nextLine().toLowerCase();
