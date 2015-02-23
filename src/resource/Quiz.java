@@ -18,7 +18,7 @@ public class Quiz implements Serializable {
     //static int to ensure unique id for each quiz
     private static int quizIds = 0;
     private List<Question> questions;
-    private Map<Player,Integer> highScore;  //Player-HighScore pair
+    private Map<Integer,Player> scores;  //Player-HighScore pair
 
     public Quiz(String quizName){
         questions = new ArrayList<>();
@@ -26,7 +26,7 @@ public class Quiz implements Serializable {
         this.quizName = quizName;
         id = ++quizIds;
         closed = false;
-        highScore = new TreeMap<>();
+        scores = new TreeMap<>();
 
     }
 
