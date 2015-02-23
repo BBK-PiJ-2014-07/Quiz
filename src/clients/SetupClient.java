@@ -43,6 +43,8 @@ public class SetupClient {
         if (!connected) {
             connectToServer();
         }
+        boolean finished = false;
+        while (!finished) {
         System.out.println("\n");       //spacer
         for (int i = 0; i < 60; i++) {
             System.out.print("=");      //horizontal rule
@@ -59,19 +61,24 @@ public class SetupClient {
             choice = Integer.parseInt(input.nextLine());
         } catch (NumberFormatException ex) {
             System.out.println("Please enter a number.");
-             choice = Integer.parseInt(input.nextLine());
+            choice = Integer.parseInt(input.nextLine());
         }
 
-        switch(choice) {
-            case 1: createQuiz();
+        switch (choice) {
+            case 1:
+                createQuiz();
                 break;
-            case 2: closeQuiz();
+            case 2:
+                closeQuiz();
                 break;
-            case 3: return;
+            case 3:
+                finished = true;
+                return;
             default:
                 System.out.println("Please choose a valid option.");
                 break;
         }
+    }
 
     }
 
