@@ -13,36 +13,44 @@ public class ClientLauncher {
 
     public void launch() {
         printHeader();
+        boolean finished = false;
+        System.out.println("WELCOME TO THE QUIZ PROGRAM!");
+        while (!finished){
+            System.out.println("\n");       //spacer
+            for (int i = 0; i < 60; i++) {
+                System.out.print("=");      //horizontal rule
+            }
 
-        System.out.println("\n");       //spacer
-        for (int i = 0; i < 60; i++) {
-            System.out.print("=");      //horizontal rule
-        }
+            System.out.println("\nWhat do you want to do?");
+            System.out.println("1. Create or edit a quiz");
+            System.out.println("2. Play a quiz");
+            System.out.println("3. Quit");
+            Scanner input = new Scanner(System.in);
 
-        System.out.println("\nWhat do you want to do?");
-        System.out.println("1. Create or edit a quiz");
-        System.out.println("2. Play a quiz");
-        Scanner input = new Scanner(System.in);
-
-        int choice;
-        try {
-            choice = Integer.parseInt(input.nextLine());
-        } catch (NumberFormatException ex) {
-            System.out.println("Please enter a number.");
-            choice = Integer.parseInt(input.nextLine());
-        }
+            int choice;
+            try {
+                choice = Integer.parseInt(input.nextLine());
+            } catch (NumberFormatException ex) {
+                System.out.println("Please enter a number.");
+                choice = Integer.parseInt(input.nextLine());
+            }
 
 
-        switch (choice) {
-            case 1:
-                startSetupClient();
-                break;
-            case 2:
-                startPlayerClient();
-                break;
-            default:
-                System.out.println("Invalid choice. Please choose an option.");
-                break;
+            switch (choice) {
+                case 1:
+                    startSetupClient();
+                    break;
+                case 2:
+                    startPlayerClient();
+                    break;
+                case 3:
+                    System.out.println("Thanks for playing!");
+                    finished = true;
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please choose an option.");
+                    break;
+            }
         }
     }
 
