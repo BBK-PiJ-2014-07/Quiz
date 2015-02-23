@@ -10,7 +10,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,12 +97,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
                 .filter(p -> p.getId() == playerId)
                 .findFirst().get(); //get the player details
 
-        //Check to see if score is a high score
-        if (score > thisQuiz.getHighScore().getValue()) {   //compare to existing high score
-
-            thisQuiz.setHighScore(new AbstractMap.SimpleEntry<>(thisPlayer, score));    //set the high score
-        }
-        thisPlayer.getScores().put(quizId,score);   //store the score for this quiz in player's score map
+        thisQuiz.getScores().put(score, thisPlayer);    //add the score to the quiz score map
         return score;
     }
 
