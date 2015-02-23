@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -88,7 +89,7 @@ public class TestServer {
      */
     @Test(expected = NoSuchElementException.class)
     public void testPlayQuizWrongId(){
-        server.playQuiz(999,1,answers);
+        server.playQuiz(999, 1, answers);
     }
 
     @Test   //quiz 8
@@ -105,7 +106,7 @@ public class TestServer {
         server.playQuiz(1,1,answers);   //both correct
         answers.set(1,"5");
         server.playQuiz(1,2,answers);
-        assertEquals(server.getQuizList().get(0).getHighScore().getKey().getName(),"Michael");
+        assertTrue(server.getQuizList().get(0).getScores().containsKey(2));
     }
 
     @Test
@@ -116,10 +117,6 @@ public class TestServer {
         assertTrue(server.getPlayerList().contains(lucille));
     }
 
-    @Test   //quiz 11
-    public void testSavePlayerScore(){
-        assertEquals(2, (int) server.getPlayerList().get(0).getScores().get(1));
-    }
     @AfterClass
     public static void closeDown(){
         testFile.delete();
