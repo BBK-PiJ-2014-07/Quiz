@@ -23,7 +23,15 @@ public class ClientLauncher {
         System.out.println("1. Create or edit a quiz");
         System.out.println("2. Play a quiz");
         Scanner input = new Scanner(System.in);
-        int choice = Integer.parseInt(input.nextLine());
+
+        int choice;
+        try {
+            choice = Integer.parseInt(input.nextLine());
+        } catch (NumberFormatException ex) {
+            System.out.println("Please enter a number.");
+            choice = Integer.parseInt(input.nextLine());
+        }
+
 
         switch (choice) {
             case 1:
