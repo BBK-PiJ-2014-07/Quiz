@@ -115,7 +115,7 @@ public class PlayerClient {
         int score = server.playQuiz(quizId, playerId, answers);  //play the quiz to get the score
         System.out.println("At the end of the quiz your score is " + score + "!");
 
-        // Check if high score
+        // Check if high score (if empty, automatically is high score)
         if (thisQuiz.getScores().isEmpty() || score > thisQuiz.getScores().firstKey()){
             System.out.println("NEW HIGH SCORE! CONGRATULATIONS!" + "\n");
         }
@@ -140,7 +140,7 @@ public class PlayerClient {
             }
 
 
-        System.out.println("\nType R to replay; N for new quiz; X to exit");
+        System.out.println("\nType R to replay; N for new quiz; X to return to main menu");
         String choice = input.nextLine().toLowerCase();
 
         switch (choice) {
