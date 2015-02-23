@@ -75,8 +75,8 @@ public class PlayerClient {
         System.out.println("\n");       //spacer
 
 
-        for (int i=1; i==server.getQuizList().size(); i++){
-            System.out.println(server.getQuizList().get(i-1).getId() + ". " + server.getQuizList().get(i-1).getQuizName());
+        for (int i=0; i<server.getQuizList().size(); i++){
+            System.out.println(server.getQuizList().get(i).getId() + ". " + server.getQuizList().get(i).getQuizName());
         }
         System.out.println("\n");       //spacer
         for (int i=0; i<60; i++){
