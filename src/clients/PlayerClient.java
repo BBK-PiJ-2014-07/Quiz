@@ -116,7 +116,7 @@ public class PlayerClient {
         System.out.println("At the end of the quiz your score is " + score + "!");
 
         // Check if high score
-        if (score > thisQuiz.getScores().firstKey() || thisQuiz.getScores().isEmpty()) {
+        if (thisQuiz.getScores().isEmpty() || score > thisQuiz.getScores().firstKey()){
             System.out.println("NEW HIGH SCORE! CONGRATULATIONS!" + "\n");
         }
         thisQuiz = server.getQuizList().stream().filter(q -> q.getId() == quizId).findFirst().get();   //refresh quiz to update scores
@@ -138,9 +138,6 @@ public class PlayerClient {
                 System.out.println(position + ". " + entry.getValue().getName() + " - " + entry.getKey());  //print score and player name
                 position++;
             }
-
-
-
 
 
         System.out.println("\nType R to replay; N for new quiz; X to exit");
