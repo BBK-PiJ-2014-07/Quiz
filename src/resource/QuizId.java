@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Singleton class to allow for non-repetition of quiz id.
  */
 public class QuizId implements Serializable {
-    private static int nextId = 0;
+    private int nextId = 0;
 
     public QuizId(){}
 
