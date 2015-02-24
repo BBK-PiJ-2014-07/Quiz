@@ -15,16 +15,15 @@ public class Quiz implements Serializable {
     private int id;
     private String quizName;
     private boolean closed;
-    //static int to ensure unique id for each quiz
-    private static int quizIds = 0;
+    //static int to ensure unique id for each quizprivate static int quizIds = 0;
     private List<Question> questions;
     private TreeMap<Integer,Player> scores;  //Player-HighScore pair
 
-    public Quiz(String quizName){
+    public Quiz(int id, String quizName){
         questions = new ArrayList<>();
         //pre-increment id number to assign as id of this quiz
         this.quizName = quizName;
-        id = ++quizIds;
+        this.id = id;
         closed = false;
         scores = new TreeMap<>(Collections.reverseOrder());
 
