@@ -161,10 +161,14 @@ public class SetupClient {
                 return -1;  //if not, return -1
             }
             System.out.println("Are you sure you want to close quiz " + idNo + "? You will no longer be able to play it. Y/N");
-            String choice = input.nextLine().toLowerCase();
 
-            switch (choice) {
-                case "y": server.closeQuiz(idNo);
+            boolean invalid;
+            do {
+                String choice = input.nextLine().toLowerCase();
+                invalid = false;
+                switch (choice) {
+                case "y":
+                    server.closeQuiz(idNo);
                     System.out.println("Quiz " + idNo + " closed.");
                     return idNo;
                 case "n":
@@ -172,7 +176,10 @@ public class SetupClient {
                     break;
                 default:
                     System.out.println("Please enter Y or N.");
-            }
+                    invalid = true;
+                    break;
+                }
+            } while (invalid);
         } catch (RemoteException ex){
             ex.printStackTrace();
         }
