@@ -19,50 +19,62 @@ public class ClientLauncher {
             for (int i = 0; i < 60; i++) {
                 System.out.print("=");      //horizontal rule
             }
-
-            System.out.println("\nWhat do you want to do?");
-            System.out.println("1. Create or edit a quiz");
-            System.out.println("2. Play a quiz");
-            System.out.println("3. Quit");
             Scanner input = new Scanner(System.in);
+            boolean invalid;
+            do {
+                invalid = false;
+                System.out.println("\nWhat do you want to do?");
+                System.out.println("1. Create or edit a quiz");
+                System.out.println("2. Play a quiz");
+                System.out.println("3. Quit");
 
-            int choice;
-            try {
-                choice = Integer.parseInt(input.nextLine());
-            } catch (NumberFormatException ex) {
-                System.out.println("Please enter a number.");
-                choice = Integer.parseInt(input.nextLine());
-            }
+                int choice;
+                try {
+                    choice = Integer.parseInt(input.nextLine());
+                } catch (NumberFormatException ex) {
+                    System.out.println("Please enter a number.");
+                    choice = Integer.parseInt(input.nextLine());    //get user choice
+                }
 
-
-            switch (choice) {
-                case 1:
-                    startSetupClient();
-                    break;
-                case 2:
-                    startPlayerClient();
-                    break;
-                case 3:
-                    System.out.println("Thanks for playing!");
-                    finished = true;
-                    return;
-                default:
-                    System.out.println("Invalid choice. Please choose an option.");
-                    break;
-            }
+                switch (choice) {
+                    case 1:
+                        launchSetupClient(); //create or edit quiz - launch setup client
+                        break;
+                    case 2:
+                        launchPlayerClient();  //play quiz - launch player client
+                        break;
+                    case 3:
+                        System.out.println("Thanks for playing!");  //user wants to quit
+                        finished = true;
+                        return;
+                    default:
+                        System.out.println("Invalid choice. Please choose an option.");
+                        invalid = true; //invalid option so repeat
+                        break;
+                }
+            } while (invalid);
         }
     }
 
-    public void startSetupClient(){
+    /**
+     * Launch the setup client.
+     */
+    public void launchSetupClient(){
         SetupClient setup = new SetupClient();
         setup.execute();
     }
 
-    public void startPlayerClient(){
+    /**
+     * Launch the player client.
+     */
+    public void launchPlayerClient(){
         PlayerClient player = new PlayerClient();
         player.execute();
     }
 
+    /**
+     * Print a header surrounded by asterisks
+     */
     public void printHeader(){
         for (int i=0; i<60; i++) {
             System.out.print("*");  //top border
