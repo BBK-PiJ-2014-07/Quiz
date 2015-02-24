@@ -18,7 +18,7 @@ public class TestQuiz {
 
     @Before
     public void buildUp(){
-        quiz = new Quiz("test quiz");
+        quiz = new Quiz(1,"test quiz");
         Question q1 = new Question(1, "What is the capital of France?");
         q1.addAnswers("paris", "brussels", "london", "tokyo");
         quiz.addQuestion(q1);
