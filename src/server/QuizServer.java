@@ -3,6 +3,7 @@ package server;
 import resource.Player;
 import resource.Question;
 import resource.Quiz;
+import resource.QuizId;
 import service.QuizService;
 
 import java.io.*;
@@ -22,10 +23,11 @@ import java.util.List;
  */
 
 public class QuizServer extends UnicastRemoteObject implements QuizService {
-    private List<List<?>> data;   //list for storing playerList + quizList
+    private List<Object> data;   //list for storing playerList + quizList
     private List<Quiz> quizList;    //list of all quizzes
     private List<Player> playerList;    //list of all players
     private File file;  //the file to be written to/read from - supplied by factory
+    private QuizId quizIdGenerator; //singleton object to generate unique quiz ids
 
     /**
      * default constructor - shouldn't be called
@@ -42,7 +44,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
             ObjectInputStream inStream = new ObjectInputStream(new FileInputStream(file));
 
             try {
-                data = (List<List<?>>) inStream.readObject();   //the object written to file is the data list
+                data = (List<Object>) inStream.readObject();   //the object written to file is the data list
                 quizList = (List<Quiz>) data.get(0);    //first object in data list is quizList
                 playerList = (List<Player>)data.get(1); //second object is playerList
                 inStream.close();
@@ -51,10 +53,12 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
             }
         } else {    //if the file is empty the lists must be created
             data = new ArrayList<>();
+            quizIdGenerator = new QuizId();
             quizList = new ArrayList<>();
             playerList = new ArrayList<>();
             data.add(quizList); //add the quizList to the output list
             data.add(playerList);   //add the playerList to the output list
+            data.add(quizIdGenerator);  //add quizIdGenerator to output list
 
 
         }
