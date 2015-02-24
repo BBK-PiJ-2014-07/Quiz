@@ -170,10 +170,10 @@ public class PlayerClient {
 
                     switch (choice) {
                         case 1:
-                            chooseQuiz();
+                            playQuiz(quizId);
                             break;
                         case 2:
-                            playQuiz(quizId);
+                            chooseQuiz();
                             break;
                         case 3:
                             System.out.println("Thanks for playing! See you next time.");
