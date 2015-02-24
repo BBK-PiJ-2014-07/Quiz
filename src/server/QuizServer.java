@@ -140,7 +140,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
      */
     @Override
     public synchronized int addNewPlayer(String name){
-        Player newPlayer = new Player(name);
+        Player newPlayer = new Player(playerId.incrementAndGet(),name);
         playerList.add(newPlayer);
         return newPlayer.getId();
     }
