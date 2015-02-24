@@ -25,7 +25,7 @@ public class TestServer {
 
     @BeforeClass
     public static void doFirst() throws IOException {
-        player1 = new Player("Michael");
+        player1 = new Player(1,"Michael");
         testFile = new File("testFile.txt");
         testFile.createNewFile();
         server = new QuizServer(testFile);
@@ -112,8 +112,7 @@ public class TestServer {
     @Test
     public void testAddPlayer(){
         server.addNewPlayer("Lucille");
-        Player lucille = new Player("Lucille");
-        lucille.setId(3);
+        Player lucille = new Player(3,"Lucille");
         assertTrue(server.getPlayerList().contains(lucille));
     }
 
