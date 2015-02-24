@@ -101,7 +101,7 @@ public class TestServer {
 
     @Test   //quiz 9
     public void testHighScore(){
-        Player player2 = new Player("Lindsay");
+        Player player2 = new Player(2,"Lindsay");
         server.getPlayerList().add(player2);
         server.playQuiz(1,1,answers);   //both correct
         answers.set(1,"5");
