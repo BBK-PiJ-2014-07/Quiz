@@ -15,7 +15,7 @@ public class Quiz implements Serializable {
     private int id;
     private String quizName;
     private boolean closed;
-    //static int to ensure unique id for each quizprivate static int quizIds = 0;
+    //static int to ensure unique id for each quiz
     private List<Question> questions;
     private TreeMap<Integer,Player> scores;  //Player-HighScore pair
 
