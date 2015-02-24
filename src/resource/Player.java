@@ -13,10 +13,9 @@ import java.util.TreeMap;
 public class Player implements Serializable {
     private String name;
     private int id;
-    private static int playerIds = 1;
-    public Player(String name){
+    public Player(int id, String name){
+        this.id = id;
         this.name = name;
-        id = playerIds++;
     }
 
 
