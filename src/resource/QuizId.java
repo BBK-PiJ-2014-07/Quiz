@@ -8,7 +8,7 @@ public class QuizId {
 
     public QuizId(){}
 
-    public static synchronized int incrementAndGet(){
+    public synchronized int incrementAndGet(){
         return nextId++;
 
     }
