@@ -114,19 +114,23 @@ public class SetupClient {
             newQ.addAnswers(answers);   //add answers to question
             questionsToAdd.add(newQ);   //add question to list of questions for quiz
             questionNo++;   //increment number for next question
-
-            System.out.print("\nDo you want to add another question? Y/N: ");
-            String ans = input.nextLine().toLowerCase();
-            switch (ans) {
-                case "y":   //do nothing, user wants to add another question
-                    break;
-                case "n": finished = true;  //set finished to true as user has finished
-                    break;
-                default:
-                    System.out.println("Please enter Y or N!");
-                    break;
-            }
-
+            boolean invalid;
+            do {
+                invalid = false;
+                System.out.print("\nDo you want to add another question? Y/N: ");
+                String ans = input.nextLine().toLowerCase();
+                switch (ans) {
+                    case "y":   //do nothing, user wants to add another question
+                        break;
+                    case "n":
+                        finished = true;  //set finished to true as user has finished
+                        break;
+                    default:
+                        System.out.println("Please enter Y or N!");
+                        invalid = true; //invalid input so repeat menu  1
+                        break;
+                }
+            } while (invalid);
         }
         try {
             int quizId = server.createQuiz(quizName,questionsToAdd);     //create the quiz on the server
@@ -168,7 +172,6 @@ public class SetupClient {
                     break;
                 default:
                     System.out.println("Please enter Y or N.");
-                    break;
             }
         } catch (RemoteException ex){
             ex.printStackTrace();
