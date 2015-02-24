@@ -113,7 +113,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
      */
     @Override
     public synchronized int createQuiz(String quizName, List<Question> questions) {
-        Quiz newQuiz = new Quiz(quizName);
+        Quiz newQuiz = new Quiz(quizIdGenerator.incrementAndGet(),quizName);
         questions.forEach(newQuiz::addQuestion);
         quizList.add(newQuiz);
         writeToFile();
