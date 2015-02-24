@@ -118,7 +118,6 @@ public class PlayerClient {
     public void playQuiz(int quizId) throws RemoteException {
         List<String> answers = new ArrayList<>();
         Quiz thisQuiz = server.getQuizList().stream().filter(q -> q.getId() == quizId).findFirst().get();   //get the quiz
-2
         System.out.println("\n" + thisQuiz.getQuizName().toUpperCase() + "\n");   //print the quiz name
 
         for (Question q : thisQuiz.getQuestions()) {
