@@ -25,7 +25,8 @@ public class PlayerClient {
     }
 
     /**
-     * Connects the server, gets player name and begins the process of playing a quiz.
+     * Connects the server, prints welcome message, gets player name and begins the process of playing a quiz.
+     * If the player already exists on the server, the player is greeted with "Welcome back".
      */
     public void execute(){
         try {
@@ -84,7 +85,8 @@ public class PlayerClient {
     }
 
     /**
-     * Choose the quiz to play.
+     * Choose the quiz to play. If the quiz ID given does not exist, or it refers to a closed quiz, the user is
+     * prompted to enter a valid ID number.
      * @throws RemoteException
      */
     public void chooseQuiz() throws RemoteException {
