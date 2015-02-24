@@ -72,13 +72,10 @@ public class PlayerClient {
         for (int i=0; i<60; i++){
             System.out.print("=");      //horizontal rule
         }
-        System.out.println("\n");       //spacer
-
-
+        System.out.print("\n");
         for (int i=0; i<server.getQuizList().size(); i++){
             System.out.println(server.getQuizList().get(i).getId() + ". " + server.getQuizList().get(i).getQuizName());
         }
-        System.out.println("\n");       //spacer
         for (int i=0; i<60; i++){
             System.out.print("=");      //horizontal rule
         }
