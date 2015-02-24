@@ -110,6 +110,11 @@ public class PlayerClient {
             System.out.println(q); //print the question
             System.out.print("\nEnter your answer: ");
             String ans = input.nextLine();   //get the answer from the user
+            if (q.isCorrect(ans)){
+                System.out.println("Correct!");
+            } else {
+                System.out.println("Incorrect! The answer is " + q.getCorrectAnswer() + ".");
+            }
             answers.add(ans);   //add the answer to the list
         }
         int score = server.playQuiz(quizId, playerId, answers);  //play the quiz to get the score
