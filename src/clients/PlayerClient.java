@@ -143,24 +143,34 @@ public class PlayerClient {
                 System.out.println(position + ". " + entry.getValue().getName() + " - " + entry.getKey());  //print score and player name
                 position++;
             }
+        boolean invalid;
+        do {
+            System.out.println("\n What would you like to do?");
+            System.out.println("1. Replay this quiz");
+            System.out.println("2. Play a new quiz");
+            System.out.println("3. Return to main menu");
+            invalid = false;
+            try {
+                int choice = Integer.parseInt(input.nextLine());
 
-
-        System.out.println("\nType R to replay; N for new quiz; X to return to main menu");
-        String choice = input.nextLine().toLowerCase();
-
-        switch (choice) {
-            case "n":
-                chooseQuiz();
-                break;
-            case "r":
-                playQuiz(quizId);
-                break;
-            case "x":
-                System.out.println("Thanks for playing! See you next time.");
-                return;
-            default:
-                System.out.println("Invalid choice, please enter R, N or X.");
-                break;
-        }
+                    switch (choice) {
+                        case 1:
+                            chooseQuiz();
+                            break;
+                        case 2:
+                            playQuiz(quizId);
+                            break;
+                        case 3:
+                            System.out.println("Thanks for playing! See you next time.");
+                            return;
+                        default:
+                            System.out.println("Invalid choice, please enter a number.");
+                            invalid = true;     //invalid option - repeat menu
+                            break;
+                    }
+            } catch (NumberFormatException ex) {
+                System.out.println("Please enter a number!");
+            }
+        } while (invalid);
     }
 }
