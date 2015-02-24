@@ -118,7 +118,7 @@ public class PlayerClient {
     public void playQuiz(int quizId) throws RemoteException {
         List<String> answers = new ArrayList<>();
         Quiz thisQuiz = server.getQuizList().stream().filter(q -> q.getId() == quizId).findFirst().get();   //get the quiz
-
+2
         System.out.println("\n" + thisQuiz.getQuizName().toUpperCase() + "\n");   //print the quiz name
 
         for (Question q : thisQuiz.getQuestions()) {
@@ -136,7 +136,7 @@ public class PlayerClient {
         System.out.println("At the end of the quiz your score is " + score + "!");
 
         // Check if high score (if empty, automatically is high score)
-        if (thisQuiz.getScores().isEmpty() || score > thisQuiz.getScores().firstKey()){
+        if ((thisQuiz.getScores().isEmpty() || score > thisQuiz.getScores().firstKey()) && score!=0){
             System.out.println("NEW HIGH SCORE! CONGRATULATIONS!" + "\n");
         }
         thisQuiz = server.getQuizList().stream().filter(q -> q.getId() == quizId).findFirst().get();   //refresh quiz to update scores
