@@ -51,7 +51,7 @@ public class SetupClient {
         }
 
         System.out.println("\nQUIZ SETUP\n");
-        System.out.println("You have 2 options: ");
+        System.out.println("You have 3 options: ");
         System.out.println("1. Create a new quiz");
         System.out.println("2. Close an existing quiz");
         System.out.println("3. Return to main menu");
