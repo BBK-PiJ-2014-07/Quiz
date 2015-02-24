@@ -74,7 +74,9 @@ public class PlayerClient {
         }
         System.out.print("\n");
         for (int i=0; i<server.getQuizList().size(); i++){
-            System.out.println(server.getQuizList().get(i).getId() + ". " + server.getQuizList().get(i).getQuizName());
+            if (!server.getQuizList().get(i).isClosed()){   //only print open quizzes
+                System.out.println(server.getQuizList().get(i).getId() + ". " + server.getQuizList().get(i).getQuizName());
+            }
         }
         for (int i=0; i<60; i++){
             System.out.print("=");      //horizontal rule
@@ -102,6 +104,9 @@ public class PlayerClient {
             if (server.getQuizList().stream().noneMatch(q -> q.getId() == thisId)) {    //check that quiz with this id exists
                 System.out.println("There is no quiz with that number! Please try again.");
                 invalid = true; //invalid option, so repeat
+            } else if (server.getQuizList().stream().filter(q -> q.getId() == thisId).findFirst().get().isClosed()){
+                System.out.println("This quiz is closed and can't be played."); //check that quiz is not closed.
+                invalid = true;
             }
         } while (invalid);
         playQuiz(quizIdToPlay); //play the quiz with the id
