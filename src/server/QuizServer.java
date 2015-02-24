@@ -47,6 +47,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
                 data = (List<Object>) inStream.readObject();   //the object written to file is the data list
                 quizList = (List<Quiz>) data.get(0);    //first object in data list is quizList
                 playerList = (List<Player>)data.get(1); //second object is playerList
+                quizIdGenerator = (QuizId)data.get(2); //third object is idGenerator with id of last quiz added
                 inStream.close();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
