@@ -89,10 +89,25 @@ public class PlayerClient {
      * @throws RemoteException
      */
     public void chooseQuiz() throws RemoteException {
-        printQuizNames();            //print all the quiz titles
-        System.out.println("\nPlease enter the number of the quiz you want to play.");
-        int quizIdToPlay = Integer.parseInt(input.nextLine());
-        playQuiz(quizIdToPlay);
+        int quizIdToPlay = 0;   //initialise to 0 to silence compiler warning about not being initialised
+        boolean invalid;
+        do {
+            invalid = false;    //assume valid input
+            printQuizNames(); //print all the quiz titles
+            System.out.println("\nPlease enter the number of the quiz you want to play.");
+            try {
+                quizIdToPlay = Integer.parseInt(input.nextLine());  //get from user
+            } catch (NumberFormatException ex){
+                System.out.println("Please enter a quiz number!");
+                invalid = true; //invalid option, so repeat
+            }
+            int thisId = quizIdToPlay;  //create variable equal to quizIdToPlay to allow lambda comparison
+            if (server.getQuizList().stream().noneMatch(q -> q.getId() == thisId)) {    //check that quiz with this id exists
+                System.out.println("There is no quiz with that number! Please try again.");
+                invalid = true; //invalid option, so repeat
+            }
+        } while (invalid);
+        playQuiz(quizIdToPlay); //play the quiz with the id
     }
 
     /**
