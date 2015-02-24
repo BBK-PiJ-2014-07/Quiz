@@ -14,7 +14,6 @@ public class ClientLauncher {
     public void launch() {
         printHeader();
         boolean finished = false;
-        System.out.println("WELCOME TO THE QUIZ PROGRAM!");
         while (!finished){
             System.out.println("\n");       //spacer
             for (int i = 0; i < 60; i++) {
@@ -95,10 +94,6 @@ public class ClientLauncher {
         System.out.print("\n");
         for (int i=0; i<60; i++) {
             System.out.print("*");      //bottom border
-        }
-        System.out.println("\n");       //spacer
-        for (int i=0; i<60; i++){
-            System.out.print("=");      //horizontal rule
         }
     }
 }
