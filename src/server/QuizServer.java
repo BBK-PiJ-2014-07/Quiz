@@ -27,7 +27,8 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
     private List<Quiz> quizList;    //list of all quizzes
     private List<Player> playerList;    //list of all players
     private File file;  //the file to be written to/read from - supplied by factory
-    private UniqueIdGenerator uniqueIdGeneratorGenerator; //singleton object to generate unique quiz ids
+    private UniqueIdGenerator quizId; //singleton object to generate unique quiz ids
+    private UniqueIdGenerator playerId; //singleton object to generate unique player ids
 
     /**
      * default constructor - shouldn't be called
@@ -47,19 +48,22 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
                 data = (List<Object>) inStream.readObject();   //the object written to file is the data list
                 quizList = (List<Quiz>) data.get(0);    //first object in data list is quizList
                 playerList = (List<Player>)data.get(1); //second object is playerList
-                uniqueIdGeneratorGenerator = (UniqueIdGenerator)data.get(2); //third object is idGenerator with id of last quiz added1
+                quizId = (UniqueIdGenerator)data.get(2); //third object is idGenerator with id of last quiz added
+                playerId = (UniqueIdGenerator) data.get(3); //fourth object is idGenerator with id of last player added
                 inStream.close();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         } else {    //if the file is empty the lists must be created
             data = new ArrayList<>();
-            uniqueIdGeneratorGenerator = new UniqueIdGenerator();
+            quizId = new UniqueIdGenerator();
+            playerId = new UniqueIdGenerator();
             quizList = new ArrayList<>();
             playerList = new ArrayList<>();
             data.add(quizList); //add the quizList to the output list
             data.add(playerList);   //add the playerList to the output list
-            data.add(uniqueIdGeneratorGenerator);  //add quizIdGenerator to output list
+            data.add(quizId);  //add quizId to output list
+            data.add(playerId); //add playerId to output list
 
         }
 
@@ -113,7 +117,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
      */
     @Override
     public synchronized int createQuiz(String quizName, List<Question> questions) {
-        Quiz newQuiz = new Quiz(uniqueIdGeneratorGenerator.incrementAndGet(),quizName);
+        Quiz newQuiz = new Quiz(quizId.incrementAndGet(),quizName);
         questions.forEach(newQuiz::addQuestion);
         quizList.add(newQuiz);
         writeToFile();
