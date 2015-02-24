@@ -35,10 +35,10 @@ public class TestQuiz {
 
     @Test
     public void testScoreReverseSort(){
-        quiz.getScores().put(3, new Player("blah"));
-        quiz.getScores().put(15, new Player("blah"));
-        quiz.getScores().put(12, new Player("blah"));
-        quiz.getScores().put(1, new Player("blah"));
+        quiz.getScores().put(3, new Player(1,"blah"));
+        quiz.getScores().put(15, new Player(2,"blah"));
+        quiz.getScores().put(12, new Player(3,"blah"));
+        quiz.getScores().put(1, new Player(4,"blah"));
         assertEquals(15, (int) quiz.getScores().firstKey());
     }
 }
