@@ -1,5 +1,6 @@
 package clients;
 
+import resource.Player;
 import resource.Question;
 import service.QuizService;
 import java.rmi.NotBoundException;
@@ -8,6 +9,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -16,7 +18,7 @@ import java.util.Scanner;
 public class SetupClient {
     QuizService server;
     Scanner input;
-    boolean connected;
+    boolean connected;  //whether or not the server is connected
 
     public SetupClient(){
         input = new Scanner(System.in);
@@ -24,7 +26,7 @@ public class SetupClient {
     }
 
     /**
-     * Connect to server
+     * Connect to server on port 1099.
      */
     public void connectToServer(){
         try {
@@ -141,7 +143,8 @@ public class SetupClient {
     }
 
     /**
-     * Close a quiz.
+     * Close a quiz so it can no longer be played.
+     * Print out the details of the winner (the player with the highest score, and what they scored).
      * @return the id of the closed quiz, 0 if no quiz closed, -1 if error (quiz not found)
      */
     public int closeQuiz(){
@@ -159,6 +162,9 @@ public class SetupClient {
             if (server.getQuizList().stream().noneMatch(q -> q.getId() == idNo)){   //check quiz exists
                 System.out.println("Quiz not found!");
                 return -1;  //if not, return -1
+            } else if (server.getQuizList().stream().filter(q->q.getId() == idNo).findAny().get().isClosed()){
+                System.out.println("This quiz is already closed!");
+                return -1;  //if already closed, return -1
             }
             System.out.println("Are you sure you want to close quiz " + idNo + "? You will no longer be able to play it. Y/N");
 
@@ -170,6 +176,12 @@ public class SetupClient {
                 case "y":
                     server.closeQuiz(idNo);
                     System.out.println("Quiz " + idNo + " closed.");
+                    Map.Entry<Integer,Player> highScorer = server.getQuizList().stream()
+                            .filter(q -> q.getId() == idNo)
+                            .findFirst().get().getScores().firstEntry();    //get the details of the top score
+                    System.out.println("The winner is " + highScorer.getValue().getName() + " with "
+                            + highScorer.getKey() + " point(s). Well done "
+                            + highScorer.getValue().getName()+"!"); //Print the top score details
                     return idNo;
                 case "n":
                     System.out.println("Quiz not closed.");
