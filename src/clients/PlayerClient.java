@@ -20,17 +20,13 @@ import java.util.*;
 public class PlayerClient {
     private QuizService server;
     private int playerId;
-    private Scanner input;
-    
-    public PlayerClient() {
-        input = new Scanner(System.in);
-    }
 
     /**
      * Connects the server, prints welcome message, gets player name and begins the process of playing a quiz.
      * If the player already exists on the server, the player is greeted with "Welcome back".
      */
     public void execute(){
+        Scanner input = new Scanner(System.in);
         connectToServer();
         for (int i = 0; i < 60; i++) {
             System.out.print("=");      //horizontal rule
@@ -98,6 +94,7 @@ public class PlayerClient {
      * @throws RemoteException
      */
     public void chooseQuiz() throws RemoteException {
+        Scanner input = new Scanner(System.in);
         int quizIdToPlay = 0;   //initialise to 0 to silence compiler warning about not being initialised
         boolean invalid;
         do {
@@ -128,6 +125,7 @@ public class PlayerClient {
      * @throws RemoteException
      */
     public void playQuiz(int quizId) throws RemoteException {
+        Scanner input = new Scanner(System.in);
         List<String> answers = new ArrayList<>();
         Quiz thisQuiz = server.getQuiz(quizId);   //get the quiz
         System.out.println("\n" + thisQuiz.getQuizName().toUpperCase() + "\n");   //print the quiz name
