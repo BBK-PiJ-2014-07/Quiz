@@ -152,18 +152,18 @@ public class PlayerClient {
             }
 
             if (q.isCorrect(ans)){  //check if correct answer and print corresponding message
-                System.out.println("Correct!");
+                System.out.println("\nCorrect!\n");
             } else {
-                System.out.println("Incorrect! The answer is " + q.getCorrectAnswer() + ".");
+                System.out.println("\nIncorrect! The answer is " + q.getCorrectAnswer() + ".\n");
             }
             answers.add(ans);   //add the answer to the list
         }
         int score = server.playQuiz(quizId, playerId, answers);  //play the quiz to get the score
-        System.out.println("At the end of the quiz your score is " + score + "!");
+        System.out.println("\nAt the end of the quiz your score is " + score + "out of " + thisQuiz.getQuestions().size()+"!\n");
 
         // Check if high score (if empty, automatically is high score)
         if ((thisQuiz.getScores().isEmpty() || score > thisQuiz.getScores().firstKey()) && score!=0){
-            System.out.println("NEW HIGH SCORE! CONGRATULATIONS!" + "\n");
+            System.out.println("\nNEW HIGH SCORE! CONGRATULATIONS!\n");
         }
         thisQuiz = server.getQuiz(quizId);   //refresh quiz to update scores
 
