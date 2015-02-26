@@ -155,6 +155,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
     public synchronized int addNewPlayer(String name){
         Player newPlayer = new Player(playerId.incrementAndGet(),name);
         playerList.add(newPlayer);
+        writeToFile();  //write it to file
         return newPlayer.getId();
     }
 
