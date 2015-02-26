@@ -195,7 +195,6 @@ public class PlayerClient {
                             chooseQuiz();
                             break;
                         case 3:
-                            System.out.println("Thanks for playing! See you next time.");
                             return;
                         default:
                             System.out.println("Invalid choice, please enter a number.");
