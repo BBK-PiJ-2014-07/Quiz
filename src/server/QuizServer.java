@@ -95,6 +95,11 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
         if (getQuiz(quizId)==null || getPlayer(playerId)==null) {
             throw new IllegalArgumentException("Quiz or player not found!");
         }
+        //check that answers is a populated list and has same number of answers as questions
+        if (answers == null || answers.isEmpty() || answers.size() != getQuiz(quizId).getQuestions().size()) {
+            throw new IllegalArgumentException("Answers may not be null or empty, and must match number of questions");
+        }
+
         int score = 0;  //init score
         Quiz thisQuiz = getQuiz(quizId); //get quiz to play
 
