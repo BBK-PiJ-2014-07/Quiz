@@ -51,11 +51,6 @@ public interface QuizService extends Remote{
      */
     int addNewPlayer(String name) throws RemoteException;
 
-    /**
-     * Testing method - send a response to a client
-     * @return response
-     */
-    String echo() throws RemoteException;
 
     /**
      * Get the internal list of quizzes

@@ -148,14 +148,6 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
         return newPlayer.getId();
     }
 
-    /**
-     * Send a response to a connected client
-     * @return response
-     */
-
-    @Override
-    public String echo(){ return "Server response"; }
-
     /** Return the list of quizzes
      * @return the list of quizzes
      */
