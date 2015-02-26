@@ -125,8 +125,10 @@ public class PlayerClient {
      * @throws RemoteException
      */
     public void playQuiz(int quizId) throws RemoteException {
+        if (server.getQuiz(quizId)==null) { throw new IllegalArgumentException("Quiz not found");}  //Check that quiz exists
+
         Scanner input = new Scanner(System.in);
-        List<String> answers = new ArrayList<>();
+        List<String> answers = new ArrayList<>();   //list for user's answers
         Quiz thisQuiz = server.getQuiz(quizId);   //get the quiz
         System.out.println("\n" + thisQuiz.getQuizName().toUpperCase() + "\n");   //print the quiz name
 
