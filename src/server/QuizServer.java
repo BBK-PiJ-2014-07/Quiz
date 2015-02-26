@@ -92,19 +92,17 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
      */
     public synchronized int playQuiz(int quizId, int playerId, List<String> answers) {
         //check the server list of quizzes and players to ensure that id exists
-        if (quizList.stream().noneMatch(q -> q.getId() == quizId) || playerList.stream().noneMatch(p -> p.getId() == playerId)) {
-            throw new NoSuchElementException();
+        if (getQuiz(quizId)==null || getPlayer(playerId)==null) {
+            throw new IllegalArgumentException("Quiz or player not found!");
         }
         int score = 0;  //init score
-        Quiz thisQuiz = quizList.stream().filter(q->q.getId()==quizId).findFirst().get(); //get quiz to play
+        Quiz thisQuiz = getQuiz(quizId); //get quiz to play
 
        for (int i=0; i<thisQuiz.getQuestions().size(); i++){
            //Check the answer for each question, and increment score accordingly
            if (thisQuiz.answerQuestion(i+1,answers.get(i))) { score++; }
        }
-        Player thisPlayer = playerList.stream()
-                .filter(p -> p.getId() == playerId)
-                .findFirst().get(); //get the player details
+        Player thisPlayer = getPlayer(playerId);    //get player
 
         thisQuiz.getScores().put(score, thisPlayer);    //add the score to the quiz score map
         return score;
