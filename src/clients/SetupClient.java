@@ -120,8 +120,9 @@ public class SetupClient {
             newQ.addAnswers(answers);   //add answers to question
             questionsToAdd.add(newQ);   //add question to list of questions for quiz
             questionNo++;   //increment number for next question
+
             boolean invalid;
-            do {
+            do {    //do while loop so first iteration happens before boolean checked
                 invalid = false;
                 System.out.print("\nDo you want to add another question? Y/N: ");
                 String ans = input.nextLine().toLowerCase();
@@ -163,10 +164,10 @@ public class SetupClient {
 
             System.out.println("\nPlease enter the number of the quiz you wish to close.");
             int idNo = Integer.parseInt(input.nextLine());  //get the id from the user
-            if (server.getQuizList().stream().noneMatch(q -> q.getId() == idNo)){   //check quiz exists
+            if (server.getQuiz(idNo)==null){   //check quiz exists
                 System.out.println("Quiz not found!");
                 return -1;  //if not, return -1
-            } else if (server.getQuizList().stream().filter(q->q.getId() == idNo).findAny().get().isClosed()){
+            } else if (server.getQuiz(idNo).isClosed()){
                 System.out.println("This quiz is already closed!");
                 return -1;  //if already closed, return -1
             }
@@ -180,9 +181,7 @@ public class SetupClient {
                 case "y":
                     server.closeQuiz(idNo);
                     System.out.println("Quiz " + idNo + " closed.");
-                    Map.Entry<Integer,Player> highScorer = server.getQuizList().stream()
-                            .filter(q -> q.getId() == idNo)
-                            .findFirst().get().getScores().firstEntry();    //get the details of the top score
+                    Map.Entry<Integer,Player> highScorer = server.getQuiz(idNo).getScores().firstEntry();    //get the details of the top score
                     System.out.println("The winner is " + highScorer.getValue().getName() + " with "
                             + highScorer.getKey() + " point(s). Well done "
                             + highScorer.getValue().getName()+"!"); //Print the top score details
