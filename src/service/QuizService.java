@@ -70,4 +70,16 @@ public interface QuizService extends Remote{
      * @throws RemoteException
      */
     List<Player> getPlayerList() throws RemoteException;
+
+    /**
+     * Return the Player with the specified ID
+     * @param playerId - the ID of the player to find
+     */
+    Player getPlayer(int playerId) throws RemoteException;
+
+    /**
+     * Return the Quiz with the specified ID
+     * @param quizId - the ID of the quiz to find
+     */
+    Quiz getQuizId(int quizId) throws RemoteException;
 }
