@@ -111,12 +111,28 @@ public class SetupClient {
 
         while (!finished) {  //repeat until told otherwise
             System.out.print("\nPlease enter a question: ");
+
             question = input.nextLine();    //get question from user
+            while (question.trim().isEmpty()){  //check question not blank
+                System.out.println("Question cannot be blank!");
+                question = input.nextLine();
+            }
+
             System.out.print("\nPlease enter the CORRECT answer: ");
             answers[0] = input.nextLine();  //first member of answer array is correct answer
-            for (int i = 1; i < 4; i++) {
+
+            while (answers[0].trim().isEmpty()) {  //check answer not blank
+                System.out.println("Answer cannot be blank!");
+                answers[0] = input.nextLine();
+            }
+
+                for (int i = 1; i < 4; i++) {
                 System.out.print("\nPlease enter an incorrect answer: ");
                 answers[i] = input.nextLine();  //Populate rest of answer array with incorrect answers
+                while (answers[i].trim().isEmpty()) {  //check answer not blank
+                    System.out.println("Answer cannot be blank!");
+                    answers[i] = input.nextLine();
+                }
             }
             Question newQ = new Question(questionNo,question);  //instantiate new question
             newQ.addAnswers(answers);   //add answers to question
