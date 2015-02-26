@@ -134,7 +134,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
      */
     @Override
     public synchronized void closeQuiz(int quizId) {
-        if (getQuiz(quizId) == null) { throw new NoSuchElementException("Quiz not found!"); }
+        if (getQuiz(quizId) == null) { throw new IllegalArgumentException("Quiz not found!"); }
         getQuiz(quizId).setClosed();
         writeToFile();
     }
