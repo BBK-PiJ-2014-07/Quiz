@@ -151,6 +151,26 @@ public class TestServer {
         server.addNewPlayer("Maeby");
         assertEquals("Maeby", server.getPlayer(8).getName());
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testPlayQuizNullAnswers(){
+        server.playQuiz(1,1,null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testPlayQuizNotEnoughAnswers(){
+        List<String> answerList = new ArrayList<>();
+        answerList.add("d");    //one too few answers
+        server.playQuiz(1,1,answerList);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testPlayQuizEmptyAnswers(){
+        List<String> answerList = new ArrayList<>();
+        server.playQuiz(1,1,answerList);
+    }
+
+
     @AfterClass
     public static void closeDown(){
         testFile.delete();
