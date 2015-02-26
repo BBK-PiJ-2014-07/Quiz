@@ -69,12 +69,14 @@ public interface QuizService extends Remote{
     /**
      * Return the Player with the specified ID
      * @param playerId - the ID of the player to find
+     * @return the player, or null if it does not exist
      */
     Player getPlayer(int playerId) throws RemoteException;
 
     /**
      * Return the Quiz with the specified ID
      * @param quizId - the ID of the quiz to find
+         * @return the quiz, or null if it does not exist
      */
     Quiz getQuiz(int quizId) throws RemoteException;
 }

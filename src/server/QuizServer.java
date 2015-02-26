@@ -173,6 +173,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
     /**
      * Return the Player with specified ID
      * @param playerId - the ID of the player to find
+     * @return the player, or null if it does not exist
      */
     @Override
     public Player getPlayer(int playerId){
@@ -183,6 +184,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
     /**
      * Return the Quiz with the specified ID
      * @param quizId - the ID of the quiz to find
+     * @return the quiz, or null if it does not exist
      */
     @Override
     public Quiz getQuiz(int quizId){
