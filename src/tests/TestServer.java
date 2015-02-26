@@ -16,6 +16,9 @@ import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests for basic server functionality. Make sure no serverTestData.txt file exists before running these tests.
+ */
 public class TestServer {
     private static QuizServer server;
     private static Player player1;
@@ -117,7 +120,7 @@ public class TestServer {
     @Test
     public void testGetPlayer(){
         Player tobias = new Player(4, "Tobias");
-        server.getPlayerList().add(tobias);
+        server.addNewPlayer("Tobias");
         assertEquals(tobias, server.getPlayer(4));
     }
 
@@ -128,11 +131,21 @@ public class TestServer {
     }
 
     @Test
+    public void testGetQuiz(){
+        assertEquals("test quiz", server.getQuiz(0).getQuizName());
+    }
+
+    @Test
+    public void testGetQuizInvalidId(){
+        assertNull(server.getQuiz(99));
+    }
+    @Test
     public void testPlayerIdIncrements(){
         server.addNewPlayer("Oscar");
         server.addNewPlayer("George");
         server.addNewPlayer("GOB");
         server.addNewPlayer("Maeby");
+        assertEquals("Maeby", server.getPlayer(8).getName());
     }
     @AfterClass
     public static void closeDown(){
