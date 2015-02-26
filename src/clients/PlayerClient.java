@@ -1,5 +1,6 @@
 package clients;
 
+import lombok.Data;
 import resource.Player;
 import resource.Question;
 import resource.Quiz;
@@ -15,6 +16,7 @@ import java.util.*;
  * Client for playing quiz games.
  * @author Sophie Koonin
  */
+@Data
 public class PlayerClient {
     private QuizService server;
     private int playerId;
