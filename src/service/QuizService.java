@@ -81,5 +81,5 @@ public interface QuizService extends Remote{
      * Return the Quiz with the specified ID
      * @param quizId - the ID of the quiz to find
      */
-    Quiz getQuizId(int quizId) throws RemoteException;
+    Quiz getQuiz(int quizId) throws RemoteException;
 }
