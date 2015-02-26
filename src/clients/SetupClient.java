@@ -95,6 +95,10 @@ public class SetupClient {
         System.out.println("\nCREATE A QUIZ\n");
         System.out.println("Please enter a name for your quiz: ");
         String quizName = input.nextLine();
+        while (quizName.trim().isEmpty()){     //check for blank input
+            System.out.println("Quiz name cannot be blank!");
+            quizName = input.nextLine();
+        }
         String question;
         String[] answers = new String[4];
         int questionNo = 1;
