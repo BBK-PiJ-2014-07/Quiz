@@ -134,7 +134,8 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
      */
     @Override
     public synchronized void closeQuiz(int quizId) {
-        quizList.stream().filter(q -> q.getId() == quizId).forEach(Quiz::setClosed);
+        if (getQuiz(quizId) == null) { throw new NoSuchElementException("Quiz not found!"); }
+        getQuiz(quizId).setClosed();
         writeToFile();
     }
 
