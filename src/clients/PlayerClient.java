@@ -43,7 +43,7 @@ public class PlayerClient {
         String playerName = input.nextLine();
 
         try {
-            if (server.getPlayerList().stream()         // check to see if player exists already
+            if (server.getPlayerList().stream()         // check to see if player exists already (by name)
                     .noneMatch(p -> p.getName().equals(playerName))) {
                 playerId = server.addNewPlayer(playerName);
                 System.out.println("\nWelcome " + playerName + "!");//if not, create player
@@ -103,11 +103,11 @@ public class PlayerClient {
                 invalid = true; //invalid option, so repeat
             }
             int thisId = quizIdToPlay;  //create variable equal to quizIdToPlay to allow lambda comparison
-            if (server.getQuizList().stream().noneMatch(q -> q.getId() == thisId)) {    //check that quiz with this id exists
+            if (server.getQuiz(thisId)==null) {    //check that quiz with this id exists
                 System.out.println("There is no quiz with that number! Please try again.");
                 invalid = true; //invalid option, so repeat
-            } else if (server.getQuizList().stream().filter(q -> q.getId() == thisId).findFirst().get().isClosed()){
-                System.out.println("This quiz is closed and can't be played."); //check that quiz is not closed.
+            } else if (server.getQuiz(thisId).isClosed()){ //check that quiz is not closed.
+                System.out.println("This quiz is closed and can't be played.");
                 invalid = true;
             }
         } while (invalid);
@@ -121,7 +121,7 @@ public class PlayerClient {
      */
     public void playQuiz(int quizId) throws RemoteException {
         List<String> answers = new ArrayList<>();
-        Quiz thisQuiz = server.getQuizList().stream().filter(q -> q.getId() == quizId).findFirst().get();   //get the quiz
+        Quiz thisQuiz = server.getQuiz(quizId);   //get the quiz
         System.out.println("\n" + thisQuiz.getQuizName().toUpperCase() + "\n");   //print the quiz name
 
         for (Question q : thisQuiz.getQuestions()) {
@@ -142,7 +142,7 @@ public class PlayerClient {
         if ((thisQuiz.getScores().isEmpty() || score > thisQuiz.getScores().firstKey()) && score!=0){
             System.out.println("NEW HIGH SCORE! CONGRATULATIONS!" + "\n");
         }
-        thisQuiz = server.getQuizList().stream().filter(q -> q.getId() == quizId).findFirst().get();   //refresh quiz to update scores
+        thisQuiz = server.getQuiz(quizId);   //refresh quiz to update scores
 
         System.out.println("Top scores:");  //print top 5 scores
         SortedMap<Integer, Player> topScores;
