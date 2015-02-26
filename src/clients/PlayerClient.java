@@ -24,10 +24,12 @@ public class PlayerClient {
     /**
      * Connects the server, prints welcome message, gets player name and begins the process of playing a quiz.
      * If the player already exists on the server, the player is greeted with "Welcome back".
+     * Player identification is done using both id number and name, but the name must be unique.
      */
     public void execute(){
         Scanner input = new Scanner(System.in);
-        connectToServer();
+        connectToServer(); //connect server
+
         for (int i = 0; i < 60; i++) {
             System.out.print("=");      //horizontal rule
         }
@@ -35,14 +37,20 @@ public class PlayerClient {
         System.out.println("Please enter your name.");
         String playerName = input.nextLine();
 
+        while (playerName.trim().isEmpty()){
+            System.out.println("Player name cannot be blank!");
+            playerName = input.nextLine();
+        }
+
+        String findPlayerName = playerName; //local variable to stop lambda complaining
         try {
             if (server.getPlayerList().stream()         // check to see if player exists already (by name)
-                    .noneMatch(p -> p.getName().equals(playerName))) {
+                    .noneMatch(p -> p.getName().equals(findPlayerName))) {
                 playerId = server.addNewPlayer(playerName);
                 System.out.println("\nWelcome " + playerName + "!");//if not, create player
             } else {
                 playerId = server.getPlayerList().stream()      //otherwise get id of existing player
-                        .filter(p -> p.getName().equals(playerName))
+                        .filter(p -> p.getName().equals(findPlayerName))
                         .findFirst().get().getId();
                 System.out.println("\nWelcome back " + playerName + "!");
             }
