@@ -143,8 +143,15 @@ public class PlayerClient {
         for (Question q : thisQuiz.getQuestions()) {
             System.out.println(q); //print the question
             System.out.print("\nEnter your answer: ");
-            String ans = input.nextLine();   //get the answer from the user
-            if (q.isCorrect(ans)){
+
+            String ans = input.nextLine();//get the answer from the user
+
+            while (ans.trim().isEmpty()) {
+                System.out.println("Please enter an answer!");  //check not blank
+                ans = input.nextLine();
+            }
+
+            if (q.isCorrect(ans)){  //check if correct answer and print corresponding message
                 System.out.println("Correct!");
             } else {
                 System.out.println("Incorrect! The answer is " + q.getCorrectAnswer() + ".");
