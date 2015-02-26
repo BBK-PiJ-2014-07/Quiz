@@ -24,11 +24,11 @@ public class TestServer {
 
     @BeforeClass
     public static void doFirst() throws IOException {
-        player1 = new Player(1,"Michael");
-        testFile = new File("testFile.txt");
+        testFile = new File("serverTestData.txt");
         testFile.createNewFile();
         server = new QuizServer(testFile);
-        server.getPlayerList().add(player1);
+        server.addNewPlayer("Michael");
+
     }
     @Before
     public void buildUp() {
@@ -100,8 +100,7 @@ public class TestServer {
 
     @Test   //quiz 9
     public void testHighScore(){
-        Player player2 = new Player(2,"Lindsay");
-        server.getPlayerList().add(player2);
+        server.addNewPlayer("Lindsay");
         server.playQuiz(1,1,answers);   //both correct
         answers.set(1,"5");
         server.playQuiz(1,2,answers);
@@ -119,7 +118,21 @@ public class TestServer {
     public void testGetPlayer(){
         Player tobias = new Player(4, "Tobias");
         server.getPlayerList().add(tobias);
-        asserEquals(tobias, server.getPlayer(4));
+        assertEquals(tobias, server.getPlayer(4));
+    }
+
+
+    @Test
+    public void testGetPlayerInvalidId(){
+        assertNull(server.getPlayer(99));
+    }
+
+    @Test
+    public void testPlayerIdIncrements(){
+        server.addNewPlayer("Oscar");
+        server.addNewPlayer("George");
+        server.addNewPlayer("GOB");
+        server.addNewPlayer("Maeby");
     }
     @AfterClass
     public static void closeDown(){
