@@ -124,6 +124,10 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
         if (quizName == null || questions == null){
             throw new IllegalArgumentException("Quiz name and questions cannot be null!");
         }
+        if (questions.isEmpty() || quizName.trim().isEmpty()){
+            throw new IllegalArgumentException("Quiz name and questions cannot be empty or blank!");
+        }
+
         Quiz newQuiz = new Quiz(quizId.incrementAndGet(),quizName);
         questions.forEach(newQuiz::addQuestion);
         quizList.add(newQuiz);
