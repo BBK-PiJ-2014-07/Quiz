@@ -23,7 +23,6 @@ public class TestPlayer {
     @Test
     public void testEqualsSameNameId(){
         Player playerSame = new Player(1, "Fred");
-        playerSame.setId(6);
         assertTrue(player.equals(playerSame));  //equality with obj with same name and id
 
     }
