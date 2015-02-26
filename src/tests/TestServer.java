@@ -65,6 +65,11 @@ public class TestServer {
         assertTrue(server.getQuizList().get(2).isClosed());
     }
 
+    @Test (expected = IllegalArgumentException.class)
+    public void testCloseQuizInvalidId(){
+        server.closeQuiz(999);
+    }
+
     @Test   //quiz 4
     public void testWriteToFileWritesSomething(){
         assertTrue(testFile.length() > 0);
@@ -132,7 +137,7 @@ public class TestServer {
 
     @Test
     public void testGetQuiz(){
-        assertEquals("test quiz", server.getQuiz(0).getQuizName());
+        assertEquals("test quiz", server.getQuiz(1).getQuizName());
     }
 
     @Test
