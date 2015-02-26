@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,6 +39,7 @@ public class TestPlayerClient {
     @Before
     public void buildUp(){
         player = new PlayerClient();
+        player.setPlayerId(1);
     }
 
 
@@ -49,8 +49,7 @@ public class TestPlayerClient {
     }
 
     @Test
-    public void testPlayQuiz(){
-        player.execute();
+    public void testPlayQuiz() throws RemoteException {
         String answers = "paris\n2";
         System.setIn(new ByteArrayInputStream(answers.getBytes(StandardCharsets.UTF_8)));
         List<Question> questions = new ArrayList<>();
@@ -60,14 +59,11 @@ public class TestPlayerClient {
         q2.addAnswers("2","3","4","5");
         questions.add(q1);
         questions.add(q2);
+        server.addNewPlayer("Alfred");
+        server.createQuiz("test quiz", questions);
+        player.playQuiz(1);
+        assertTrue(server.getQuizList().get(0).getScores().containsKey(2));
 
-        try {
-            server.addNewPlayer("Alfred");
-            server.createQuiz("test quiz", questions);
-            assertTrue(server.getQuizList().get(0).getScores().containsKey(2));
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
 
     }
 
