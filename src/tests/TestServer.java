@@ -10,7 +10,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -116,6 +115,12 @@ public class TestServer {
         assertTrue(server.getPlayerList().contains(lucille));
     }
 
+    @Test
+    public void testGetPlayer(){
+        Player tobias = new Player(4, "Tobias");
+        server.getPlayerList().add(tobias);
+        asserEquals(tobias, server.getPlayer(4));
+    }
     @AfterClass
     public static void closeDown(){
         testFile.delete();
