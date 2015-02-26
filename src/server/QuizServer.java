@@ -13,6 +13,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Implementation of QuizService. The file for I/O is passed into the constructor.
@@ -92,7 +93,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
     public synchronized int playQuiz(int quizId, int playerId, List<String> answers) {
         //check the server list of quizzes and players to ensure that id exists
         if (quizList.stream().noneMatch(q -> q.getId() == quizId) || playerList.stream().noneMatch(p -> p.getId() == playerId)) {
-            return -1;
+            throw new NoSuchElementException();
         }
         int score = 0;  //init score
         Quiz thisQuiz = quizList.stream().filter(q->q.getId()==quizId).findFirst().get(); //get quiz to play
@@ -117,6 +118,9 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
      */
     @Override
     public synchronized int createQuiz(String quizName, List<Question> questions) {
+        if (quizName == null || questions == null){
+            throw new IllegalArgumentException("Quiz name and questions cannot be null!");
+        }
         Quiz newQuiz = new Quiz(quizId.incrementAndGet(),quizName);
         questions.forEach(newQuiz::addQuestion);
         quizList.add(newQuiz);
@@ -164,6 +168,24 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
      * @return the list of players
      */
     public List<Player> getPlayerList() { return playerList; }
+
+    /**
+     * Return the Player with specified ID
+     * @param playerId - the ID of the player to find
+     */
+    public Player getPlayer(int playerId){
+        if (playerList.stream().noneMatch(p-> p.getId() == playerId)) { return null; }  //null if not found
+        return playerList.stream().filter(p -> p.getId() == playerId).findFirst().get();
+    }
+
+    /**
+     * Return the Quiz with the specified ID
+     * @param quizId - the ID of the quiz to find
+     */
+    public Quiz getQuiz(int quizId){
+        if (quizList.stream().noneMatch(q -> q.getId() == quizId)) { return null; }  //null if not found
+        return quizList.stream().filter(q -> q.getId() == quizId).findFirst().get();
+    }
 
     /**
      * Write the data list to the file specified in the constructor.
