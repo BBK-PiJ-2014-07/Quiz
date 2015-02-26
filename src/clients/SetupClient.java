@@ -17,11 +17,9 @@ import java.util.Scanner;
  */
 public class SetupClient {
     QuizService server;
-    Scanner input;
     boolean connected;  //whether or not the server is connected
 
     public SetupClient(){
-        input = new Scanner(System.in);
         connected = false;
     }
 
@@ -45,6 +43,8 @@ public class SetupClient {
         if (!connected) {
             connectToServer();
         }
+        Scanner input = new Scanner(System.in);
+
         boolean finished = false;
         while (!finished) {
         System.out.println("\n");       //spacer
@@ -91,6 +91,8 @@ public class SetupClient {
      * where the questions will be added to a new Quiz.
      */
     public void createQuiz() {
+        Scanner input = new Scanner(System.in);
+
         //Variables for each question
         System.out.println("\nCREATE A QUIZ\n");
         System.out.println("Please enter a name for your quiz: ");
@@ -153,6 +155,8 @@ public class SetupClient {
      * @return the id of the closed quiz, 0 if no quiz closed, -1 if error (quiz not found)
      */
     public int closeQuiz(){
+        Scanner input = new Scanner(System.in);
+
         System.out.println("\nCLOSE A QUIZ\n");
         try {
             System.out.println("Open quizzes: ");
@@ -181,10 +185,14 @@ public class SetupClient {
                 case "y":
                     server.closeQuiz(idNo);
                     System.out.println("Quiz " + idNo + " closed.");
-                    Map.Entry<Integer,Player> highScorer = server.getQuiz(idNo).getScores().firstEntry();    //get the details of the top score
-                    System.out.println("The winner is " + highScorer.getValue().getName() + " with "
-                            + highScorer.getKey() + " point(s). Well done "
-                            + highScorer.getValue().getName()+"!"); //Print the top score details
+
+                    if (!server.getQuiz(idNo).getScores().isEmpty()) {  //High score details only if quiz has been played
+                        Map.Entry<Integer,Player> highScorer = server.getQuiz(idNo).getScores().firstEntry();    //get the details of the top score
+                        System.out.println("The winner is " + highScorer.getValue().getName() + " with "
+                                + highScorer.getKey() + " point(s). Well done "
+                                + highScorer.getValue().getName()+"!"); //Print the top score details
+                    }
+
                     return idNo;
                 case "n":
                     System.out.println("Quiz not closed.");
