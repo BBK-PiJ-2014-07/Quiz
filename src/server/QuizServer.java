@@ -166,12 +166,14 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
      * Return the list of players
      * @return the list of players
      */
+    @Override
     public List<Player> getPlayerList() { return playerList; }
 
     /**
      * Return the Player with specified ID
      * @param playerId - the ID of the player to find
      */
+    @Override
     public Player getPlayer(int playerId){
         if (playerList.stream().noneMatch(p-> p.getId() == playerId)) { return null; }  //null if not found
         return playerList.stream().filter(p -> p.getId() == playerId).findFirst().get();
@@ -181,6 +183,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
      * Return the Quiz with the specified ID
      * @param quizId - the ID of the quiz to find
      */
+    @Override
     public Quiz getQuiz(int quizId){
         if (quizList.stream().noneMatch(q -> q.getId() == quizId)) { return null; }  //null if not found
         return quizList.stream().filter(q -> q.getId() == quizId).findFirst().get();
