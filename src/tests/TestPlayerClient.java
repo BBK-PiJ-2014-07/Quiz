@@ -47,6 +47,10 @@ public class TestPlayerClient {
         assertNotNull(player.getServer());
     }
 
+    @Test(expected=IllegalArgumentException.class)
+    public void testPlayQuizIllegalId() throws RemoteException {
+        player.playQuiz(9999);
+    }
     @Test
     public void testPlayQuiz() throws RemoteException {
 
