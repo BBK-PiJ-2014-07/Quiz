@@ -49,8 +49,7 @@ public class TestPlayerClient {
 
     @Test
     public void testPlayQuiz() throws RemoteException {
-        String answers = "paris\n2";
-        System.setIn(new ByteArrayInputStream(answers.getBytes(StandardCharsets.UTF_8)));
+
         List<Question> questions = new ArrayList<>();
         Question q1 = new Question(1, "What is the capital of France?");
         q1.addAnswers("paris","london","tokyo","madrid");
@@ -60,6 +59,8 @@ public class TestPlayerClient {
         questions.add(q2);
         server.addNewPlayer("Alfred");
         server.createQuiz("test quiz", questions);
+        String answers = "paris\n2\n3";
+        System.setIn(new ByteArrayInputStream(answers.getBytes(StandardCharsets.UTF_8)));
         player.playQuiz(1);
         assertTrue(server.getQuizList().get(0).getScores().containsKey(2));
 
