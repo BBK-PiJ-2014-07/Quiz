@@ -29,12 +29,7 @@ public class PlayerClient {
      * If the player already exists on the server, the player is greeted with "Welcome back".
      */
     public void execute(){
-        try {
-            Registry registry = LocateRegistry.getRegistry(1099); //TODO
-            server = (QuizService) registry.lookup("QuizService");
-        } catch (RemoteException | NotBoundException ex) {
-            ex.printStackTrace();
-        }
+        connectToServer();
         for (int i = 0; i < 60; i++) {
             System.out.print("=");      //horizontal rule
         }
@@ -63,6 +58,17 @@ public class PlayerClient {
     }
 
 
+    /**
+     * Connect to the server
+     */
+    public void connectToServer(){
+        try {
+            Registry registry = LocateRegistry.getRegistry(1099); //TODO
+            server = (QuizService) registry.lookup("QuizService");
+        } catch (RemoteException | NotBoundException ex) {
+            ex.printStackTrace();
+        }
+    }
     /**
      * Print quiz names
      */
