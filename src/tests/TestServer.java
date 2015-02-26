@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 
 import static org.junit.Assert.*;
@@ -94,7 +93,7 @@ public class TestServer {
      * Test that looking up a wrong ID throws an exception.
      * Checking for this is done in PlayerClient
      */
-    @Test(expected = NoSuchElementException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testPlayQuizWrongId(){
         server.playQuiz(999, 1, answers);
     }

@@ -2,11 +2,9 @@ package tests;
 import org.junit.*;
 import static org.junit.Assert.*;
 
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+
 import clients.PlayerClient;
 import resource.Question;
-import resource.Quiz;
 import server.QuizServer;
 import service.QuizService;
 
@@ -22,7 +20,7 @@ import java.util.List;
  * Testing class for Player Client
  * @see clients.PlayerClient
  */
-@RunWith(MockitoJUnitRunner.class)
+
 public class TestPlayerClient {
     private PlayerClient player;
     private static File file;
@@ -40,12 +38,13 @@ public class TestPlayerClient {
     public void buildUp(){
         player = new PlayerClient();
         player.setPlayerId(1);
+        player.connectToServer();
     }
 
 
     @Test
     public void testServerConnection() throws RemoteException {
-        assertEquals("Server response", server.echo());
+        assertNotNull(player.getServer());
     }
 
     @Test
