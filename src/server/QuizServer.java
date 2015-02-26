@@ -110,6 +110,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
         Player thisPlayer = getPlayer(playerId);    //get player
 
         thisQuiz.getScores().put(score, thisPlayer);    //add the score to the quiz score map
+        writeToFile();  //write the score to file
         return score;
     }
 
@@ -200,6 +201,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
             ObjectOutputStream outStream = new ObjectOutputStream(new FileOutputStream(file));
             outStream.reset();  //clear the file, to avoid appending rather than overwriting
             outStream.writeObject(data);    //write the data list to file
+            outStream.flush();
             outStream.close();  //close the OutputStream
         } catch (IOException e) {
             e.printStackTrace();
