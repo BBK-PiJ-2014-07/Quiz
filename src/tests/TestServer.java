@@ -169,6 +169,39 @@ public class TestServer {
         List<String> answerList = new ArrayList<>();
         server.playQuiz(1,1,answerList);
     }
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateQuizEmptyQuestions(){
+        server.createQuiz("Blah",new ArrayList<>());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateQuizBlankQuizName(){
+        List<Question> questions = new ArrayList<>();
+        Question q1 = new Question(1, "What is the capital of France?");
+        q1.addAnswers("paris","london","tokyo","madrid");
+        Question q2 = new Question(2, "What is 1+1");
+        q2.addAnswers("2","3","4","5");
+        questions.add(q1);
+        questions.add(q2);
+        server.createQuiz(" ", questions);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateQuizNullQuizName(){
+        List<Question> questions = new ArrayList<>();
+        Question q1 = new Question(1, "What is the capital of France?");
+        q1.addAnswers("paris","london","tokyo","madrid");
+        Question q2 = new Question(2, "What is 1+1");
+        q2.addAnswers("2","3","4","5");
+        questions.add(q1);
+        questions.add(q2);
+        server.createQuiz(null, questions);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateQuizNullQuestions(){
+        server.createQuiz("hello", null);
+    }
 
 
     @AfterClass
